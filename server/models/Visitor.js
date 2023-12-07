@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
+
 
 const visiterSchema = mongoose.Schema({
     type: {
         type: String,
         trim: true,
-        required: [true, 'required']
+        required: [true, 'required'],
+        enum: ['Case-Hearing', 'General-Visitor', 'Contractor', 'Vendor', 'Guest']
     },
     passNo: {
         type: Number,
@@ -41,18 +44,26 @@ const visiterSchema = mongoose.Schema({
     idProofType: {
         type: String,
         required: [true, 'required'],
+        enum: ['Adhar', 'PAN-Card', 'Driving-Licence']
+
     },
     idProofNo: {
         type: String,
         required: [true, 'required'],
     },
-    validUpTo:{
-        type:String,
+    validUpTo: {
+        type: Date,
         required: [true, 'required'],
-    },
-    validOn:{
-        type:String,
+        default: function () {
+          return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+        },
+      },
+      validOn: {
+        type: Date,
         required: [true, 'required'],
+        default: function () {
+          return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+        },
     },
 }, {
     timestamps: true,

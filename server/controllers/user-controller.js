@@ -145,7 +145,7 @@ const deleteUser = asyncHandler(async (req, res) => {
             return res.status(404).json({ message: "User not found" })
         }
         await User.deleteOne({ _id: req.params.id });
-        return res.status(200).json({ message: 'User deleted successfully' })
+        return res.status(200).json({ message: 'User deleted successfully' });
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
