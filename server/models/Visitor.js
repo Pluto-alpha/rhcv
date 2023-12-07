@@ -3,6 +3,11 @@ const moment = require("moment");
 
 
 const visiterSchema = mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
     type: {
         type: String,
         trim: true,
@@ -55,14 +60,14 @@ const visiterSchema = mongoose.Schema({
         type: Date,
         required: [true, 'required'],
         default: function () {
-          return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
-      },
-      validOn: {
+    },
+    validOn: {
         type: Date,
         required: [true, 'required'],
         default: function () {
-          return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
 }, {

@@ -173,3 +173,15 @@
 ::1 - - [07/Dec/2023:07:32:07 +0000] "POST /api/v1/visitor HTTP/1.1" 400 182
 ::1 - - [07/Dec/2023:07:32:23 +0000] "POST /api/v1/visitor HTTP/1.1" 400 201
 ::1 - - [07/Dec/2023:07:32:59 +0000] "POST /api/v1/visitor HTTP/1.1" 400 222
+::1 - - [07/Dec/2023:09:29:12 +0000] "POST /api/v1/visitor HTTP/1.1" 401 56
+::1 - - [07/Dec/2023:09:32:02 +0000] "POST /api/v1/visitor HTTP/1.1" 401 56
+::1 - - [07/Dec/2023:09:33:39 +0000] "DELETE /api/v1/visitor/6571911d5c8ff52fa77f9a3c HTTP/1.1" 403 49
+::1 - - [07/Dec/2023:09:52:33 +0000] "POST /api/v1/visitor HTTP/1.1" 500 105
+::1 - - [07/Dec/2023:09:53:41 +0000] "POST /api/v1/visitor HTTP/1.1" 500 106
+::1 - - [07/Dec/2023:09:57:38 +0000] "POST /api/v1/visitor HTTP/1.1" 500 106
+::1 - - [07/Dec/2023:09:57:47 +0000] "POST /api/v1/visitor HTTP/1.1" 500 105
+::1 - - [07/Dec/2023:09:58:21 +0000] "POST /api/v1/visitor HTTP/1.1" 500 105
+::1 - - [07/Dec/2023:10:00:20 +0000] "POST /api/v1/visitor HTTP/1.1" 500 105
+::1 - - [07/Dec/2023:10:04:03 +0000] "POST /api/v1/visitor HTTP/1.1" 500 118
+::1 - - [07/Dec/2023:10:04:19 +0000] "POST /api/v1/visitor HTTP/1.1" 500 105
+::1 - - [07/Dec/2023:10:11:14 +0000] "GET /api/v1/visitor/65700e1221c4f74db415b027 HTTP/1.1" 404 31

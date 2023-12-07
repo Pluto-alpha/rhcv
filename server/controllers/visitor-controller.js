@@ -31,6 +31,7 @@ const addVisitor = asyncHandler(async (req, res) => {
             idProofNo,
             validUpTo,
             validOn,
+            user_id: req.user.id,
         });
         if (visitor) {
             return res.status(200).json({ visitor, msg: 'Visitor created successfully' })
@@ -49,7 +50,7 @@ const addVisitor = asyncHandler(async (req, res) => {
 
 const GetAllvisitor = asyncHandler(async (req, res) => {
     try {
-        const visitor = await Visitor.find({});
+        const visitor = await Visitor.find({ user_id: req.user.id });
         if (!visitor) {
             return res.status(404).json(visitor, "message: Visitors list not found")
         } else {
@@ -61,7 +62,7 @@ const GetAllvisitor = asyncHandler(async (req, res) => {
 });
 /**
  * @des Get single Visitor
- * @route GET /api/v1/visitor:id
+ * @route GET /api/v1/visitor/:id
  * @access private
  */
 
@@ -79,7 +80,7 @@ const GetVisitor = asyncHandler(async (req, res) => {
 });
 /**
  * @des Update Visitor
- * @route PUT /api/v1/visitor:id
+ * @route PUT /api/v1/visitor/:id
  * @access private
  */
 
@@ -88,6 +89,9 @@ const updateVisitor = asyncHandler(async (req, res) => {
         const visitor = await Visitor.findById(req.params.id);
         if (!visitor) {
             return res.status(404).json({ message: "Visitor not found" })
+        }
+        if (visitor.user_id.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'User cannot have permission to update other visitor' });
         }
         const updatedvisitor = await Visitor.findByIdAndUpdate(
             req.params.id,
@@ -101,7 +105,7 @@ const updateVisitor = asyncHandler(async (req, res) => {
 });
 /**
  * @des Delete Visitor
- * @route DELETE /api/v1/visitor:id
+ * @route DELETE /api/v1/visitor/:id
  * @access private
  */
 
@@ -110,6 +114,9 @@ const deleteVisitor = asyncHandler(async (req, res) => {
         const visitor = await Visitor.findById(req.params.id);
         if (!visitor) {
             return res.status(404).json({ message: "Visitor not found" })
+        }
+        if (visitor.user_id.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'User cannot have permission to delete other visitor' });
         }
         await Visitor.deleteOne({ _id: req.params.id });
         return res.status(200).json({ message: 'Visitor deleted successfully' });
