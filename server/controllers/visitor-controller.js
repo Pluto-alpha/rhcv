@@ -93,12 +93,12 @@ const updateVisitor = asyncHandler(async (req, res) => {
         if (visitor.user_id.toString() !== req.user.id) {
             return res.status(403).json({ message: 'User cannot have permission to update other visitor' });
         }
-        const updatedvisitor = await Visitor.findByIdAndUpdate(
+        const updatedVisitor = await Visitor.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         )
-        return res.status(200).json({ updatedvisitor, message: 'Visitor updated successfully' })
+        return res.status(200).json({ updatedVisitor, message: 'Visitor updated successfully' })
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }

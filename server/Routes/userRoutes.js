@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout } = require('../controllers/user-controller');
+const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd } = require('../controllers/user-controller');
 const { verifyToken } = require('../middlewares/validateTokenHandler')
 
 router.post('/login', loginUser);
 router.post('/logout', logout);
+router.post('/reset-password', resetPaswrd);
 
 /**protected routes middleware */
 router.use(verifyToken);
