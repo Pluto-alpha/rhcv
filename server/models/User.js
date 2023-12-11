@@ -23,13 +23,17 @@ const userSchema = mongoose.Schema({
         required: [true, 'required']
     },
     image: {
-        type:String,
-        default:'https://res.cloudinary.com/dv3i0t3u9/image/upload/v1701864592/user-images/bx0rzcfckip5hhzuonxb.jpg'
+        type: String,
+        default: 'https://res.cloudinary.com/dv3i0t3u9/image/upload/v1701864592/user-images/bx0rzcfckip5hhzuonxb.jpg'
     },
     role: {
         type: String,
-        default:'Receptionist',
+        default: 'Receptionist',
         enum: ["Admin", "Receptionist"],
+    },
+    enabled: {
+        type: Boolean,
+        default: true
     },
 }, {
     timestamps: true,

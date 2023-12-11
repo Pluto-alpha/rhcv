@@ -52,6 +52,9 @@ const loginUser = asyncHandler(async (req, res) => {
             return res.status(204).json({ success: false, msg: error.details[0] });
         }
         const user = await User.findOne({ email });
+        if (user.enabled === false) {
+            return res.status(401).json({ status: 'false', msg: 'The user is disabled from the admin side' })
+        }
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
                 {
