@@ -11,7 +11,7 @@ const { signupSchema, loginSchema } = require('../config/validator');
  */
 const registerUser = asyncHandler(async (req, res) => {
     try {
-        const { name, email, phone, password, role } = req.body;
+        const { name, email, phone, password, role, enabled } = req.body;
         const { error } = signupSchema.validate(req.body, { abortEarly: false, });
         if (error) {
             return res.status(400).json({ success: false, msg: error.details[0] });
@@ -28,6 +28,7 @@ const registerUser = asyncHandler(async (req, res) => {
             phone,
             password: hashPassword,
             role: role || 'Receptionist',
+            enabled,
         });
         if (user) {
             return res.status(200).json({ _id: user.id, email: user.email, msg: 'User created successfully' })
@@ -73,7 +74,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 secure: false, /*Set to true in a production environment with HTTPS*/
                 httpOnly: true, /*Make the cookie accessible only via HTTP (not JavaScript)*/
                 sameSite: 'strict', /*Apply SameSite attribute for CSRF protection*/
-            }).json({ msg: 'Login Successful' });
+            }).json({ token: token, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
         } else {
             res.status(401).json({ msg: 'Invalid credentials' });
         }
@@ -88,7 +89,7 @@ const loginUser = asyncHandler(async (req, res) => {
  */
 const getAllUsers = asyncHandler(async (req, res) => {
     try {
-        const user = await User.find({});
+        const user = await User.find({}).select('-password').sort({ createdAt: -1 });
         if (!user) {
             return res.status(404).json(user, "message: Users list not found")
         } else {

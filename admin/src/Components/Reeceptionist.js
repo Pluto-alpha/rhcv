@@ -1,0 +1,141 @@
+import React from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import * as AuthApi from '../API/authRequest';
+import { useNavigate } from 'react-router-dom';
+
+const Reeceptionist = () => {
+    const navigate = useNavigate();
+
+    const initialValues = {
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        role: 'Receptionist',
+        enabled: true,
+    };
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string().email('Invalid email').required('Email is required'),
+        phone: Yup.string().matches(/^\d{10}$/, 'Invalid phone number').required('Phone is required'),
+        password: Yup.string().required('Password is required'),
+        role: Yup.string().required('Role is required'),
+        enabled: Yup.string().required('Action is required'),
+
+    });
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        const data = JSON.stringify(values);
+
+        try {
+            const res = await AuthApi.register(values);
+            console.log(res.data);
+            if (res.status === 200) {
+                toast.success(res.data.msg);
+                resetForm({ ...initialValues });
+                navigate("/receptionist-list");
+            } else {
+                toast.error('An error occurred during the request');
+            }
+        } catch (err) {
+            console.error(err);
+            if (err.response && err.response.data && err.response.data.msg) {
+                toast.error(err.response.data.msg);
+            } else {
+                toast.error('Internal Server Error');
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    return (
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Form>
+                <div className="row">
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label"> Name</label>
+                            <Field
+                                id="name"
+                                name="name"
+                                type="text"
+                                className="form-control"
+                                placeholder="Your name"
+                            />
+                            <ErrorMessage name="name" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Mobile No</label>
+                            <Field
+                                id="phone"
+                                className="form-control"
+                                name="phone"
+                                placeholder="Phone Number"
+                                type="text"
+                            />
+                            <ErrorMessage name="phone" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Email</label>
+                            <Field
+                                id="email"
+                                className="form-control"
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                            />
+                            <ErrorMessage name="email" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Password</label>
+                            <Field
+                                id="password"
+                                name="password"
+                                type="password"
+                                className="form-control"
+                                placeholder="Password"
+                            />
+                            <ErrorMessage name="password" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Role</label>
+                            <Field as="select" name="role" className="form-select">
+                                <option value="Receptionist">Receptionist</option>
+                                <option value="Admin">Admin</option>
+                            </Field>
+                            <ErrorMessage name="role" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Action</label>
+                            <Field as="select" name="enabled" className="form-select">
+                                <option value={true}>Active</option>
+                                <option value={false}>Inactive</option>
+                            </Field>
+                            <ErrorMessage name="enabled" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                </div>
+                <div className="add_button_page">
+                    <button type="submit" className="btn btn-primary ">
+                        Add Receptionist
+                    </button>
+                </div>
+            </Form>
+        </Formik>
+    )
+}
+
+export default Reeceptionist

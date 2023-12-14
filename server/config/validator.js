@@ -8,6 +8,7 @@ const signupSchema = Joi.object({
   ,
   password: Joi.string().required(),
   role: Joi.string().allow('').optional(),
+  enabled:Joi.boolean().allow('').optional(),
 });
 
 const loginSchema = Joi.object({
@@ -16,8 +17,9 @@ const loginSchema = Joi.object({
 });
 
 const visiterValid = Joi.object({
-  type: Joi.string().required(),
-  passNo: Joi.number().integer().required(),
+  type: Joi.string().valid('Case-Hearing', 'General-Visitor', 'Contractor', 'Vendor', 'Guest').required(),
+  passNo: Joi.number().required(),
+  visitorName:Joi.string().required(),
   fatherName: Joi.string().required(),
   advocateName: Joi.string().required(),
   address: Joi.string().required(),

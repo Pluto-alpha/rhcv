@@ -10,7 +10,7 @@ const { visiterValid } = require('../config/validator');
 
 const addVisitor = asyncHandler(async (req, res) => {
     try {
-        const { type, passNo, fatherName, advocateName, address, mobile, email, idProofType, idProofNo, validUpTo, validOn } = req.body;
+        const { type, passNo, visitorName, fatherName, advocateName, address, mobile, email, idProofType, idProofNo, validUpTo, validOn } = req.body;
         const visitorAvail = await Visitor.findOne({ $or: [{ email }, { mobile }] });
         if (visitorAvail) {
             return res.status(400).json({ msg: 'Visiter is already exist' })
@@ -22,6 +22,7 @@ const addVisitor = asyncHandler(async (req, res) => {
         const visitor = await Visitor.create({
             type,
             passNo,
+            visitorName,
             fatherName,
             advocateName,
             address,
@@ -50,7 +51,7 @@ const addVisitor = asyncHandler(async (req, res) => {
 
 const GetAllvisitor = asyncHandler(async (req, res) => {
     try {
-        const visitor = await Visitor.find({ user_id: req.user.id });
+        const visitor = await Visitor.find({ user_id: req.user.id }).sort({ createdAt: -1 });
         if (!visitor) {
             return res.status(404).json(visitor, "message: Visitors list not found")
         } else {

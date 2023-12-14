@@ -19,6 +19,11 @@ const visiterSchema = mongoose.Schema({
         trim: true,
         required: [true, 'required'],
     },
+    visitorName:{
+        type: String,
+        trim: true,
+        required: [true, 'required'],
+    },
     fatherName: {
         type: String,
         trim: true,
