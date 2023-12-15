@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 const VisitorPass = () => {
     const navigate = useNavigate();
-    const [passNo, setPassNo] = useState(new Date().getTime().toString());
+    const [passNo, setPassNo] = useState(Math.floor((Math.random() * 1000000) + 1));
 
     useEffect(() => {
-        setPassNo();
+        setPassNo(passNo);
     }, []);
 
 
@@ -40,8 +40,8 @@ const VisitorPass = () => {
         email: Yup.string().email('Invalid email').required('Mail Id is required'),
         idProofType: Yup.string().required('ID Proof Type is required'),
         idProofNo: Yup.string().required('ID Proof No is required'),
-        validUpTo: Yup.date().required('Date is required'),
         validOn: Yup.date().required('Date On is required'),
+        validUpTo: Yup.date().required('Date is required'),
     });
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
 
@@ -201,19 +201,6 @@ const VisitorPass = () => {
                     </div>
                     <div className="col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label className="form-label">Valid Upto</label>
-                            <Field
-                                id="validUpTo"
-                                name="validUpTo"
-                                type="Date"
-                                className="form-control"
-                                placeholder="Valid Upto"
-                            />
-                            <ErrorMessage name="validUpTo" component="div" className="err-msg" />
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6">
-                        <div className="form-group">
                             <label className="form-label">Valid On</label>
                             <Field
                                 id="validOn"
@@ -223,6 +210,19 @@ const VisitorPass = () => {
                                 placeholder="Advocate Name"
                             />
                             <ErrorMessage name="validOn" component="div" className="err-msg" />
+                        </div>
+                    </div>
+                    <div className="col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label">Valid Upto</label>
+                            <Field
+                                id="validUpTo"
+                                name="validUpTo"
+                                type="Date"
+                                className="form-control"
+                                placeholder="Valid Upto"
+                            />
+                            <ErrorMessage name="validUpTo" component="div" className="err-msg" />
                         </div>
                     </div>
                 </div>

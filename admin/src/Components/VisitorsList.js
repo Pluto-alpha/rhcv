@@ -3,6 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import * as VisitorApi from '../API/visitorRequest';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 const VisitorsList = () => {
     const [data, setData] = useState([]);
 
@@ -21,6 +23,21 @@ const VisitorsList = () => {
     }, []);
 
     console.log(data);
+
+    const downloadPdf = async (id) => {
+        try {
+            //console.log('Visitor ID:', id);
+            const res = await VisitorApi.createPass(id); 
+            if (res.data.success) {
+                window.open(res.data.url, '_blank');
+            } else {
+                toast.error(res.data.msg);
+            }
+        } catch (err) {
+            toast.error(err.message);
+        }
+    };
+
     return (
         <>
             <div className="table-responsive">
@@ -56,14 +73,17 @@ const VisitorsList = () => {
                                     <td>{visit.address}</td>
                                     <td>{visit.idProofType}</td>
                                     <td>{visit.idProofNo}</td>
-                                    <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY, hh:mm A") : ""}</td>
-                                    <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
+                                    <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY") : ""}</td>
+                                    <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY") : ""}</td>
                                     <td>
-                                        <Link to={``} className="">
+                                        <Link to={``}>
                                             <i className="fa fa-edit me-2" />
                                         </Link>
-                                        <Link to={``} className="">
+                                        <Link to={``}>
                                             <i className="fa fa-trash me-2" />
+                                        </Link>
+                                        <Link to={``} onClick={() => downloadPdf(visit._id)}>
+                                            <i className="fa fa-print me-2" />
                                         </Link>
                                     </td>
                                 </tr>

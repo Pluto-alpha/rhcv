@@ -10,6 +10,8 @@ const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
 
+
+
 /*Logger configuration*/
 app.use(morgan('common', {
     skip: function (req, res) { return res.statusCode < 400 },
@@ -22,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(helmet({ crossOriginResourcePolicy: false, }));
 app.use(cookieParser());
+app.use(express.static(__dirname + "/public"));
+
 
 // log all requests to console with dev format
 app.use(morgan('dev'));
@@ -40,5 +44,5 @@ app.use(errorHandler);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+    console.log(`--Server is listening on port ${port}--`);
 });

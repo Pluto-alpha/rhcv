@@ -1,6 +1,10 @@
 const Visitor = require('../models/Visitor');
 const asyncHandler = require('express-async-handler');
 const { visiterValid } = require('../config/validator');
+const path = require('path');
+const fs = require('fs')
+const generatePdf = require('../config/generatePdf');
+const mongoose = require('mongoose');
 
 /**
  * @des Create Visitor
@@ -125,5 +129,26 @@ const deleteVisitor = asyncHandler(async (req, res) => {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });
+const visitorPass = asyncHandler(async (req, res) => {
+    try {
+        const visitorId = req.params.id;
+        if (!mongoose.Types.ObjectId.isValid(visitorId)) {
+            return res.status(400).json({ success: false, msg: 'Invalid visitor ID' });
+        }
+        const visitor = await Visitor.findById(visitorId);
+        if (!visitor) {
+            return res.status(404).send('Visitor not found');
+        }
+        const pdfBuffer = await generatePdf(visitor);
+        const fileName = `VisitorPass-${visitor.passNo}.pdf`;
+        const filePath = path.resolve(__dirname, `../public/${fileName}`);
+        fs.writeFileSync(filePath, pdfBuffer);
+        res.download(filePath, fileName);
+    } catch (err) {
+        console.error('Error generating or downloading PDF:', err);
+        res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+});
 
-module.exports = { addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor }
+
+module.exports = { addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass }

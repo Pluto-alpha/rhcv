@@ -65,14 +65,14 @@ const visiterSchema = mongoose.Schema({
         type: Date,
         required: [true, 'required'],
         default: function () {
-            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY") : undefined;
         },
     },
     validOn: {
         type: Date,
         required: [true, 'required'],
         default: function () {
-            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY") : undefined;
         },
     },
 }, {
