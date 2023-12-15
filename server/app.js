@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(helmet({ crossOriginResourcePolicy: false, }));
 app.use(cookieParser());
-app.use(express.static(__dirname + "/public"));
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 
 // log all requests to console with dev format

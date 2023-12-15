@@ -27,9 +27,9 @@ const VisitorsList = () => {
     const downloadPdf = async (id) => {
         try {
             //console.log('Visitor ID:', id);
-            const res = await VisitorApi.createPass(id); 
-            if (res.data.success) {
-                window.open(res.data.url, '_blank');
+            const res = await VisitorApi.createPass(id);
+            if (res.data) {
+                window.open(res.data.downloadUrl, '_blank')
             } else {
                 toast.error(res.data.msg);
             }

@@ -139,13 +139,20 @@ const visitorPass = asyncHandler(async (req, res) => {
         if (!visitor) {
             return res.status(404).send('Visitor not found');
         }
-        const pdfBuffer = await generatePdf(visitor);
-        const fileName = `VisitorPass-${visitor.passNo}.pdf`;
+        const fileName = `PASS-NO-${visitor.passNo}.pdf`;
+        const url = `http://localhost:5001/static/${fileName}`;
+        const pdfBuffer = await generatePdf(visitor, url);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);
+        const response = {
+            success: true,
+            msg: 'File Download successful',
+            downloadUrl: url,
+        };
+        res.status(200).json(response);
         res.download(filePath, fileName);
+        
     } catch (err) {
-        console.error('Error generating or downloading PDF:', err);
         res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });

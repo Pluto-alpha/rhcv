@@ -3,7 +3,7 @@ const path = require('path');
 const hbs = require('handlebars');
 const puppeteer = require('puppeteer');
 
-const generatePdf = async (visitor) => {
+const generatePdf = async (visitor, url) => {
     try {
         const browser = await puppeteer.launch({ headless: 'new' });
         const page = await browser.newPage();
@@ -19,6 +19,7 @@ const generatePdf = async (visitor) => {
         });
         await page.setContent(html);
         const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+        await page.goto(url);
         await browser.close();
         return pdfBuffer;
     } catch (error) {
