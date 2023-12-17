@@ -9,6 +9,7 @@ import VisitorList from './Pages/VisitorList';
 import Profile from './Pages/Profile';
 //import Spinner from './Components/Spinner';
 import Login from './Components/Login';
+import PrivateComponent from './Components/PrivateComponent';
 import { ToastContainer } from "react-toastify";
 
 
@@ -22,8 +23,8 @@ const App = () => {
       <BrowserRouter>
         {/* <Spinner /> */}
         <Routes>
-          <Route>
-            <Route path='/' element={<Login />} />
+          <Route path='/' element={<Login />} />
+          <Route element={<PrivateComponent />}>
             <Route path='/home' element={<Home />} />
             <Route path='/add-receptionist' element={<AddReceptionist />} />
             <Route path='/add-visitor' element={<AddVisitor />} />

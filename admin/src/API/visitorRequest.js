@@ -5,17 +5,26 @@ const API = axios.create({
   withCredentials: true,
 });
 
+const refreshToken = async () => {
+  try {
+    const res = await API.get('/api/v1/auth/refresh-token');
+    const token = res.data.token;
+    localStorage.setItem('token', token);
+    return token;
+  } catch (error) {
+    console.error('Token refresh failed:', error);
+    throw error;
+  }
+}
+
 // Add a request interceptor
 API.interceptors.request.use(
   (config) => {
-    // Get the authentication token from local storage if it exists
     const token = localStorage.getItem('token');
-    // Add the token to the request headers
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-
   },
   (error) => {
     return Promise.reject(error);
@@ -25,14 +34,17 @@ API.interceptors.request.use(
 // Add a response interceptor
 API.interceptors.response.use(
   (response) => {
-    // Do something with the response data
     return response;
   },
   (error) => {
-    // Handle errors, e.g., redirect to login page if authentication fails
     if (error.response.status === 401) {
-      // Handle unauthorized access
-      // Redirect to login page or show an error message
+      try {
+        refreshToken();
+        return API.request(error.config);
+      } catch (refreshError) {
+        window.location.href = '/';
+        return Promise.reject(refreshError);
+      }
     }
     return Promise.reject(error);
   }

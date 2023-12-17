@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Token = require('../models/Token');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -57,6 +58,10 @@ const loginUser = asyncHandler(async (req, res) => {
             return res.status(401).json({ status: 'false', msg: 'The user is disabled from the admin side' })
         }
         if (user && (await bcrypt.compare(password, user.password))) {
+
+            const expiredDate = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour expiration
+            //const expiredDate = new Date(Date.now() + 2 * 60 * 1000);// 2 min expiration
+
             const token = jwt.sign(
                 {
                     user: {
@@ -69,12 +74,13 @@ const loginUser = asyncHandler(async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: "24hr" }
             );
-            return res.cookie('token', token, {
-                expires: new Date(Date.now() + 30 * 60 * 1000), /*Cookie expires in 30 min*/
-                secure: false, /*Set to true in a production environment with HTTPS*/
-                httpOnly: true, /*Make the cookie accessible only via HTTP (not JavaScript)*/
-                sameSite: 'strict', /*Apply SameSite attribute for CSRF protection*/
-            }).json({ token: token, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
+            const newToken = new Token({
+                user: user.id,
+                token,
+                expiredDate,
+            });
+            await newToken.save();
+            return res.status(200).json({ token: token, newToken, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
         } else {
             res.status(401).json({ msg: 'Invalid credentials' });
         }
@@ -179,6 +185,40 @@ const resetPaswrd = asyncHandler(async (req, res) => {
     }
 })
 /**
+ * @des Token the expire user
+ * @route GET /api/v1/auth/refresh-token
+ * @access public
+ */
+const refreshToken = asyncHandler(async (req, res) => {
+    try {
+        let token;
+        if (req.headers.authorization) {
+            token = req.headers.authorization.split(' ')[1];
+        } else if (req.body.token) {
+            token = req.body.token;
+        } else if (req.query.token) {
+            token = req.query.token;
+        } else if (req.headers["x-access-token"]) {
+            token = req.headers["x-access-token"];
+        }
+        if (!token) {
+            return res.status(401).json({ message: 'Token not provided' });
+        }
+        const tokenDoc = await Token.findOne({ token }).populate('user');
+        if (!tokenDoc) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        const now = new Date();
+        if (now > tokenDoc.expiredDate) {
+            return res.status(401).json({ message: 'Token has expired' });
+        }
+        res.status(200).json({ message: 'Token is valid' });
+    } catch (err) {
+        console.error('Error checking token:', err);
+        res.status(500).json({ message: 'Internal Server Error', err: err });
+    }
+});
+/**
  * @des logout the user
  * @route POST /api/v1/auth/logout
  * @access public
@@ -188,4 +228,4 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd };
+module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, refreshToken };

@@ -6,7 +6,7 @@ import Footer from '../Components/Footer';
 const Profile = () => {
 
   const userAuth = localStorage.getItem('user');
-  const parsedAuth = userAuth ? JSON.parse(userAuth) : null;
+  const parsedAuth = userAuth ? JSON.parse(userAuth) : 'null';
 
   return (
     <div className="container-fluid position-relative bg-white d-flex p-0">

@@ -141,7 +141,7 @@ const visitorPass = asyncHandler(async (req, res) => {
         }
         const fileName = `PASS-NO-${visitor.passNo}.pdf`;
         const url = `http://localhost:5001/static/${fileName}`;
-        const pdfBuffer = await generatePdf(visitor, url);
+        const pdfBuffer = await generatePdf(visitor);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);
         const response = {
@@ -150,7 +150,7 @@ const visitorPass = asyncHandler(async (req, res) => {
             downloadUrl: url,
         };
         res.status(200).json(response);
-        res.download(filePath, fileName);
+        //res.download(filePath, fileName);
         
     } catch (err) {
         res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
