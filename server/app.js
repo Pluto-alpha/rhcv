@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const errorHandler = require('./middlewares/errorHandler');
 const corsOptions = require('./config/corsOptions');
 const morgan = require("morgan");
-const cron = require('node-cron');
 const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
@@ -38,7 +37,6 @@ app.use('/api/v1/', require('./Routes/visitorsRoutes'));
 
 /*** database connection*/
 require('./config/dbConnect');
-cron.schedule('0 * * * *', require('./config/tokenCleanup'));
 /**Error middleware */
 app.use(errorHandler);
 

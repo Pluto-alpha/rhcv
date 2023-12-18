@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Token = require('../models/Token');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -59,8 +58,8 @@ const loginUser = asyncHandler(async (req, res) => {
         }
         if (user && (await bcrypt.compare(password, user.password))) {
 
-            const expiredDate = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour expiration
-            //const expiredDate = new Date(Date.now() + 2 * 60 * 1000);// 2 min expiration
+            //const expiredDate = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour expiration
+            const expiredDate = new Date(Date.now() + 2 * 60 * 1000);// 2 min expiration
 
             const token = jwt.sign(
                 {
@@ -72,7 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
                     },
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "24hr" }
+                { expiresIn: "24h" }
             );
             const newToken = new Token({
                 user: user.id,
@@ -184,40 +183,7 @@ const resetPaswrd = asyncHandler(async (req, res) => {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 })
-/**
- * @des Token the expire user
- * @route GET /api/v1/auth/refresh-token
- * @access public
- */
-const refreshToken = asyncHandler(async (req, res) => {
-    try {
-        let token;
-        if (req.headers.authorization) {
-            token = req.headers.authorization.split(' ')[1];
-        } else if (req.body.token) {
-            token = req.body.token;
-        } else if (req.query.token) {
-            token = req.query.token;
-        } else if (req.headers["x-access-token"]) {
-            token = req.headers["x-access-token"];
-        }
-        if (!token) {
-            return res.status(401).json({ message: 'Token not provided' });
-        }
-        const tokenDoc = await Token.findOne({ token }).populate('user');
-        if (!tokenDoc) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-        const now = new Date();
-        if (now > tokenDoc.expiredDate) {
-            return res.status(401).json({ message: 'Token has expired' });
-        }
-        res.status(200).json({ message: 'Token is valid' });
-    } catch (err) {
-        console.error('Error checking token:', err);
-        res.status(500).json({ message: 'Internal Server Error', err: err });
-    }
-});
+
 /**
  * @des logout the user
  * @route POST /api/v1/auth/logout
@@ -228,4 +194,4 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, refreshToken };
+module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd };

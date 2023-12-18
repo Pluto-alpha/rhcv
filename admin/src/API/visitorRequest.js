@@ -5,18 +5,6 @@ const API = axios.create({
   withCredentials: true,
 });
 
-const refreshToken = async () => {
-  try {
-    const res = await API.get('/api/v1/auth/refresh-token');
-    const token = res.data.token;
-    localStorage.setItem('token', token);
-    return token;
-  } catch (error) {
-    console.error('Token refresh failed:', error);
-    throw error;
-  }
-}
-
 // Add a request interceptor
 API.interceptors.request.use(
   (config) => {
@@ -38,13 +26,7 @@ API.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      try {
-        refreshToken();
-        return API.request(error.config);
-      } catch (refreshError) {
-        window.location.href = '/';
-        return Promise.reject(refreshError);
-      }
+      //token expiration
     }
     return Promise.reject(error);
   }
