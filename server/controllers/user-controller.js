@@ -57,10 +57,6 @@ const loginUser = asyncHandler(async (req, res) => {
             return res.status(401).json({ status: 'false', msg: 'The user is disabled from the admin side' })
         }
         if (user && (await bcrypt.compare(password, user.password))) {
-
-            //const expiredDate = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour expiration
-            const expiredDate = new Date(Date.now() + 2 * 60 * 1000);// 2 min expiration
-
             const token = jwt.sign(
                 {
                     user: {
@@ -73,13 +69,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: "24h" }
             );
-            const newToken = new Token({
-                user: user.id,
-                token,
-                expiredDate,
-            });
-            await newToken.save();
-            return res.status(200).json({ token: token, newToken, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
+            return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
         } else {
             res.status(401).json({ msg: 'Invalid credentials' });
         }
