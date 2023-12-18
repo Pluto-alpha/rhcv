@@ -10,9 +10,10 @@ const VisitorPass = () => {
     const [passNo, setPassNo] = useState(Math.floor((Math.random() * 1000000) + 1));
 
     useEffect(() => {
-        setPassNo(passNo);
+        setPassNo((passNo)=>{
+            return passNo;
+        });
     }, []);
-
 
     const initialValues = {
         type: '',
@@ -179,9 +180,9 @@ const VisitorPass = () => {
                             <label className="form-label">ID Proof Type</label>
                             <Field as="select" name="idProofType" className="form-select">
                                 <option value="">--select-id-type--</option>
-                                <option value="Adhar">Adhar Card</option>
-                                <option value="PAN-Card">Pan Card</option>
-                                <option value="Driving-Licence">Driving Licence</option>
+                                <option value="ADHAR CARD">ADHAR CARD</option>
+                                <option value="PAN CARD">PAN CARD</option>
+                                <option value="DRIVING LICENCE">DRIVING LICENCE</option>
                             </Field>
                             <ErrorMessage name="idProofType" component="div" className="err-msg" />
                         </div>

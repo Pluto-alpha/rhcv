@@ -54,7 +54,7 @@ const visiterSchema = mongoose.Schema({
     idProofType: {
         type: String,
         required: [true, 'required'],
-        enum: ['Adhar', 'PAN-Card', 'Driving-Licence']
+        enum: ['ADHAR CARD', 'PAN CARD', 'DRIVING-LICENCE']
 
     },
     idProofNo: {

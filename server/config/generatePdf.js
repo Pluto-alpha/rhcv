@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const hbs = require('handlebars');
 const puppeteer = require('puppeteer');
+const moment = require('moment');
 
 const generatePdf = async (visitor) => {
     try {
@@ -10,12 +11,18 @@ const generatePdf = async (visitor) => {
         const templatePath = path.join(__dirname, `../passTemplate/pass.html`);
         const templateContent = fs.readFileSync(templatePath, 'utf8');
         const template = hbs.compile(templateContent);
+        const validOn = moment(visitor.validOn).format("DD MMM YYYY");
+        const validUpTo = moment(visitor.validUpTo).format("DD MMM YYYY");
         const html = template({
             name: visitor.visitorName,
             passNo: visitor.passNo,
             advocateName: visitor.advocateName,
+            fatherName: visitor.fatherName,
+            address: visitor.address,
             idProofType: visitor.idProofType,
             idProofNo: visitor.idProofNo,
+            validOn: validOn,
+            validUpTo: validUpTo,
         });
         await page.setContent(html);
         const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });

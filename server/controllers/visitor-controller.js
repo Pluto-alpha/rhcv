@@ -150,8 +150,7 @@ const visitorPass = asyncHandler(async (req, res) => {
             downloadUrl: url,
         };
         res.status(200).json(response);
-        //res.download(filePath, fileName);
-        
+        //res.download(filePath, fileName);  
     } catch (err) {
         res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }

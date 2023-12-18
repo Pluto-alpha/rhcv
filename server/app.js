@@ -38,7 +38,7 @@ app.use('/api/v1/', require('./Routes/visitorsRoutes'));
 
 /*** database connection*/
 require('./config/dbConnect');
-cron.schedule('*/2 * * * *', require('./config/tokenCleanup'));
+cron.schedule('0 * * * *', require('./config/tokenCleanup'));
 /**Error middleware */
 app.use(errorHandler);
 

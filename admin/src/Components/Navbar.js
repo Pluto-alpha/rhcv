@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react';
+import React, {  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const auth = localStorage.getItem("token");
-        if (!auth) {
-            navigate('/')
-        }
-    }, []);
 
     const logout = () => {
         localStorage.clear()
