@@ -1,4 +1,4 @@
-import React, {  } from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = localStorage.getItem("token");
+    if (auth) {
+      navigate('/home')
+    }
+  }, []);
 
   const initialValues = {
     email: '',
@@ -28,6 +35,9 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
         toast.success('Login Successful');
+        // localStorage.setItem("user", JSON.stringify(res.data))
+        // const token = res.data.token;
+        // localStorage.setItem("token", token);
         resetForm({ ...initialValues });
         navigate("/home");
       } else {
