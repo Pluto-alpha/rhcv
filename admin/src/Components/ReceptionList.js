@@ -2,10 +2,27 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as AuthApi from '../API/authRequest';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ReceptionList = () => {
     const [data, setData] = useState([]);
-
+    
+    const updateStatus = async (userId, currentStatus) => {
+        try {
+            const response = await AuthApi.updateUser(userId, { enabled: !currentStatus });
+            const updatedUser = response.data;
+            setData((prevData) =>
+                prevData.map((user) =>
+                    user._id === userId ? { ...user, enabled: updatedUser.enabled } : user
+                )
+            );
+            if (response.status === 200) {
+                toast.success('User updated Successfully')
+            }
+        } catch (error) {
+            toast.error('Error updating user status:', error);
+        }
+    };
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
         const getData = async () => {
@@ -17,13 +34,13 @@ const ReceptionList = () => {
                 }
             }
         };
-
         getData();
-
         return () => {
             cancelToken.cancel();
         };
     }, []);
+
+    
 
     return (
         <div className="table-responsive">
@@ -46,7 +63,10 @@ const ReceptionList = () => {
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>
-                                    <Link to="#" className={user.enabled ? 'activeclas' : 'inactive'}>
+                                    <Link to="#"
+                                        onClick={() => updateStatus(user._id, user.enabled)}
+                                        className={user.enabled ? 'activeclas' : 'inactive'}
+                                    >
                                         {user.enabled ? 'Active' : 'InActive'}
                                     </Link>
                                 </td>

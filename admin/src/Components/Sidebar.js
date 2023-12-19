@@ -40,10 +40,10 @@ const Sidebar = () => {
                     </Link>
                     <Link to="/visitor-list" className="nav-item nav-link ">
                         <i className="fa fa-users me-2" />
-                        Visitor{" "}
+                        Visitors{" "}
                     </Link>
                     <Link to="/receptionist-list" className="nav-item nav-link">
-                        <i className="fa fa-balance-scale me-2" /> Receptionist
+                        <i className="fa fa-balance-scale me-2" /> Receptionists
                     </Link>
                     <Link to="/profile" className="nav-item nav-link ">
                         <i className="fa fa-user me-2" />

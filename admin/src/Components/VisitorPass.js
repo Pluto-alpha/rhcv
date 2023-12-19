@@ -4,16 +4,22 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import * as VisitorApi from '../API/visitorRequest';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+
 
 const VisitorPass = () => {
     const navigate = useNavigate();
     const [passNo, setPassNo] = useState(Math.floor((Math.random() * 1000000) + 1));
+    const [validOn, setValidOn] = useState(new Date());
+    const [validUpTo, setValidUpTo] = useState(new Date());
+
 
     useEffect(() => {
-        setPassNo((passNo)=>{
+        setPassNo((passNo) => {
             return passNo;
         });
     }, []);
+
 
     const initialValues = {
         type: '',
@@ -26,8 +32,8 @@ const VisitorPass = () => {
         email: '',
         idProofType: '',
         idProofNo: '',
-        validUpTo: '',
-        validOn: '',
+        validOn: validOn,
+        validUpTo: validUpTo,
     };
 
     const validationSchema = Yup.object().shape({
@@ -41,11 +47,10 @@ const VisitorPass = () => {
         email: Yup.string().email('Invalid email').required('Mail Id is required'),
         idProofType: Yup.string().required('ID Proof Type is required'),
         idProofNo: Yup.string().required('ID Proof No is required'),
-        validOn: Yup.date().required('Date On is required'),
+        validOn: Yup.date().required('Date is required'),
         validUpTo: Yup.date().required('Date is required'),
     });
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-
         try {
             const res = await VisitorApi.addVisitor(values);
             console.log(res.data);
@@ -202,26 +207,38 @@ const VisitorPass = () => {
                     </div>
                     <div className="col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label className="form-label">Valid On</label>
-                            <Field
+                            <label className="form-label">Valid On</label><br />
+                            <DatePicker
                                 id="validOn"
                                 name="validOn"
-                                type="Date"
+                                selected={validOn}
+                                minDate={validOn}
+                                onChange={(validOn) => { setValidOn(validOn); console.log('ValidOn:', validOn) }}
+                                showTimeSelect
+                                timeFormat="hh:mm aa"
+                                timeIntervals={15}
+                                dateFormat="dd MMM yyyy, hh:mm aa"
                                 className="form-control"
-                                placeholder="Advocate Name"
+                                placeholderText="Select Valid On"
                             />
                             <ErrorMessage name="validOn" component="div" className="err-msg" />
                         </div>
                     </div>
                     <div className="col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label className="form-label">Valid Upto</label>
-                            <Field
+                            <label className="form-label">Valid Upto</label><br />
+                            <DatePicker
                                 id="validUpTo"
                                 name="validUpTo"
-                                type="Date"
+                                selected={validUpTo}
+                                minDate={validUpTo}
+                                onChange={(validUpTo) => { setValidUpTo(validUpTo); console.log('ValidupTo:', validUpTo) }}
+                                showTimeSelect
+                                timeFormat="hh:mm aa"
+                                timeIntervals={15}
+                                dateFormat="dd MMM yyyy, hh:mm aa"
                                 className="form-control"
-                                placeholder="Valid Upto"
+                                placeholderText="Select Valid Upto"
                             />
                             <ErrorMessage name="validUpTo" component="div" className="err-msg" />
                         </div>

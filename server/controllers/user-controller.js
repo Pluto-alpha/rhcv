@@ -71,7 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: "24h" }
             );
-            return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, msg: 'Login Successful' });
+            return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, role: user.role, msg: 'Login Successful' });
         } else {
             res.status(401).json({ msg: 'Invalid credentials' });
         }

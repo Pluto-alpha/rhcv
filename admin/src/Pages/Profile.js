@@ -50,7 +50,7 @@ const Profile = () => {
                   <tr>
                     <td>Role</td>
                     <td>:</td>
-                    <td>Admin</td>
+                    <td>{parsedAuth.role}</td>
                   </tr>
                 </tbody>
               </table>

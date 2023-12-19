@@ -38,5 +38,6 @@ API.interceptors.response.use(
 export const login = (data) => API.post('/api/v1/auth/login', data);
 export const register = (data) => API.post('/api/v1/auth/register', data);
 export const getAllUsers = (data) => API.get('/api/v1/auth/user', data);
+export const updateUser = (id,data) => API.put(`/api/v1/auth/user/${id}`,data);
 
 export default API;

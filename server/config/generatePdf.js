@@ -4,15 +4,15 @@ const hbs = require('handlebars');
 const puppeteer = require('puppeteer');
 const moment = require('moment');
 
-const generatePdf = async (visitor) => {
+const generatePdf = async (visitor, passMaker) => {
     try {
         const browser = await puppeteer.launch({ headless: 'new' });
         const page = await browser.newPage();
         const templatePath = path.join(__dirname, `../passTemplate/pass.html`);
         const templateContent = fs.readFileSync(templatePath, 'utf8');
         const template = hbs.compile(templateContent);
-        const validOn = moment(visitor.validOn).format("DD MMM YYYY");
-        const validUpTo = moment(visitor.validUpTo).format("DD MMM YYYY");
+        const validOn = moment(visitor.validOn).format("DD MMM YYYY, hh:mm A");
+        const validUpTo = moment(visitor.validUpTo).format("DD MMM YYYY, hh:mm A");
         const html = template({
             name: visitor.visitorName,
             passNo: visitor.passNo,
@@ -23,6 +23,7 @@ const generatePdf = async (visitor) => {
             idProofNo: visitor.idProofNo,
             validOn: validOn,
             validUpTo: validUpTo,
+            passCreater:passMaker,
         });
         await page.setContent(html);
         const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });

@@ -27,8 +27,8 @@ const visiterValid = Joi.object({
   email: Joi.string().email().required(),
   idProofType: Joi.string().required(),
   idProofNo: Joi.string().required(),
-  validUpTo: Joi.date().iso().required(),
   validOn: Joi.date().iso().required(), 
+  validUpTo: Joi.date().iso().required(),
 });
 
 module.exports = { signupSchema, loginSchema, visiterValid };

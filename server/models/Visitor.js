@@ -54,7 +54,7 @@ const visiterSchema = mongoose.Schema({
     idProofType: {
         type: String,
         required: [true, 'required'],
-        enum: ['ADHAR CARD', 'PAN CARD', 'DRIVING-LICENCE']
+        enum: ['ADHAR CARD', 'PAN CARD', 'DRIVING LICENCE']
 
     },
     idProofNo: {
@@ -65,14 +65,14 @@ const visiterSchema = mongoose.Schema({
         type: Date,
         required: [true, 'required'],
         default: function () {
-            return this.isNew ? moment().format("DD MMM YYYY") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
     validOn: {
         type: Date,
         required: [true, 'required'],
         default: function () {
-            return this.isNew ? moment().format("DD MMM YYYY") : undefined;
+            return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
 }, {

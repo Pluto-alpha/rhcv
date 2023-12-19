@@ -73,14 +73,11 @@ const VisitorsList = () => {
                                     <td>{visit.address}</td>
                                     <td>{visit.idProofType}</td>
                                     <td>{visit.idProofNo}</td>
-                                    <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY") : ""}</td>
-                                    <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY") : ""}</td>
-                                    <td>
+                                    <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY, hh:mm A") : ""}</td>
+                                    <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
+                                    <td style={{ display: "flex" }}>
                                         <Link to={``}>
                                             <i className="fa fa-edit me-2" />
-                                        </Link>
-                                        <Link to={``}>
-                                            <i className="fa fa-trash me-2" />
                                         </Link>
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
