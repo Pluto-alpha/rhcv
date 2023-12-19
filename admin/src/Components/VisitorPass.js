@@ -32,8 +32,8 @@ const VisitorPass = () => {
         email: '',
         idProofType: '',
         idProofNo: '',
-        validOn: validOn,
-        validUpTo: validUpTo,
+        validOn: new Date(),
+        validUpTo: new Date(),
     };
 
     const validationSchema = Yup.object().shape({
@@ -215,7 +215,6 @@ const VisitorPass = () => {
                                 minDate={validOn}
                                 onChange={(validOn) => { setValidOn(validOn); console.log('ValidOn:', validOn) }}
                                 showTimeSelect
-                                timeFormat="hh:mm aa"
                                 timeIntervals={15}
                                 dateFormat="dd MMM yyyy, hh:mm aa"
                                 className="form-control"
@@ -234,7 +233,6 @@ const VisitorPass = () => {
                                 minDate={validUpTo}
                                 onChange={(validUpTo) => { setValidUpTo(validUpTo); console.log('ValidupTo:', validUpTo) }}
                                 showTimeSelect
-                                timeFormat="hh:mm aa"
                                 timeIntervals={15}
                                 dateFormat="dd MMM yyyy, hh:mm aa"
                                 className="form-control"
