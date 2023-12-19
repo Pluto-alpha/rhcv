@@ -129,6 +129,12 @@ const deleteVisitor = asyncHandler(async (req, res) => {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });
+
+/**
+ * @des Create Visitor pass
+ * @route GET /visitor/generate-pass/:id
+ * @access private
+ */
 const visitorPass = asyncHandler(async (req, res) => {
     try {
         const visitorId = req.params.id;

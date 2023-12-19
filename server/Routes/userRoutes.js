@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd } = require('../controllers/user-controller');
-const { verifyToken } = require('../middlewares/validateTokenHandler')
+const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData } = require('../controllers/user-controller');
+const { verifyReceptionToken, verifyToken } = require('../middlewares/validateTokenHandler');
+
 
 router.post('/login', loginUser);
 router.post('/logout', logout);
@@ -15,6 +16,7 @@ router.get('/user', getAllUsers);
 router.get('/user/:id', getAUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
+router.get('/dashboard', verifyReceptionToken, dashboardData);
 
 
 

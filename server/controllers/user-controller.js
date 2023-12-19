@@ -1,8 +1,10 @@
 const User = require('../models/User');
+const Visitor = require('../models/Visitor')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { signupSchema, loginSchema } = require('../config/validator');
+const moment = require('moment');
 
 /**
  * @des Register a user
@@ -175,6 +177,37 @@ const resetPaswrd = asyncHandler(async (req, res) => {
 })
 
 /**
+ * @des user dashboard api
+ * @route POST /api/v1/auth/dashboard
+ * @access private
+ */
+const dashboardData = asyncHandler(async (req, res) => {
+    try {
+        const totalReceptionistUsers = await User.countDocuments({ role: 'Receptionist' });
+
+        const todayStart = moment().startOf('day');
+        const todayEnd = moment().endOf('day');
+        const totalVisitorsOfDay = await Visitor.countDocuments({
+            createdAt: { $gte: todayStart, $lte: todayEnd }
+        });
+
+        const monthStart = moment().startOf('month');
+        const monthEnd = moment().endOf('month');
+        const totalVisitorsOfMonth = await Visitor.countDocuments({
+            createdAt: { $gte: monthStart, $lte: monthEnd }
+        });
+
+        res.json({
+            totalReceptionistUsers,
+            totalVisitorsOfDay,
+            totalVisitorsOfMonth
+        });
+    } catch (err) {
+        return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+})
+
+/**
  * @des logout the user
  * @route POST /api/v1/auth/logout
  * @access public
@@ -184,4 +217,4 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd };
+module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData };
