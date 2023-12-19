@@ -1,358 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pass</title>
+    <style>
+        .table_case td {
+            text-align: left;
+            padding: 4px 10px;
+            font-size: 14px;
+        }
+
+        .table_case td span {
+            font-weight: bold;
+        }
+
+        td.tff {
+            font-size: 14px;
+        }
+
+        .table_ul_li ul li {
+            text-align: left;
+        }
+    </style>
 </head>
 
-<body style="margin: 0;">
-
-    <div id="p1" style="overflow: hidden; position: relative; background-color: white; width: 641px; height: 908px;">
-
-        <!-- Begin shared CSS values -->
-        <style class="shared-css" type="text/css">
-            .t {
-                transform-origin: bottom left;
-                z-index: 2;
-                position: absolute;
-                white-space: pre;
-                overflow: visible;
-                line-height: 1.5;
-            }
-
-            .text-container {
-                white-space: pre;
-            }
-
-            @supports (-webkit-touch-callout: none) {
-                .text-container {
-                    white-space: normal;
-                }
-            }
-        </style>
-        <!-- End shared CSS values -->
+<body>
+    <div class="middle_wrapper" style="width: 100%;float: left;text-align: center;">
+        <div class="pdf" style="padding: 20px;display: inline-block;">
 
 
-        <!-- Begin inline CSS -->
-        <style type="text/css">
-            #t1_1 {
-                left: 53px;
-                bottom: 746px;
-                letter-spacing: 0.09px;
-            }
+            <h2 style="display: block; text-align: center; padding: 0px 0 20px 0;font-family:sans-serif;">Rajasthan High
+                Court, Jodhpur</h2>
 
-            #t2_1 {
-                left: 53px;
-                bottom: 736px;
-                letter-spacing: 0.07px;
-                word-spacing: -0.01px;
-            }
+            <div style=" width: 50%; float: left;">
+                <div class="bar-code" style="float: left;text-align: left;">
+                    <img style="width: 100px;" src="images/qr.jpg" alt="">
+                    <p style="padding: 10px 0 0; margin: 0;font-family: sans-serif;font-size: 11px;">Pass No. {{passNo}}</p>
+                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Issue Date & Time : {{validOn}}, 02:07 PM
+                    </p>
+                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Expiry Date & Time : {{validUpTo}}, 06:00
+                        PM</p>
+                </div>
+            </div>
+            <div style="width: 50%; float: right;">
+                <img style="width:400px; float: right; text-align: right;" src="images/ffff.jpg" alt="">
+            </div>
+            <div style="display: inline-block; text-align: center;">
+                <h2 style="font-family:sans-serif;padding: 30px 0px 5px;">COURT ENTRY PASS</h2>
+                <p style="font-family: sans-serif;font-size: 15px;"> <span
+                        style="display: inline-block; font-weight: 700;">{{advocateName}}, Advocate, Registration No.
+                        ,,,,,,</span> recommend <span style="display: inline-block; font-weight: 700;"> {{name}} </span>
+                    S/o
+                    Mr. <span style="font-weight: 700;">{{fatherName}}</span>
+                    resident of <span style="display: inline-block; font-weight: 700;">{{address}}</span> to issue
+                    Visitor Pass
+                    for
+                    <span style="display: inline-block; font-weight: 700;">{{validUpTo}}</span> valid upto 06:00 p.m.
+                    for
+                    the
+                    hearing of below
+                    mentioned case to visit Court No.8 and judicial sections.
+                </p>
+            </div>
+            <div class="table_case">
+                <table style="font-family: sans-serif;">
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="tff">Case No.</td>
+                            <td><span>CRLMP/8976/2022</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="tff">Year</td>
+                            <td><span>2022</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="tff">Title of Case</td>
+                            <td><span> {{name}} V/S STATE OF RAJASTHAN</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="tff">Item No.</td>
+                            <td><span> 644</span></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="tff">ID Proof</td>
+                            <td><span> {{idProofType}} ({{idProofNo}})</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table_ul_li">
+                <ul>
+                    <li style="font-family: sans-serif;font-size: 14px;">The above named person is permitted to enter the above
+                        mentioned section/court as recommended
+                    </li>
+                    <li style="font-family: sans-serif;font-size: 14px;">Visitor pass is not transfeable</li>
+                    <li style="font-family: sans-serif;font-size: 14px;">Bring this pass next time for faster service</li>
+                </ul>
+            </div>
+            <div class="resopn" style="width: 100%;float: left;padding: 25px 0 10px 0;">
+                <div style="width: 50%; float: left;">
+                    <p style="float: left;font-family: sans-serif;font-size: 14px;">Created at Reception by Nandini</p>
+                </div>
 
-            #t3_1 {
-                left: 53px;
-                bottom: 726px;
-                letter-spacing: 0.07px;
-                word-spacing: -0.01px;
-            }
-
-            #t4_1 {
-                left: 53px;
-                bottom: 327px;
-                letter-spacing: 0.21px;
-            }
-
-            #t5_1 {
-                left: 476px;
-                bottom: 327px;
-                letter-spacing: 0.21px;
-            }
-
-            #t6_1 {
-                left: 186px;
-                bottom: 830px;
-                letter-spacing: 0.17px;
-            }
-
-            #t7_1 {
-                left: 206px;
-                bottom: 602px;
-                letter-spacing: -0.28px;
-                word-spacing: 0.23px;
-            }
-
-            #t8_1 {
-                left: 53px;
-                bottom: 579px;
-                letter-spacing: 0.19px;
-                word-spacing: -0.1px;
-            }
-
-            #t9_1 {
-                left: 353px;
-                bottom: 579px;
-                letter-spacing: 0.24px;
-            }
-
-            #ta_1 {
-                left: 416px;
-                bottom: 579px;
-                letter-spacing: 0.28px;
-            }
-
-            #tb_1 {
-                left: 469px;
-                bottom: 579px;
-                letter-spacing: 0.06px;
-                word-spacing: 0.13px;
-            }
-
-            #tc_1 {
-                left: 509px;
-                bottom: 579px;
-                letter-spacing: -0.04px;
-            }
-
-            #td_1 {
-                left: 53px;
-                bottom: 566px;
-                letter-spacing: 0.18px;
-            }
-
-            #te_1 {
-                left: 110px;
-                bottom: 566px;
-                letter-spacing: -0.08px;
-            }
-
-            #tf_1 {
-                left: 139px;
-                bottom: 566px;
-                letter-spacing: 0.17px;
-                word-spacing: 0.01px;
-            }
-
-            #tg_1 {
-                left: 261px;
-                bottom: 566px;
-                letter-spacing: 0.24px;
-            }
-
-            #th_1 {
-                left: 330px;
-                bottom: 566px;
-                letter-spacing: 0.2px;
-            }
-
-            #ti_1 {
-                left: 53px;
-                bottom: 554px;
-                letter-spacing: 0.2px;
-            }
-
-            #tj_1 {
-                left: 57px;
-                bottom: 538px;
-            }
-
-            #tk_1 {
-                left: 84px;
-                bottom: 538px;
-                letter-spacing: 0.24px;
-            }
-
-            #tl_1 {
-                left: 169px;
-                bottom: 538px;
-                letter-spacing: 0.26px;
-            }
-
-            #tm_1 {
-                left: 57px;
-                bottom: 521px;
-            }
-
-            #tn_1 {
-                left: 84px;
-                bottom: 521px;
-                letter-spacing: -0.12px;
-            }
-
-            #to_1 {
-                left: 169px;
-                bottom: 521px;
-                letter-spacing: 0.25px;
-            }
-
-            #tp_1 {
-                left: 57px;
-                bottom: 503px;
-            }
-
-            #tq_1 {
-                left: 84px;
-                bottom: 503px;
-                letter-spacing: 0.15px;
-                word-spacing: 0.04px;
-            }
-
-            #tr_1 {
-                left: 169px;
-                bottom: 503px;
-                letter-spacing: 0.21px;
-                word-spacing: 0.07px;
-            }
-
-            #ts_1 {
-                left: 57px;
-                bottom: 486px;
-            }
-
-            #tt_1 {
-                left: 84px;
-                bottom: 486px;
-                letter-spacing: 0.22px;
-            }
-
-            #tu_1 {
-                left: 169px;
-                bottom: 486px;
-                letter-spacing: 0.25px;
-            }
-
-            #tv_1 {
-                left: 57px;
-                bottom: 469px;
-            }
-
-            #tw_1 {
-                left: 84px;
-                bottom: 469px;
-                letter-spacing: 0.21px;
-            }
-
-            #tx_1 {
-                left: 169px;
-                bottom: 469px;
-                letter-spacing: 0.24px;
-                word-spacing: 0.03px;
-            }
-
-            #ty_1 {
-                left: 99px;
-                bottom: 441px;
-                letter-spacing: 0.21px;
-            }
-
-            #tz_1 {
-                left: 99px;
-                bottom: 429px;
-                letter-spacing: 0.27px;
-            }
-
-            #t10_1 {
-                left: 99px;
-                bottom: 416px;
-                letter-spacing: 0.18px;
-                word-spacing: 0.01px;
-            }
-
-            #t11_1 {
-                left: 99px;
-                bottom: 404px;
-                letter-spacing: 0.19px;
-            }
-
-            .s0 {
-                font-size: 9px;
-                font-family: ArialMT_2e;
-                color: #000;
-            }
-
-            .s1 {
-                font-size: 11px;
-                font-family: ArialMT_2e;
-                color: #000;
-            }
-
-            .s2 {
-                font-size: 18px;
-                font-family: Arial-BoldMT_2i;
-                color: #000;
-            }
-
-            .s3 {
-                font-size: 23px;
-                font-family: Arial-BoldMT_2i;
-                color: #000;
-            }
-
-            .s4 {
-                font-size: 11px;
-                font-family: Arial-BoldMT_2i;
-                color: #000;
-            }
-        </style>
-        <!-- End inline CSS -->
-
-        <!-- Begin embedded font definitions -->
-        <style id="fonts1" type="text/css">
-            @font-face {
-                font-family: Arial-BoldMT_2i;
-                src: url("fonts/Arial-BoldMT_2i.woff") format("woff");
-            }
-
-            @font-face {
-                font-family: ArialMT_2e;
-                src: url("fonts/ArialMT_2e.woff") format("woff");
-            }
-        </style>
-        <!-- End embedded font definitions -->
-
-        <!-- Begin page background -->
-        <div id="pg1Overlay"
-            style="width:100%; height:100%; position:absolute; z-index:1; background-color:rgba(0,0,0,0); -webkit-user-select: none;">
+                <div style="width: 50%; float: right;">
+                    <p style="float: right;font-family: sans-serif;font-size: 14px;">(Authorised Signatory)</p>
+                </div>
+            </div>
         </div>
-        <div id="pg1" style="-webkit-user-select: none;"><object width="641" height="908" data="1/1.svg"
-                type="image/svg+xml" id="pdf1"
-                style="width:641px; height:908px; -moz-transform:scale(1); z-index: 0;"></object></div>
-        <!-- End page background -->
-
-
-        <!-- Begin text definitions (Positioned/styled in CSS) -->
-        <div class="text-container"><span id="t1_1" class="t s0">Pass No. {{passNo}} </span>
-            <span id="t2_1" class="t s0">Issue Date &amp; Time : {{validOn}} </span>
-            <span id="t3_1" class="t s0">Expiry Date &amp; Time : {{validUpTo}} </span>
-            <span id="t4_1" class="t s1">Created at Reception by Nandini </span><span id="t5_1" class="t s1">(Authorised
-                Signatory) </span>
-            <span id="t6_1" class="t s2">Rajasthan High Court, Jodhpur </span>
-            <span id="t7_1" class="t s3">COURT ENTRY PASS </span>
-            <span id="t8_1" class="t s4">{{advocateName}}, Advocate, Registration No. ,,,,,, </span><span id="t9_1"
-                class="t s1">recommend </span><span id="ta_1" class="t s4">{{name}} </span><span id="tb_1"
-                class="t s1">S/o Mr. </span><span id="tc_1" class="t s4">{{fatherName}} </span>
-            <span id="td_1" class="t s1">resident of </span><span id="te_1" class="t s4">{{address}} </span><span
-                id="tf_1" class="t s1">to issue Visitor Pass for </span><span id="tg_1" class="t s4">{{validUpTo}}
-            </span><span id="th_1" class="t s1">valid upto 06:00 p.m. for the hearing of below </span>
-            <span id="ti_1" class="t s1">mentioned case to visit Court No.8 and judicial sections. </span>
-            <span id="tj_1" class="t s1">1 </span><span id="tk_1" class="t s1">Case No. </span><span id="tl_1"
-                class="t s4">CRLMP/8976/2022 </span>
-            <span id="tm_1" class="t s1">2 </span><span id="tn_1" class="t s1">Year </span><span id="to_1"
-                class="t s4">2022 </span>
-            <span id="tp_1" class="t s1">3 </span><span id="tq_1" class="t s1">Title of Case </span><span id="tr_1"
-                class="t s4">{{name}} V/S STATE OF RAJASTHAN </span>
-            <span id="ts_1" class="t s1">5 </span><span id="tt_1" class="t s1">Item No. </span><span id="tu_1"
-                class="t s4">644 </span>
-            <span id="tv_1" class="t s1">6 </span><span id="tw_1" class="t s1">ID Proof </span><span id="tx_1"
-                class="t s4">{{idProofType}} ({{idProofNo}}) </span>
-            <span id="ty_1" class="t s1">The above named person is permitted to enter the above mentioned section/court
-                as </span>
-            <span id="tz_1" class="t s1">recommended </span>
-            <span id="t10_1" class="t s1">Visitor pass is not transfeable </span>
-            <span id="t11_1" class="t s1">Bring this pass next time for faster service </span>
-        </div>
-        <!-- End text definitions -->
-
-
     </div>
 </body>
 
