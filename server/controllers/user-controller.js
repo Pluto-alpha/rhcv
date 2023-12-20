@@ -197,10 +197,16 @@ const dashboardData = asyncHandler(async (req, res) => {
             createdAt: { $gte: monthStart, $lte: monthEnd }
         });
 
+        const totalRejectedVisitorsOfDay = await Visitor.countDocuments({
+            createdAt: { $gte: todayStart, $lte: todayEnd },
+            status: 'Rejected' 
+        });
+
         res.json({
             totalReceptionistUsers,
             totalVisitorsOfDay,
-            totalVisitorsOfMonth
+            totalVisitorsOfMonth,
+            totalRejectedVisitorsOfDay
         });
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });

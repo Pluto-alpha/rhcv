@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from '../Components/Sidebar';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import VisitorsList from '../Components/VisitorsList';
+import * as AuthApi from '../API/authRequest';
+
 
 const Home = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const cancelToken = axios.CancelToken.source();
+        const getData = async () => {
+            try {
+                const res = await AuthApi.getDashboard({ cancelToken: cancelToken.token });
+                setData(res.data);
+            } catch (err) {
+                if (axios.isCancel(err)) {
+                }
+            }
+        };
+        getData();
+        return () => {
+            cancelToken.cancel();
+        };
+    }, []);
+    console.log(data)
     return (
         <div className="container-fluid position-relative bg-white d-flex p-0">
             {/* Spinner Start */}
@@ -24,7 +46,7 @@ const Home = () => {
                                 <i className="fa fa-balance-scale fa-3x text-primary" />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Receptionist User</p>
-                                    <h6 className="mb-0">10</h6>
+                                    <h6 className="mb-0">{data.totalReceptionistUsers}</h6>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +55,7 @@ const Home = () => {
                                 <i className="fa fa-chart-bar fa-3x text-primary" />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Visitors of The Day</p>
-                                    <h6 className="mb-0">25</h6>
+                                    <h6 className="mb-0">{data.totalVisitorsOfDay}</h6>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +64,7 @@ const Home = () => {
                                 <i className="fa fa-chart-area fa-3x text-primary" />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Visitor of The Month</p>
-                                    <h6 className="mb-0">150</h6>
+                                    <h6 className="mb-0">{data.totalReceptionistUsers}</h6>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +73,7 @@ const Home = () => {
                                 <i className="fa fa-ban fa-3x text-primary" />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Rejected Visitor</p>
-                                    <h6 className="mb-0">50</h6>
+                                    <h6 className="mb-0">{data.totalRejectedVisitorsOfDay}</h6>
                                 </div>
                             </div>
                         </div>

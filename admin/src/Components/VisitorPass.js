@@ -244,6 +244,7 @@ const VisitorPass = () => {
                                     dateFormat="dd MMM yyyy, hh:mm aa"
                                     className="form-control"
                                     placeholderText="Select Valid Upto"
+                                    
                                 />
                                 <ErrorMessage name="validUpTo" component="div" className="err-msg" />
                             </div>
