@@ -1,5 +1,5 @@
 const allowedOrigins = ['http://localhost:5001', 'http://localhost:3000', 'http://localhost:3001'];
-
+//update to orgins whenever project in production
 const corsOptions = {
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     origin: (origin, callback) => {

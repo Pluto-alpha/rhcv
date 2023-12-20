@@ -166,7 +166,7 @@ const visitorPass = asyncHandler(async (req, res) => {
         }
         const passMaker = req.user.name;
         const fileName = `PASS-NO-${visitor.passNo}.pdf`;
-        const url = `http://localhost:5001/static/${fileName}`;
+        const url = `http://localhost:5001/static/${fileName}`;//chnage path to production 
         const pdfBuffer = await generatePdf(visitor, passMaker);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);

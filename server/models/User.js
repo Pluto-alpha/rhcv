@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
     },
     image: {
         type: String,
-        default: 'https://res.cloudinary.com/dv3i0t3u9/image/upload/v1701864592/user-images/bx0rzcfckip5hhzuonxb.jpg'
+        default: 'http://localhost:5001/static/user.jpeg' //chnage to path when project in production 
     },
     role: {
         type: String,
