@@ -71,7 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: "24h" }
             );
-            return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, role: user.role, msg: 'Login Successful' });
+            return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, role: user.role, image: user.image, msg: 'Login Successful' });
         } else {
             res.status(401).json({ msg: 'Invalid credentials' });
         }
@@ -183,7 +183,8 @@ const resetPaswrd = asyncHandler(async (req, res) => {
  */
 const dashboardData = asyncHandler(async (req, res) => {
     try {
-        const totalReceptionistUsers = await User.countDocuments({ role: 'Receptionist' });
+        const rolesToFind = ['Admin', 'Receptionist'];
+        const totalReceptionistUsers = await User.countDocuments({ role: { $in: rolesToFind } });
 
         const todayStart = moment().startOf('day');
         const todayEnd = moment().endOf('day');
@@ -199,7 +200,7 @@ const dashboardData = asyncHandler(async (req, res) => {
 
         const totalRejectedVisitorsOfDay = await Visitor.countDocuments({
             createdAt: { $gte: todayStart, $lte: todayEnd },
-            status: 'Rejected' 
+            status: 'Rejected'
         });
 
         res.json({

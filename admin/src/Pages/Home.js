@@ -27,6 +27,8 @@ const Home = () => {
         };
     }, []);
     console.log(data)
+    const auth = localStorage.getItem('user');
+    const parsedAuth = auth ? JSON.parse(auth) : null;
     return (
         <div className="container-fluid position-relative bg-white d-flex p-0">
             {/* Spinner Start */}
@@ -41,7 +43,10 @@ const Home = () => {
                 {/* Sale & Revenue Start */}
                 <div className="container-fluid pt-4 px-4">
                     <div className="row g-4">
-                        <div className="col-sm-6 col-xl-3">
+                        {
+                            parsedAuth.role === 'Admin' ? (
+
+                                <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
                                 <i className="fa fa-balance-scale fa-3x text-primary" />
                                 <div className="ms-3">
@@ -50,6 +55,8 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
+                            ):null
+                        }
                         <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
                                 <i className="fa fa-chart-bar fa-3x text-primary" />

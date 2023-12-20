@@ -17,7 +17,7 @@ const Navbar = () => {
     }
     const userAuth = localStorage.getItem('user');
     const parsedAuth = userAuth ? JSON.parse(userAuth) : null;
-    
+
     return (
         <>
             <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -48,9 +48,9 @@ const Navbar = () => {
                         >
                             <img
                                 className="rounded-circle me-lg-2"
-                                src="img/user.jpg"
+                                src={parsedAuth.image}
                                 alt=""
-                                style={{ width: 40, height: 40 }}
+                                style={{ width: 50, height: 50, objectFit: 'cover' }}
                             />
                             <span className="d-none d-lg-inline-flex">{parsedAuth ? parsedAuth.name : 'Guest'}</span>
                         </a>
