@@ -6,6 +6,25 @@ const fs = require('fs')
 const generatePdf = require('../config/generatePdf');
 const mongoose = require('mongoose');
 
+
+/**
+ * @des Get All Visitors of particular user
+ * @route GET /api/v1/all-visitors
+ * @access private
+ */
+const GetAllvisitorList = asyncHandler(async (req, res) => {
+    try {
+        const visitor = await Visitor.find({}).sort({ createdAt: -1 });
+        if (!visitor) {
+            return res.status(404).json(visitor, "message: Visitors list not found")
+        } else {
+            return res.status(200).json(visitor);
+        }
+    } catch (err) {
+        return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+});
+
 /**
  * @des Create Visitor
  * @route POST /api/v1/visitor
@@ -48,7 +67,7 @@ const addVisitor = asyncHandler(async (req, res) => {
     }
 })
 /**
- * @des Get All Visitor
+ * @des Get All Visitors of particular user
  * @route GET /api/v1/visitor
  * @access private
  */
@@ -164,4 +183,4 @@ const visitorPass = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass }
+module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass }

@@ -55,8 +55,8 @@ const ReceptionList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.length > 0 ? (
-                        data.map((user) => (
+                    {data?.length > 0 ? (
+                        data?.map((user) => (
                             <tr key={user._id}>
                                 <td>{user.name}</td>
                                 <td>+91-{user.phone}</td>

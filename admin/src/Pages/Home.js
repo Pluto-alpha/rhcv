@@ -27,8 +27,7 @@ const Home = () => {
         };
     }, []);
     console.log(data)
-    const auth = localStorage.getItem('user');
-    const parsedAuth = auth ? JSON.parse(auth) : null;
+    
     return (
         <div className="container-fluid position-relative bg-white d-flex p-0">
             {/* Spinner Start */}
@@ -43,10 +42,7 @@ const Home = () => {
                 {/* Sale & Revenue Start */}
                 <div className="container-fluid pt-4 px-4">
                     <div className="row g-4">
-                        {
-                            parsedAuth.role === 'Admin' ? (
-
-                                <div className="col-sm-6 col-xl-3">
+                        <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
                                 <i className="fa fa-balance-scale fa-3x text-primary" />
                                 <div className="ms-3">
@@ -55,8 +51,6 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                            ):null
-                        }
                         <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
                                 <i className="fa fa-chart-bar fa-3x text-primary" />
@@ -96,153 +90,6 @@ const Home = () => {
                             <h6 className="mb-0">Visitors</h6>
                             <a href="">Show All</a>
                         </div>
-                        {/* <div className="table-responsive">
-                            <table className="table text-start align-middle table-bordered table-hover mb-0">
-                                <thead>
-                                    <tr className="text-dark">
-                                        <th scope="col">Pass No</th>
-                                        <th scope="col">Visitor Name</th>
-                                        <th scope="col">Mobile No</th>
-                                        <th scope="col">Mail Id</th>
-                                        <th scope="col">Valid On</th>
-                                        <th scope="col">Valid Upto</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="inactive">
-                                                InActive
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 2045</td>
-                                        <td>Jhon Doe</td>
-                                        <td>+91-0000-000-000</td>
-                                        <td>jhondoe@gmail.com</td>
-                                        <td>21 Nov 23</td>
-                                        <td>21 Dec, 23 </td>
-                                        <td>
-                                            <a href="#" className="activeclas">
-                                                Active
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div> */}
                         <VisitorsList />
                     </div>
                 </div>

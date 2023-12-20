@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass } = require('../controllers/visitor-controller');
+const { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass } = require('../controllers/visitor-controller');
 const { verifyReceptionToken, verifyToken } = require('../middlewares/validateTokenHandler');
 
 
@@ -8,6 +8,7 @@ const { verifyReceptionToken, verifyToken } = require('../middlewares/validateTo
 router.use(verifyReceptionToken);
 
 // Routes
+router.get('/all-visitors', GetAllvisitorList);
 router.post('/visitor', addVisitor);
 router.get('/visitor', GetAllvisitor);
 router.get('/visitor/:id', GetVisitor);

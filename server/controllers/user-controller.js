@@ -178,14 +178,12 @@ const resetPaswrd = asyncHandler(async (req, res) => {
 
 /**
  * @des user dashboard api
- * @route POST /api/v1/auth/dashboard
+ * @route GET /api/v1/auth/dashboard
  * @access private
  */
 const dashboardData = asyncHandler(async (req, res) => {
     try {
-        const rolesToFind = ['Admin', 'Receptionist'];
-        const totalReceptionistUsers = await User.countDocuments({ role: { $in: rolesToFind } });
-
+        const totalReceptionistUsers = await User.countDocuments({ role: 'Receptionist' });
         const todayStart = moment().startOf('day');
         const todayEnd = moment().endOf('day');
         const totalVisitorsOfDay = await Visitor.countDocuments({
@@ -215,6 +213,45 @@ const dashboardData = asyncHandler(async (req, res) => {
 })
 
 /**
+ * @des user dashboard api
+ * @route POST /api/v1/auth/reception-dashboard
+ * @access GET
+ */
+const receptionDashboard = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const todayStart = moment().startOf('day');
+        const todayEnd = moment().endOf('day');
+        const totalVisitorsOfDay = await Visitor.countDocuments({
+            user_id: userId,
+            createdAt: { $gte: todayStart, $lte: todayEnd }
+        });
+
+        const monthStart = moment().startOf('month');
+        const monthEnd = moment().endOf('month');
+        const totalVisitorsOfMonth = await Visitor.countDocuments({
+            user_id: userId,
+            createdAt: { $gte: monthStart, $lte: monthEnd }
+        });
+
+        const totalRejectedVisitorsOfDay = await Visitor.countDocuments({
+            user_id: userId,
+            createdAt: { $gte: todayStart, $lte: todayEnd },
+            status: 'Rejected'
+        });
+
+        res.json({
+            totalVisitorsOfDay,
+            totalVisitorsOfMonth,
+            totalRejectedVisitorsOfDay
+        });
+    } catch (err) {
+        return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+});
+
+/**
  * @des logout the user
  * @route POST /api/v1/auth/logout
  * @access public
@@ -224,4 +261,4 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData };
+module.exports = { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData, receptionDashboard };

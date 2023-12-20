@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData } = require('../controllers/user-controller');
+const { registerUser, loginUser, getAllUsers, getAUser, updateUser, deleteUser, logout, resetPaswrd, dashboardData,receptionDashboard } = require('../controllers/user-controller');
 const { verifyReceptionToken, verifyToken } = require('../middlewares/validateTokenHandler');
 
 
@@ -9,6 +9,7 @@ router.post('/logout', logout);
 router.post('/reset-password', resetPaswrd);
 
 router.get('/dashboard', verifyReceptionToken, dashboardData);
+router.get('/reception-dashboard', verifyReceptionToken, receptionDashboard);
 
 /**protected routes middleware */
 router.use(verifyToken);

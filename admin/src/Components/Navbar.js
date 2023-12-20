@@ -48,7 +48,7 @@ const Navbar = () => {
                         >
                             <img
                                 className="rounded-circle me-lg-2"
-                                src={parsedAuth.image}
+                                src='img/user.jpg'
                                 alt=""
                                 style={{ width: 50, height: 50, objectFit: 'cover' }}
                             />

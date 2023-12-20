@@ -35,7 +35,7 @@ API.interceptors.response.use(
 );
 
 export const addVisitor = (data) => API.post('/api/v1/visitor', data);
-export const GetAllvisitor = (data) => API.get('/api/v1/visitor', data);
+export const GetAllvisitor = (data) => API.get('/api/v1/all-visitors', data);
 export const createPass = (id) => API.get(`/api/v1/visitor/generate-pass/${id}`);
 
 

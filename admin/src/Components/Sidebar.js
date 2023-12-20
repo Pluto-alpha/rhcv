@@ -22,15 +22,15 @@ const Sidebar = () => {
                     <div className="position-relative">
                         <img
                             className="rounded-circle"
-                            src={parsedAuth.image}
+                            src="img/user.jpg"
                             alt=""
-                            style={{ width: 50, height: 50, objectFit: 'cover' }}
+                            style={{ width: 40, height: 40 }}
                         />
                         <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1" />
                     </div>
                     <div className="ms-3">
-                        <h6 className="mb-0">{parsedAuth ? parsedAuth.name : 'Guest'}</h6>
-                        <span>{parsedAuth ? parsedAuth.role : 'Guest'}</span>
+                        <h6 className="mb-0">{ parsedAuth ? parsedAuth.name : 'Guest' }</h6>
+                        <span>{ parsedAuth ? parsedAuth.role : 'Guest' }</span>
                     </div>
                 </div>
                 <div className="navbar-nav w-100">
@@ -42,12 +42,9 @@ const Sidebar = () => {
                         <i className="fa fa-users me-2" />
                         Visitors{" "}
                     </Link>
-                    {parsedAuth.role === 'Admin' ? (
-                        <Link to="/receptionist-list" className="nav-item nav-link">
-                            <i className="fa fa-balance-scale me-2" /> Receptionists
-                        </Link>
-                    ) : null}
-
+                    <Link to="/receptionist-list" className="nav-item nav-link">
+                        <i className="fa fa-balance-scale me-2" /> Receptionists
+                    </Link>
                     <Link to="/profile" className="nav-item nav-link ">
                         <i className="fa fa-user me-2" />
                         Profile
