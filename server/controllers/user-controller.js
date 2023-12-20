@@ -195,10 +195,9 @@ const dashboardData = asyncHandler(async (req, res) => {
         const totalVisitorsOfMonth = await Visitor.countDocuments({
             createdAt: { $gte: monthStart, $lte: monthEnd }
         });
-
+        const date = moment().format("DD MMM YYYY");
         const totalRejectedVisitorsOfDay = await Visitor.countDocuments({
-            createdAt: { $gte: todayStart, $lte: todayEnd },
-            status: 'Rejected'
+            validUpTo: { $lt: new Date(date) },
         });
 
         res.json({
@@ -234,11 +233,10 @@ const receptionDashboard = asyncHandler(async (req, res) => {
             user_id: userId,
             createdAt: { $gte: monthStart, $lte: monthEnd }
         });
-
+        const date = moment().format('DD MMM YYYY');
         const totalRejectedVisitorsOfDay = await Visitor.countDocuments({
             user_id: userId,
-            createdAt: { $gte: todayStart, $lte: todayEnd },
-            status: 'Rejected'
+            validUpTo: { $lt: new Date(date) },
         });
 
         res.json({

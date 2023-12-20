@@ -61,14 +61,14 @@ const visiterSchema = mongoose.Schema({
         type: String,
         required: [true, 'required'],
     },
-    validUpTo: {
+    validOn: {
         type: Date,
         required: [true, 'required'],
         default: function () {
             return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
-    validOn: {
+    validUpTo: {
         type: Date,
         required: [true, 'required'],
         default: function () {
