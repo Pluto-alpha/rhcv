@@ -249,7 +249,12 @@
     border-bottom-color: var(--primary);
 }
 
-
+.react-datepicker-wrapper {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    width: 100% !important;
+  }
 /*** Testimonial ***/
 .progress .progress-bar {
     width: 0px;
