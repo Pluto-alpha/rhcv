@@ -16,7 +16,7 @@ const GetAllvisitorList = asyncHandler(async (req, res) => {
     try {
         const visitor = await Visitor.find({}).sort({ createdAt: -1 });
         if (!visitor) {
-            return res.status(404).json(visitor, "message: Visitors list not found")
+            return res.status(404).json(visitor, "msg: Visitors list not found")
         } else {
             return res.status(200).json(visitor);
         }
@@ -76,7 +76,7 @@ const GetAllvisitor = asyncHandler(async (req, res) => {
     try {
         const visitor = await Visitor.find({ user_id: req.user.id }).sort({ createdAt: -1 });
         if (!visitor) {
-            return res.status(404).json(visitor, "message: Visitors list not found")
+            return res.status(404).json(visitor, "msg: Visitors list not found")
         } else {
             return res.status(200).json(visitor);
         }
@@ -94,7 +94,7 @@ const GetVisitor = asyncHandler(async (req, res) => {
     try {
         const visitor = await Visitor.findById(req.params.id);
         if (!visitor) {
-            return res.status(404).json({ message: "Visitor not found" })
+            return res.status(404).json({ msg: "Visitor not found" })
         } else {
             return res.status(200).json(visitor);
         }
@@ -112,17 +112,30 @@ const updateVisitor = asyncHandler(async (req, res) => {
     try {
         const visitor = await Visitor.findById(req.params.id);
         if (!visitor) {
-            return res.status(404).json({ message: "Visitor not found" })
+            return res.status(404).json({ msg: "Visitor not found" });
         }
-        if (visitor.user_id.toString() !== req.user.id) {
-            return res.status(403).json({ message: 'User cannot have permission to update other visitor' });
+
+        if (req.user.role === "Admin" || req.user.role === "Receptionist") {
+            const updatedVisitor = await Visitor.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
+
+            return res.status(200).json({ updatedVisitor, msg: 'Visitor updated successfully' });
+        } else {
+            if (visitor.user_id.toString() !== req.user.id) {
+                return res.status(403).json({ msg: 'User cannot have permission to update other visitor' });
+            }
+
+            const updatedVisitor = await Visitor.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
+
+            return res.status(200).json({ updatedVisitor, msg: 'Visitor updated successfully' });
         }
-        const updatedVisitor = await Visitor.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        )
-        return res.status(200).json({ updatedVisitor, message: 'Visitor updated successfully' })
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
@@ -137,13 +150,13 @@ const deleteVisitor = asyncHandler(async (req, res) => {
     try {
         const visitor = await Visitor.findById(req.params.id);
         if (!visitor) {
-            return res.status(404).json({ message: "Visitor not found" })
+            return res.status(404).json({ msg: "Visitor not found" })
         }
         if (visitor.user_id.toString() !== req.user.id) {
             return res.status(403).json({ message: 'User cannot have permission to delete other visitor' });
         }
         await Visitor.deleteOne({ _id: req.params.id });
-        return res.status(200).json({ message: 'Visitor deleted successfully' });
+        return res.status(200).json({ msg: 'Visitor deleted successfully' });
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }

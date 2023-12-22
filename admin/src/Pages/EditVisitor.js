@@ -2,10 +2,11 @@ import React from 'react'
 import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
-import { Link } from 'react-router-dom';
-import VisitorsList from '../Components/VisitorsList';
+import EditVisiorForm from '../Components/EditVisitorForm';
 
-const VisitorList = () => {
+
+const EditVisitor = () => {
+
   return (
     <div className="container-fluid position-relative bg-white d-flex p-0">
       {/* Spinner Start */}
@@ -20,17 +21,15 @@ const VisitorList = () => {
         {/* Navbar End */}
         {/* Form Start */}
         <div className="container-fluid pt-4 px-4">
-          <div className="bg-light text-center rounded p-4">
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <h6 className="mb-0">Visitors List</h6>
-              <Link to="/add-visitor" className="add_button">
-                Add Visitor
-              </Link>
+          <div className="row g-4">
+            <div className="col-sm-12 col-xl-12">
+              <div className="bg-light rounded h-100 p-4 add_visitorform">
+                <h6 className="mb-4">Update Visitor </h6>
+                <EditVisiorForm />
+              </div>
             </div>
-            <VisitorsList />
           </div>
         </div>
-
 
         {/* Form End */}
         {/* Footer Start */}
@@ -42,7 +41,8 @@ const VisitorList = () => {
       <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
         <i className="bi bi-arrow-up" />
       </a>{" "}
-    </div>)
+    </div>
+  )
 }
 
-export default VisitorList
+export default EditVisitor

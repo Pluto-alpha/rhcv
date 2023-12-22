@@ -27,7 +27,6 @@ const Reeceptionist = () => {
 
     });
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-        const data = JSON.stringify(values);
 
         try {
             const res = await AuthApi.register(values);
