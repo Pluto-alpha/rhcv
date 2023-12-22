@@ -4,9 +4,12 @@ import moment from 'moment';
 import * as VisitorApi from '../API/visitorRequest';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
 
 const VisitorsList = () => {
     const [data, setData] = useState([]);
+    const [pageNumber, setPageNumber] = useState(0);
+    const visitorsPerPage = 10;
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
@@ -26,7 +29,6 @@ const VisitorsList = () => {
 
     const downloadPdf = async (id) => {
         try {
-            //console.log('Visitor ID:', id);
             const res = await VisitorApi.createPass(id);
             if (res.data) {
                 window.open(res.data.downloadUrl, '_blank')
@@ -36,6 +38,14 @@ const VisitorsList = () => {
         } catch (err) {
             toast.error(err.message);
         }
+    };
+
+    const indexOfLastVisitor = (pageNumber + 1) * visitorsPerPage;
+    const indexOfFirstVisitor = indexOfLastVisitor - visitorsPerPage;
+    const currentVisitors = data.slice(indexOfFirstVisitor, indexOfLastVisitor);
+
+    const handlePageClick = ({ selected }) => {
+        setPageNumber(selected);
     };
 
     return (
@@ -60,8 +70,8 @@ const VisitorsList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.length > 0 ? (
-                            data?.map((visit) => (
+                        {currentVisitors?.length > 0 ? (
+                            currentVisitors?.map((visit) => (
                                 <tr key={visit._id}>
                                     <td>{visit.passNo}</td>
                                     <td>{visit.type}</td>
@@ -77,8 +87,8 @@ const VisitorsList = () => {
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td style={{ display: "flex" }}>
                                         {/* <Link to={``}>
-                                            <i className="fa fa-edit me-2" />
-                                        </Link> */}
+                                                <i className="fa fa-edit me-2" />
+                                            </Link> */}
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
                                         </Link>
@@ -93,6 +103,18 @@ const VisitorsList = () => {
                     </tbody>
                 </table>
             </div>
+            <ReactPaginate
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
+                breakLabel={'...'}
+                breakClassName={'break-me'}
+                pageCount={Math.ceil(data.length / visitorsPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={'pagination'}
+                activeClassName={'active'}
+            />
         </>
     )
 }

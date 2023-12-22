@@ -284,7 +284,20 @@
 .bg_wi_color {
     background: #fff;
 }
+.pagination {
+    display: flex;
+    margin: 12px 0px;
+    padding-left: 0;
+    list-style: none;
+    justify-content: center;
+}
 
+a:not([href]):not([class]),
+a:not([href]):not([class]):hover {
+    color: inherit;
+    text-decoration: none;
+    padding: 10px;
+}
 .err-msg {
     color: red;
     text-align: start;

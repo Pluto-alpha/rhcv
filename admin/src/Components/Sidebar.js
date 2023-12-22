@@ -21,10 +21,10 @@ const Sidebar = () => {
                 <div className="d-flex align-items-center ms-4 mb-4">
                     <div className="position-relative">
                         <img
-                            className="rounded-circle"
+                            className="rounded-circle me-lg-2 object-fit-none"
                             src="img/user.jpg"
                             alt=""
-                            style={{ width: 40, height: 40 }}
+                            style={{ width: 50, height: 50 }}
                         />
                         <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1" />
                     </div>

@@ -50,7 +50,7 @@ const Navbar = () => {
                                 className="rounded-circle me-lg-2"
                                 src='img/user.jpg'
                                 alt=""
-                                style={{ width: 50, height: 50, objectFit: 'cover' }}
+                                style={{ width: 50, height: 50}}
                             />
                             <span className="d-none d-lg-inline-flex">{parsedAuth ? parsedAuth.name : 'Guest'}</span>
                         </a>
