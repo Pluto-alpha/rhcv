@@ -199,9 +199,9 @@ const EditVisitorForm = () => {
                 <label className="form-label">Mail Id</label>
                 <Field
                   id="email"
-                  className="form-control"
                   name="email"
                   type="email"
+                  className="form-control"
                   placeholder="Email"
                 />
                 <ErrorMessage name="email" component="div" className="err-msg" />
