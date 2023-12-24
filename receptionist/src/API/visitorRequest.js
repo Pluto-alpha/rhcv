@@ -29,13 +29,15 @@ API.interceptors.response.use(
       localStorage.clear('token');
       localStorage.clear('user');
       window.location.href = '/'
-    } 
+    }
     return Promise.reject(error);
   }
 );
 
 export const addVisitor = (data) => API.post('/api/v1/visitor', data);
-export const GetAllvisitor = (data) => API.get('/api/v1/visitor', data);
+export const GetVisitorDetails = (id) => API.get(`/api/v1/visitor/${id}`);
+export const UpdateVisitor = (id, data) => API.put(`/api/v1/visitor/${id}`, data);
+export const GetAllvisitor = (data) => API.get('/api/v1/all-visitors', data);
 export const createPass = (id) => API.get(`/api/v1/visitor/generate-pass/${id}`);
 
 

@@ -86,9 +86,9 @@ const VisitorsList = () => {
                                     <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td style={{ display: "flex" }}>
-                                        {/* <Link to={``}>
+                                        <Link to={`/${visit._id}`}>
                                                 <i className="fa fa-edit me-2" />
-                                            </Link> */}
+                                            </Link>
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
                                         </Link>
