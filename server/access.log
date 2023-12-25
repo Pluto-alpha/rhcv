@@ -9,3 +9,5 @@
 ::1 - - [25/Dec/2023:05:37:49 +0000] "GET /api/v1/all-visitors HTTP/1.1" 401 42
 ::1 - - [25/Dec/2023:05:37:49 +0000] "GET /api/v1/auth/dashboard HTTP/1.1" 401 42
 ::1 - - [25/Dec/2023:05:40:27 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::1 - - [25/Dec/2023:11:00:09 +0000] "GET /api/v1/visitor/generate-pass/658947c423979e9fa32da06d HTTP/1.1" 500 106
+::1 - - [25/Dec/2023:11:00:50 +0000] "GET /api/v1/visitor/generate-pass/658947c423979e9fa32da06d HTTP/1.1" 500 106
