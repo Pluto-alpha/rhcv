@@ -35,13 +35,16 @@
             <h2 style="display: block; text-align: center; padding: 0px 0 20px 0;font-family:sans-serif;">Rajasthan High
                 Court, Jodhpur</h2>
 
-            <div style=" width: 50%; float: left;">
+            <div style="width: 50%; float: left;">
                 <div class="bar-code" style="float: left;text-align: left;">
                     <img style="width: 100px;" src="images/qr.jpg" alt="">
-                    <p style="padding: 10px 0 0; margin: 0;font-family: sans-serif;font-size: 11px;">Pass No. {{passNo}}</p>
-                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Issue Date & Time : {{validOn}} 
+                    <p style="padding: 10px 0 0; margin: 0;font-family: sans-serif;font-size: 11px;">Pass No. {{passNo}}
                     </p>
-                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Expiry Date & Time : {{validUpTo}}
+                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Issue Date & Time :
+                        {{validOn}}
+                    </p>
+                    <p style="padding: 0; margin: 0;font-family: sans-serif;font-size: 11px;">Expiry Date & Time :
+                        {{validUpTo}}, {{time}}
                     </p>
                 </div>
             </div>
@@ -49,7 +52,7 @@
                 <img style="width:400px; float: right; text-align: right;" src="images/ffff.jpg" alt="">
             </div>
             <div style="display: inline-block; text-align: center;">
-                <h2 style="font-family:sans-serif;padding: 30px 0px 5px;">COURT ENTRY PASS</h2>
+                <h2 style="font-family:sans-serif;padding-top: 30px;">COURT ENTRY PASS</h2>
                 <p style="font-family: sans-serif;font-size: 15px;text-align: left;"> <span
                         style="display: inline-block; font-weight: 700;">{{advocateName}}, Advocate, Registration No.
                         ,,,,,,</span> recommend <span style="display: inline-block; font-weight: 700;"> {{name}} </span>
@@ -58,7 +61,7 @@
                     resident of <span style="display: inline-block; font-weight: 700;">{{address}}</span> to issue
                     Visitor Pass
                     for
-                    <span style="display: inline-block; font-weight: 700;">{{validUpTo}}</span> valid upto 06:00 p.m.
+                    <span style="display: inline-block; font-weight: 700;">{{validUpTo}}</span> valid upto {{time}}
                     for
                     the
                     hearing of below
@@ -98,16 +101,19 @@
             </div>
             <div class="table_ul_li">
                 <ul>
-                    <li style="font-family: sans-serif;font-size: 14px;">The above named person is permitted to enter the above
+                    <li style="font-family: sans-serif;font-size: 14px;">The above named person is permitted to enter
+                        the above
                         mentioned section/court as recommended
                     </li>
                     <li style="font-family: sans-serif;font-size: 14px;">Visitor pass is not transfeable</li>
-                    <li style="font-family: sans-serif;font-size: 14px;">Bring this pass next time for faster service</li>
+                    <li style="font-family: sans-serif;font-size: 14px;">Bring this pass next time for faster service
+                    </li>
                 </ul>
             </div>
             <div class="resopn" style="width: 100%;float: left;padding: 25px 0 10px 0;">
                 <div style="width: 50%; float: left;">
-                    <p style="float: left;font-family: sans-serif;font-size: 14px;">Created at Reception by {{passCreater}}</p>
+                    <p style="float: left;font-family: sans-serif;font-size: 14px;">Created at Reception by
+                        {{passCreater}}</p>
                 </div>
 
                 <div style="width: 50%; float: right;">
