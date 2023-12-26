@@ -219,7 +219,6 @@ const dashboardData = asyncHandler(async (req, res) => {
 const receptionDashboard = asyncHandler(async (req, res) => {
     try {
         const userId = req.user.id;
-
         const todayStart = moment().startOf('day');
         const todayEnd = moment().endOf('day');
         const totalVisitorsOfDay = await Visitor.countDocuments({

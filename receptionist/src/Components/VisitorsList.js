@@ -14,7 +14,7 @@ const VisitorsList = () => {
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
         const getData = async () => {
-            await VisitorApi.GetAllvisitor({ cancelToken: cancelToken.token }).then((res) => setData(res.data)).catch(err => {
+            await VisitorApi.GetVisitorDetails({ cancelToken: cancelToken.token }).then((res) => setData(res.data)).catch(err => {
                 if (axios.isCancel(err)) {
                 }
             });
@@ -87,8 +87,8 @@ const VisitorsList = () => {
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td style={{ display: "flex" }}>
                                         <Link to={`/${visit._id}`}>
-                                                <i className="fa fa-edit me-2" />
-                                            </Link>
+                                            <i className="fa fa-edit me-2" />
+                                        </Link>
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
                                         </Link>

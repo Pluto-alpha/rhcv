@@ -6,23 +6,24 @@ import { toast } from 'react-toastify';
 
 const ReceptionList = () => {
     const [data, setData] = useState([]);
-    
+    const [forceUpdate, setForceUpdate] = useState(false);
+
     const updateStatus = async (userId, currentStatus) => {
         try {
             const response = await AuthApi.updateUser(userId, { enabled: !currentStatus });
             const updatedUser = response.data;
-            setData((prevData) =>
-                prevData.map((user) =>
-                    user._id === userId ? { ...user, enabled: updatedUser.enabled } : user
-                )
-            );
+            setData((prevData) => {
+                return prevData.map((user) => (user._id === userId ? { ...user, enabled: updatedUser.enabled } : user));
+            });
             if (response.status === 200) {
-                toast.success('User updated Successfully')
+                toast.success('User updated Successfully');
+                setForceUpdate(prevState => !prevState);
             }
         } catch (error) {
             toast.error('Error updating user status:', error);
         }
     };
+
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
         const getData = async () => {
@@ -38,9 +39,9 @@ const ReceptionList = () => {
         return () => {
             cancelToken.cancel();
         };
-    }, []);
+    }, [forceUpdate]);
 
-    
+
 
     return (
         <div className="table-responsive">
@@ -66,6 +67,7 @@ const ReceptionList = () => {
                                     <Link to="#"
                                         onClick={() => updateStatus(user._id, user.enabled)}
                                         className={user.enabled ? 'activeclas' : 'inactive'}
+
                                     >
                                         {user.enabled ? 'Active' : 'InActive'}
                                     </Link>

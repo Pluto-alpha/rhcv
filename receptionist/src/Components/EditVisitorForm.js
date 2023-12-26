@@ -23,7 +23,7 @@ const EditVisitorForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await VisitorApi.GetVisitorDetails(id);
+        const res = await VisitorApi.GetSingleVisitor(id);
         const visitorData = res.data;
         setInitialValues({
           type: visitorData.type,
@@ -77,7 +77,7 @@ const EditVisitorForm = () => {
     validOn: Yup.date().required('Date is required'),
     validUpTo: Yup.date().required('Date is required'),
   });
-  const handleSubmit = async (values, { setSubmitting }) => {
+    const handleSubmit = async (values, { setSubmitting }) => {
     console.log('SubmitValues:', values)
     try {
       const res = await VisitorApi.UpdateVisitor(id, values);
@@ -98,9 +98,9 @@ const EditVisitorForm = () => {
       setSubmitting(false);
     }
   };
-  
+
   if (!initialValues.type) {
-    return null;
+    return console.log('InitialValues not Found!');
   }
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>

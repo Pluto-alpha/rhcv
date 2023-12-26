@@ -34,10 +34,7 @@ const Login = () => {
         const token = user.token;
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
-        toast.success('Login Successful');
-        // localStorage.setItem("user", JSON.stringify(res.data))
-        // const token = res.data.token;
-        // localStorage.setItem("token", token);
+        toast.success(res.data.msg);
         resetForm({ ...initialValues });
         navigate("/home");
       } else {

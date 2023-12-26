@@ -9,14 +9,12 @@ import Login from './Components/Login';
 import PrivateComponent from './Components/PrivateComponent';
 import { ToastContainer } from "react-toastify";
 import EditVisitor from './Pages/EditVisitor'
-import { useParams } from 'react-router-dom';
 
 
 
 
 const App = () => {
-  const params = useParams();
-  const { id } = params;
+  
   return (
     <div>
       <BrowserRouter>
@@ -26,7 +24,7 @@ const App = () => {
           <Route element={<PrivateComponent />}>
             <Route path='/home' element={<Home />} />
             <Route path='/add-visitor' element={<AddVisitor />} />
-            <Route path='/:id' element={<EditVisitor visitorId={id}/>}/>
+            <Route path="/:id" element={<EditVisitor />} />
             <Route path='/visitor-list' element={<VisitorList />} />
             <Route path='/profile' element={<Profile />} />
           </Route>
