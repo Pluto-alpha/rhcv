@@ -5,11 +5,19 @@ import * as VisitorApi from '../API/visitorRequest';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
+import CamModel from '../Components/CamModel';
 
 const VisitorsList = () => {
     const [data, setData] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const visitorsPerPage = 10;
+    const [modal, setModel] = useState(false);
+    const [selectedVisitId, setSelectedVisitId] = useState(null);
+
+    const toggle = (visitId) => {
+        setSelectedVisitId(visitId);
+        setModel(!modal);
+    };
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
@@ -86,8 +94,14 @@ const VisitorsList = () => {
                                     <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td style={{ display: "flex" }}>
-                                        <Link to={`/${visit._id }`}>
+                                        <Link to={`/${visit._id}`}>
                                             <i className="fa fa-edit me-2" />
+                                        </Link>
+                                        <Link to={''}>
+                                            <i
+                                                className="fa fa-camera me-2"
+                                                onClick={() => toggle(visit._id)}
+                                            />
                                         </Link>
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
@@ -103,6 +117,7 @@ const VisitorsList = () => {
                     </tbody>
                 </table>
             </div>
+            <CamModel modal={modal} toggle={toggle} visitId={selectedVisitId} />
             <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}

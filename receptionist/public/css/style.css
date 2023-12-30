@@ -254,7 +254,8 @@
     padding: 0;
     border: 0;
     width: 100% !important;
-  }
+}
+
 /*** Testimonial ***/
 .progress .progress-bar {
     width: 0px;
@@ -284,6 +285,7 @@
 .bg_wi_color {
     background: #fff;
 }
+
 .pagination {
     display: flex;
     margin: 12px 0px;
@@ -298,6 +300,7 @@ a:not([href]):not([class]):hover {
     text-decoration: none;
     padding: 10px;
 }
+
 .err-msg {
     color: red;
     text-align: start;
@@ -430,7 +433,8 @@ a:not([href]):not([class]):hover {
     margin: 0;
     text-align: left;
     float: left;
-    background-color: transparent;    color: var(--dark);
+    background-color: transparent;
+    color: var(--dark);
     font-weight: 500;
     border-left: 3px solid var(--light);
     border-radius: 0 30px 30px 0;
@@ -451,4 +455,18 @@ a:not([href]):not([class]):hover {
     justify-content: center;
     background: #FFFFFF;
     border-radius: 40px;
+}
+
+.cam-btn {
+    margin-top: 12px;
+    margin: 5px;
+    display: flex;
+}
+.react-responsive-modal-root {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000 !important;
 }

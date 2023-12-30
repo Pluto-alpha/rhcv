@@ -4,7 +4,6 @@ const { visiterValid } = require('../config/validator');
 const path = require('path');
 const fs = require('fs')
 const generatePdf = require('../config/generatePdf');
-const mongoose = require('mongoose');
 
 
 /**
@@ -164,22 +163,19 @@ const deleteVisitor = asyncHandler(async (req, res) => {
 
 /**
  * @des Create Visitor pass
- * @route GET /visitor/generate-pass/:id
+ * @route GET api/v1/visitor/generate-pass/:id
  * @access private
  */
 const visitorPass = asyncHandler(async (req, res) => {
     try {
         const visitorId = req.params.id;
-        if (!mongoose.Types.ObjectId.isValid(visitorId)) {
-            return res.status(400).json({ success: false, msg: 'Invalid visitor ID' });
-        }
         const visitor = await Visitor.findById(visitorId);
         if (!visitor) {
             return res.status(404).send('Visitor not found');
         }
         const passMaker = req.user.name;
         const fileName = `PASS-NO-${visitor.passNo}.pdf`;
-        const url = `http://localhost:5001/static/${fileName}`;//chnage path to production 
+        const url = `http://localhost:5001/files/${fileName}`;//chnage path to production 
         const pdfBuffer = await generatePdf(visitor, passMaker);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);
@@ -194,6 +190,31 @@ const visitorPass = asyncHandler(async (req, res) => {
         res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });
+/**
+ * @des Update visitor image file
+ * @route POST api/v1/visitor/:id
+ * @access private
+ */
+const updateVisitorImg = asyncHandler(async (req, res) => {
+    try {
+        const file = req.file;
+        const visitor = await Visitor.findById(req.params.id);
+        if (!visitor) {
+            return res.status(404).json({ msg: "Visitor not found" });
+        }
+        const filePath = `http://localhost:5001/files/uploads/${file.filename}`;//change your path when production 
+        await Visitor.findByIdAndUpdate(
+            req.params.id,
+            { image: filePath },
+            { new: true }
+        );
+        res.status(200).json({ status: true, msg: "Image updated successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+});
 
 
-module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass }
+
+module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg }

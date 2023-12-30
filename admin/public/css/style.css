@@ -457,3 +457,16 @@ a:not([href]):not([class]):hover {
     background: #FFFFFF;
     border-radius: 40px;
 }
+.cam-btn {
+    margin-top: 12px;
+    margin: 5px;
+    display: flex;
+}
+.react-responsive-modal-root {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000 !important;
+}

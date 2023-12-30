@@ -19,7 +19,7 @@ const visiterSchema = mongoose.Schema({
         trim: true,
         required: [true, 'required'],
     },
-    visitorName:{
+    visitorName: {
         type: String,
         trim: true,
         required: [true, 'required'],
@@ -50,6 +50,10 @@ const visiterSchema = mongoose.Schema({
         trim: true,
         unique: [true, 'Email is already exist'],
         required: [true, 'required']
+    },
+    image   : {
+        type: String,
+        default: "http://localhost:5001/files/user.jpeg"
     },
     idProofType: {
         type: String,

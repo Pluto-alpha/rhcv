@@ -26,6 +26,7 @@ const generatePdf = async (visitor, passMaker) => {
         const time = moment(visitor.validUpTo).format("hh:mm A");
         const html = template({
             name: visitor.visitorName,
+            image:visitor.image,
             passNo: visitor.passNo,
             advocateName: visitor.advocateName,
             fatherName: visitor.fatherName,
