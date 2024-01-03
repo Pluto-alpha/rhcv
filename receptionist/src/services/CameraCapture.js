@@ -43,8 +43,8 @@ const CameraCapture = ({ visitorId, onCaptureSuccess }) => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 webcamRef.current.video.srcObject = stream;
-            } catch (error) {
-                console.error('Error opening webcam:', error);
+            } catch (err) {
+                console.error('Error opening webcam:', err);
             }
         };
         const cleanupTracks = () => {
@@ -62,8 +62,6 @@ const CameraCapture = ({ visitorId, onCaptureSuccess }) => {
                 }
             }
         };
-
-        cleanupTracks();
         openWebcam();
         return cleanupTracks;
     }, [webcamRef]);

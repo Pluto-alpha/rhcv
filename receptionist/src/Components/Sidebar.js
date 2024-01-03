@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const Sidebar = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const logout = () => {
         localStorage.clear()
         navigate('/');

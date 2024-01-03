@@ -63,7 +63,6 @@ const CameraCapture = ({ visitorId, onCaptureSuccess }) => {
             }
         };
 
-        cleanupTracks();
         openWebcam();
         return cleanupTracks;
     }, [webcamRef]);

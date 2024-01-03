@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const auth = localStorage.getItem("token");
         if (!auth) {
