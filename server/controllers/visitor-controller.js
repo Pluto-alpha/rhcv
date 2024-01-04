@@ -175,7 +175,9 @@ const visitorPass = asyncHandler(async (req, res) => {
         }
         const passMaker = req.user.name;
         const fileName = `PASS-NO-${visitor.passNo}.pdf`;
-        const url = `http://localhost:5001/files/${fileName}`;//chnage path to production 
+        const protocol = req.protocol;
+        const host = req.get('host');
+        const url = `${protocol}://${host}/files/${fileName}`; 
         const pdfBuffer = await generatePdf(visitor, passMaker);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);
@@ -202,7 +204,9 @@ const updateVisitorImg = asyncHandler(async (req, res) => {
         if (!visitor) {
             return res.status(404).json({ msg: "Visitor not found" });
         }
-        const filePath = `http://localhost:5001/files/uploads/${file.filename}`;//change your path when production 
+        const protocol = req.protocol;
+        const host = req.get('host');
+        const filePath = `${protocol}://${host}/files/uploads/${file.filename}`;//change your path when production 
         await Visitor.findByIdAndUpdate(
             req.params.id,
             { image: filePath },
