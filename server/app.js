@@ -33,9 +33,8 @@ app.use(morgan('dev'));
 /**API's routes  */
 app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));
-
 app.get('/', (req, res) => {
-    res.status(200).json({ msg: 'Server is running!' });
+    res.status(200).json({ msg: 'server is running!' })
 })
 
 /*** database connection*/
@@ -46,5 +45,5 @@ app.use(errorHandler);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is running on http://${process.env.IP_ADDRESS}:${port}`);
+    console.log(`--Server is listening on port ${port}--`);
 });
