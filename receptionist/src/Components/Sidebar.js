@@ -1,20 +1,25 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
 
     const logout = () => {
         localStorage.clear()
         navigate('/');
     }
+    const isCurrentRoute = (path) => {
+        return location.pathname === path;
+    };
     const auth = localStorage.getItem('user');
     const parsedAuth = auth ? JSON.parse(auth) : null;
 
     return (
-        <div className='sidebar pe-4 pb-3'>
+        <div className="sidebar pe-4 pb-3" >
             <nav className="navbar bg-light navbar-light">
                 <Link to="/home" className="navbar-brand mx-4 mb-3 indexpage_logo">
                     <img src="img/logo.png" alt='logo' />
@@ -35,19 +40,19 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className="navbar-nav w-100">
-                    <Link to="/home" className="nav-item nav-link active">
+                    <Link to="/home" className={`nav-item nav-link ${isCurrentRoute('/home') ? 'active' : ''}`}>
                         <i className="fa fa-tachometer-alt me-2" />
                         Dashboard
                     </Link>
-                    <Link to="/visitor-list" className="nav-item nav-link ">
+                    <Link to="/visitor-list" className={`nav-item nav-link ${isCurrentRoute('/visitor-list') ? 'active' : ''}`}>
                         <i className="fa fa-users me-2" />
-                        Visitors{" "}
+                        Visitors
                     </Link>
-                    <Link to="/profile" className="nav-item nav-link ">
+                    <Link to="/profile" className={`nav-item nav-link ${isCurrentRoute('/profile') ? 'active' : ''}`}>
                         <i className="fa fa-user me-2" />
                         Profile
                     </Link>
-                    <button className="logout-btn" onClick={logout}>
+                    <button className="nav-item nav-link logout-btn" onClick={logout}>
                         <i className="fa fa-power-off me-2" />
                         Log Out
                     </button>
