@@ -34,6 +34,9 @@ app.use(morgan('dev'));
 app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));
 
+app.get('/', (req, res) => {
+    res.status(200).json({ msg: 'Server is running!' });
+})
 
 /*** database connection*/
 require('./config/dbConnect');
