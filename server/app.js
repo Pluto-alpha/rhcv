@@ -46,5 +46,5 @@ app.use(errorHandler);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is running on http://${IP_ADDRESS}:${PORT}`);
+    console.log(`Server is running on http://${process.env.IP_ADDRESS}:${port}`);
 });
