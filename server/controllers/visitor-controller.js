@@ -4,6 +4,7 @@ const { visiterValid } = require('../config/validator');
 const path = require('path');
 const fs = require('fs')
 const generatePdf = require('../config/generatePdf');
+const Case = require("../models/Case")
 
 
 /**
@@ -32,7 +33,7 @@ const GetAllvisitorList = asyncHandler(async (req, res) => {
 
 const addVisitor = asyncHandler(async (req, res) => {
     try {
-        const { type, passNo, visitorName, fatherName, advocateName, address, mobile, email, idProofType, idProofNo, validUpTo, validOn } = req.body;
+        const { type, passNo, visitorName, fatherName, advocateName, address, mobile, email, idProofType, idProofNo, validUpTo, validOn, caseInfo } = req.body;
         const visitorAvail = await Visitor.findOne({ $or: [{ email }, { mobile }] });
         if (visitorAvail) {
             return res.status(400).json({ msg: 'Visiter is already exist' })
@@ -54,6 +55,7 @@ const addVisitor = asyncHandler(async (req, res) => {
             idProofNo,
             validUpTo,
             validOn,
+            caseInfo,
             user_id: req.user.id,
         });
         if (visitor) {
@@ -64,7 +66,7 @@ const addVisitor = asyncHandler(async (req, res) => {
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
-})
+});
 /**
  * @des Get All Visitors of particular user
  * @route GET /api/v1/visitor
@@ -215,6 +217,20 @@ const updateVisitorImg = asyncHandler(async (req, res) => {
     }
 });
 
+const findCaseDetail = asyncHandler(async (req, res) => {
+    try {
+        const cases = await Case.findOne({ case_no: "207600009122023" });
+        if (!cases) {
+            return res.status(404).json({ status: false, msg: 'Case details not found' });
+        } else {
+            res.status(200).json({ status: true, cases: [cases] });
+        }
+    } catch (err) {
+        res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+    }
+});
 
 
-module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg }
+
+
+module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg, findCaseDetail }

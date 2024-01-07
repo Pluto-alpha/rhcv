@@ -11,7 +11,6 @@ const path = require("path")
 require("dotenv").config();
 
 
-
 /*Logger configuration*/
 app.use(morgan('common', {
     skip: function (req, res) { return res.statusCode < 400 },
@@ -29,7 +28,7 @@ app.use('/files', express.static(path.join(__dirname, 'public')));
 
 // log all requests to console with dev format
 app.use(morgan('dev'));
-
+const findCaseDetail = require('./controllers/visitor-controller')
 /**API's routes  */
 app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));

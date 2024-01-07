@@ -51,7 +51,7 @@ const visiterSchema = mongoose.Schema({
         unique: [true, 'Email is already exist'],
         required: [true, 'required']
     },
-    image   : {
+    image: {
         type: String,
         default: "http://localhost:5001/files/user.jpeg"
     },
@@ -79,6 +79,10 @@ const visiterSchema = mongoose.Schema({
             return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
+    caseInfo: {
+        type: Array,
+        default: null,
+    }
 }, {
     timestamps: true,
 });

@@ -26,25 +26,32 @@ const generatePdf = async (visitor, passMaker) => {
         const time = moment(visitor.validUpTo).format("hh:mm A");
         const html = template({
             name: visitor.visitorName,
-            image:visitor.image,
+            image: visitor.image,
             passNo: visitor.passNo,
-            advocateName: visitor.advocateName,
+            advocateName: visitor.caseInfo[0].law1,
+            croom: visitor.caseInfo[0].croom,
+            caseType: visitor.caseInfo[0].casetype,
+            caseYear: visitor.caseInfo[0].yr,
+            caseNo: visitor.caseInfo[0].case_no,
+            party1: visitor.caseInfo[0].pet,
+            party2: visitor.caseInfo[0].res,
+            itemNo: visitor.caseInfo[0].no,
             fatherName: visitor.fatherName,
             address: visitor.address,
             idProofType: visitor.idProofType,
             idProofNo: visitor.idProofNo,
             validOn: validOn,
             validUpTo: validUpTo,
-            time:time,
-            passCreater:passMaker,
+            time: time,
+            passCreater: passMaker,
             // Include barcode as base64-encoded image in HTML
             barcode: `data:image/png;base64,${barcodeBuffer.toString('base64')}`,
         });
         await page.setContent(html);
-        const pdfBuffer = await page.pdf({ 
+        const pdfBuffer = await page.pdf({
             margin: { top: '30px', right: '30px', bottom: '30px', left: '30px' },
-            format: 'A4', 
-            printBackground: true 
+            format: 'A4',
+            printBackground: true
         });
         return pdfBuffer;
     } catch (error) {

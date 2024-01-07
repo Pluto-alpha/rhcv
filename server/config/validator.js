@@ -8,7 +8,7 @@ const signupSchema = Joi.object({
   ,
   password: Joi.string().required(),
   role: Joi.string().allow('').optional(),
-  enabled:Joi.boolean().allow('').optional(),
+  enabled: Joi.boolean().allow('').optional(),
 });
 
 const loginSchema = Joi.object({
@@ -19,7 +19,7 @@ const loginSchema = Joi.object({
 const visiterValid = Joi.object({
   type: Joi.string().valid('Case-Hearing', 'General-Visitor', 'Contractor', 'Vendor', 'Guest').required(),
   passNo: Joi.number().required(),
-  visitorName:Joi.string().required(),
+  visitorName: Joi.string().required(),
   fatherName: Joi.string().required(),
   advocateName: Joi.string().required(),
   address: Joi.string().required(),
@@ -27,8 +27,13 @@ const visiterValid = Joi.object({
   email: Joi.string().email().required(),
   idProofType: Joi.string().required(),
   idProofNo: Joi.string().required(),
-  validOn: Joi.date().iso().required(), 
+  validOn: Joi.date().iso().required(),
   validUpTo: Joi.date().iso().required(),
+  caseInfo: Joi.array().allow('').optional(),
+  case_no: Joi.string().allow('').optional(),
+  causelisttype: Joi.string().allow('').optional(),
+  causelistdate: Joi.string().allow('').optional(),
+
 });
 
 module.exports = { signupSchema, loginSchema, visiterValid };

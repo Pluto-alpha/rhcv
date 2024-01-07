@@ -5,24 +5,30 @@ import { toast } from 'react-toastify';
 import * as VisitorApi from '../API/visitorRequest';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import * as Case from '../API/caseDetailReq';
+
 
 
 const VisitorPass = () => {
     const navigate = useNavigate();
+    const [caseInfo, setCaseInfo] = useState([]);
     const [passNo, setPassNo] = useState(Math.floor((Math.random() * 1000000) + 1));
     const [validOn, setValidOn] = useState(new Date());
     const [validUpTo, setValidUpTo] = useState(new Date());
+    const [selectedVisitorType, setSelectedVisitorType] = useState('');
 
-
+    console.log(caseInfo)
     useEffect(() => {
         setPassNo((passNo) => {
             return passNo;
         });
     }, []);
 
-
     const initialValues = {
         type: '',
+        case_no: '',
+        causelisttype: '',
+        causelistdate: '',
         passNo: passNo,
         visitorName: '',
         fatherName: '',
@@ -34,11 +40,15 @@ const VisitorPass = () => {
         idProofNo: '',
         validOn: new Date(),
         validUpTo: new Date(),
+        caseInfo: caseInfo || [],
     };
 
     const validationSchema = Yup.object().shape({
         type: Yup.string().required('Visitor Type is required'),
         passNo: Yup.number().required('Pass No is required'),
+        case_no: Yup.string().optional(),
+        causelisttype: Yup.string().optional(),
+        causelistdate: Yup.string().optional(),
         visitorName: Yup.string().required("Visitor's Name is required"),
         fatherName: Yup.string().required("Father's Name is required"),
         advocateName: Yup.string().required('Advocate Name is required'),
@@ -50,10 +60,53 @@ const VisitorPass = () => {
         validOn: Yup.date().required('Date is required'),
         validUpTo: Yup.date().required('Date is required'),
     });
+    const caseDetails = async (values, { setSubmitting, resetForm }) => {
+        const formData = new URLSearchParams();
+        formData.append('case_no', values.case_no);
+        formData.append('causelisttype', values.causelisttype);
+        formData.append('causelistdate', values.causelistdate);
+        try {
+            const res = await Case.caseDetails(formData);
+            console.log(res.data);
+            if (res.data && res.data.cases) {
+                setCaseInfo(res.data.cases);
+                if (res.data.msg) {
+                    toast.success(res.data.msg);
+                } else {
+                    toast.success('Success');
+                }
+            } else {
+                toast.error('Invalid response structure from the server');
+            }
+            resetForm({ ...initialValues });
+            return res;
+        } catch (err) {
+            console.error('An error occurred during the request:', err);
+            if (err.response && err.response.data && err.response.data.msg) {
+                toast.error(err.response.data.msg);
+            } else {
+                toast.error('An error occurred during the request', err);
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
+            if (values.type === 'Case-Hearing') {
+                const caseRes = await caseDetails(values, { setSubmitting, resetForm });
+                console.log('caseResponse:', caseRes);
+                if (caseRes && caseRes.data && caseRes.data.cases) {
+                    values.caseInfo = caseRes.data.cases || [];
+                } else {
+                    toast.error('Invalid response structure from caseDetails');
+                    return;
+                }
+            }
             const res = await VisitorApi.addVisitor(values);
             console.log(res.data);
+
             if (res.status === 200) {
                 toast.success(res.data.msg);
                 resetForm({ ...initialValues });
@@ -64,14 +117,20 @@ const VisitorPass = () => {
         } catch (err) {
             console.error(err);
             if (err.response && err.response.data && err.response.data.msg) {
-                toast.error(err.response.data.msg);
+                toast.error(err.response.data.msg, err);
             } else {
-                toast.error('Internal Server Error');
+                toast.error('Internal Server Error', err);
             }
         } finally {
             setSubmitting(false);
         }
     };
+    
+
+
+
+
+
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             {({ setFieldValue }) => (
@@ -80,7 +139,13 @@ const VisitorPass = () => {
                         <div className="col-md-6 col-sm-6">
                             <div className="form-group">
                                 <label className="form-label">Visitor Type</label>
-                                <Field as="select" name="type" className="form-select">
+                                <Field as="select"
+                                    name="type"
+                                    className="form-select"
+                                    onChange={(e) => {
+                                        setFieldValue('type', e.target.value, true);
+                                        setSelectedVisitorType(e.target.value);
+                                    }}>
                                     <option value="">--select-visitor-type--</option>
                                     <option value="Case-Hearing">Case Hearing</option>
                                     <option value="General-Visitor">General Visitor</option>
@@ -103,6 +168,49 @@ const VisitorPass = () => {
                                 />
                             </div>
                         </div>
+                        {selectedVisitorType === 'Case-Hearing' && (
+                            <>
+                                <div className="col-md-6 col-sm-6">
+                                    <div className="form-group">
+                                        <label className="form-label">Case Number</label>
+                                        <Field
+                                            id="case_no"
+                                            name="case_no"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Case number"
+                                        />
+                                        <ErrorMessage name="case_no" component="div" className="err-msg" />
+                                    </div>
+                                </div>
+                                <div className="col-md-6 col-sm-6">
+                                    <div className="form-group">
+                                        <label className="form-label">Case Type</label>
+                                        <Field
+                                            id="causelisttype"
+                                            name="causelisttype"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Case type"
+                                        />
+                                        <ErrorMessage name="causelisttype" component="div" className="err-msg" />
+                                    </div>
+                                </div>
+                                <div className="col-md-6 col-sm-6">
+                                    <div className="form-group">
+                                        <label className="form-label">Case Date</label>
+                                        <Field
+                                            id="causelistdate"
+                                            name="causelistdate"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Case date"
+                                        />
+                                        <ErrorMessage name="causelistdate" component="div" className="err-msg" />
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         <div className="col-md-6 col-sm-6">
                             <div className="form-group">
                                 <label className="form-label">Visitor Name</label>
@@ -244,7 +352,7 @@ const VisitorPass = () => {
                                     dateFormat="dd MMM yyyy, hh:mm aa"
                                     className="form-control"
                                     placeholderText="Select Valid Upto"
-                                    
+
                                 />
                                 <ErrorMessage name="validUpTo" component="div" className="err-msg" />
                             </div>

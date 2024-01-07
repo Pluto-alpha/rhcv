@@ -15,7 +15,7 @@
         .table_case td span {
             font-weight: bold;
             padding: 0 20px;
-            text-transform: uppercase;  
+            text-transform: uppercase;
         }
 
         td.tff {
@@ -55,7 +55,8 @@
             <div style="display: inline-block; text-align: center;">
                 <h2 style="font-family:sans-serif;padding-top: 30px;">COURT ENTRY PASS</h2>
                 <p style="font-family: sans-serif;font-size: 15px;text-align: left;"> <span
-                        style="display: inline-block; font-weight: 700;"><span id="advocateName">{{advocateName}}</span>, Advocate,
+                        style="display: inline-block; font-weight: 700;"><span
+                            id="advocateName">{{advocateName}}</span>, Advocate,
                         Registration No.
                         ,,,,,,</span> recommend <span style="display: inline-block; font-weight: 700;" id="visitorName">
                         {{name}} </span>
@@ -69,7 +70,7 @@
                     for
                     the
                     hearing of below
-                    mentioned case to visit Court No.8 and judicial sections.   
+                    mentioned case to visit Court No.{{croom}} and judicial sections.
                 </p>
             </div>
             <div class="table_case">
@@ -78,22 +79,22 @@
                         <tr>
                             <td>1</td>
                             <td class="tff">Case No.</td>
-                            <td><span>CRLMP/8976/2022</span></td>
+                            <td><span>{{caseType}}/{{caseNo}}/{{caseYear}}</span></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td class="tff">Year</td>
-                            <td><span>2022</span></td>
+                            <td><span>{{caseYear}}</span></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td class="tff">Title of Case</td>
-                            <td><span> {{name}} V/S STATE OF RAJASTHAN</span></td>
+                            <td><span>{{party1}} V/S {{party2}}</span></td>
                         </tr>
                         <tr>
                             <td>4</td>
                             <td class="tff">Item No.</td>
-                            <td><span> 644</span></td>
+                            <td><span> {{itemNo}}</span></td>
                         </tr>
                         <tr>
                             <td>5</td>
