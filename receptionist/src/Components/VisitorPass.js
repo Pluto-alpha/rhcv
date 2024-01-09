@@ -16,6 +16,8 @@ const VisitorPass = () => {
     const [validOn, setValidOn] = useState(new Date());
     const [validUpTo, setValidUpTo] = useState(new Date());
     const [selectedVisitorType, setSelectedVisitorType] = useState('');
+    const [causelistdate, setCauselistdate] = useState(new Date());
+
 
     console.log(caseInfo)
     useEffect(() => {
@@ -28,7 +30,7 @@ const VisitorPass = () => {
         type: '',
         case_no: '',
         causelisttype: '',
-        causelistdate: '',
+        causelistdate: new Date(),
         passNo: passNo,
         visitorName: '',
         fatherName: '',
@@ -48,10 +50,10 @@ const VisitorPass = () => {
         passNo: Yup.number().required('Pass No is required'),
         case_no: Yup.string().optional(),
         causelisttype: Yup.string().optional(),
-        causelistdate: Yup.string().optional(),
+        causelistdate: Yup.date().optional(),
         visitorName: Yup.string().required("Visitor's Name is required"),
         fatherName: Yup.string().required("Father's Name is required"),
-        advocateName: Yup.string().required('Advocate Name is required'),
+        advocateName: Yup.string().optional(),
         address: Yup.string().required('Address is required'),
         mobile: Yup.string().matches(/^\d{10}$/, 'Invalid phone number').required('Mobile No is required'),
         email: Yup.string().email('Invalid email').required('Mail Id is required'),
@@ -125,7 +127,7 @@ const VisitorPass = () => {
             setSubmitting(false);
         }
     };
-    
+
 
 
 
@@ -156,18 +158,7 @@ const VisitorPass = () => {
                                 <ErrorMessage name="type" component="div" className="err-msg" />
                             </div>
                         </div>
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="form-label">Pass No</label>
-                                <Field
-                                    id="passNo"
-                                    name="passNo"
-                                    type="number"
-                                    className="form-control"
-                                    readOnly
-                                />
-                            </div>
-                        </div>
+
                         {selectedVisitorType === 'Case-Hearing' && (
                             <>
                                 <div className="col-md-6 col-sm-6">
@@ -199,18 +190,80 @@ const VisitorPass = () => {
                                 <div className="col-md-6 col-sm-6">
                                     <div className="form-group">
                                         <label className="form-label">Case Date</label>
-                                        <Field
+                                        <DatePicker
                                             id="causelistdate"
                                             name="causelistdate"
                                             type="text"
                                             className="form-control"
-                                            placeholder="Case date"
+                                            selected={causelistdate}
+                                            minDate={causelistdate}
+                                            onChange={(causelistdate) => {
+                                                setFieldValue('causelistdate', causelistdate, true);
+                                                setCauselistdate(causelistdate);
+                                            }}
+                                            dateFormat="dd-MM-yyyy"
+                                            placeholderText="Select Valid On"
                                         />
                                         <ErrorMessage name="causelistdate" component="div" className="err-msg" />
                                     </div>
                                 </div>
+                                <div className="table-responsive">
+                                    <table className="table text-start align-middle table-bordered table-hover mb-0">
+                                        <thead>
+                                            <tr className="text-dark">
+                                                <th scope="col">Case No</th>
+                                                <th scope="col">Item No</th>
+                                                <th scope="col">Case Type</th>
+                                                <th scope="col">Case Year</th>
+                                                <th scope="col">Lawyer</th>
+                                                <th scope="col">Court Room</th>
+                                                <th scope="col">Party 1</th>
+                                                <th scope="col">Party 2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {caseInfo?.length > 0 ? (
+                                                caseInfo?.map((d, i) => (
+                                                    <tr key={i}>
+                                                        <td>{d.case_no}</td>
+                                                        <td>{d.no}</td>
+                                                        <td>{d.casetype}</td>
+                                                        <td>{d.yr}</td>
+                                                        <td>{d.law1}</td>
+                                                        <td>{d.croom}</td>
+                                                        <td>{d.pet}</td>
+                                                        <td>{d.res}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={8} style={{ textAlign: 'center' }}>N/A</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="add_button_page">
+                                    <button type="submit"
+                                        className="btn btn-primary mt-5"
+                                        onClick={() => caseDetails(initialValues, { setSubmitting: () => { }, resetForm: () => { } })}>
+                                        Fetch
+                                    </button>
+                                </div>
                             </>
                         )}
+                        <div className="col-md-6 col-sm-6">
+                            <div className="form-group">
+                                <label className="form-label">Pass No</label>
+                                <Field
+                                    id="passNo"
+                                    name="passNo"
+                                    type="number"
+                                    className="form-control"
+                                    readOnly
+                                />
+                            </div>
+                        </div>
                         <div className="col-md-6 col-sm-6">
                             <div className="form-group">
                                 <label className="form-label">Visitor Name</label>
@@ -237,19 +290,24 @@ const VisitorPass = () => {
                                 <ErrorMessage name="fatherName" component="div" className="err-msg" />
                             </div>
                         </div>
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="form-label">Advocate Name</label>
-                                <Field
-                                    id="advocateName"
-                                    name="advocateName"
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Advocate Name"
-                                />
-                                <ErrorMessage name="advocateName" component="div" className="err-msg" />
-                            </div>
-                        </div>
+                        {selectedVisitorType === 'Case-Hearing' && (
+                            <>
+                                {/* ... other form fields */}
+                                <div className="col-md-6 col-sm-6">
+                                    <div className="form-group">
+                                        <label className="form-label">Advocate Name</label>
+                                        <Field
+                                            id="advocateName"
+                                            name="advocateName"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Advocate Name"
+                                        />
+                                        <ErrorMessage name="advocateName" component="div" className="err-msg" />
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         <div className="col-md-6 col-sm-6">
                             <div className="form-group">
                                 <label className="form-label">Address</label>

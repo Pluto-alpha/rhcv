@@ -35,6 +35,7 @@ API.interceptors.response.use(
 );
 
 export const addVisitor = (data) => API.post('/api/v1/visitor', data);
+export const addNormalVisitor = (data) => API.post('/api/v1/visitor/normal', data);
 export const GetVisitorDetails = () => API.get('/api/v1/visitor/');
 export const GetSingleVisitor = (id) => API.get(`/api/v1/visitor/${id}`);
 export const UpdateVisitor = (id, data) => API.put(`/api/v1/visitor/${id}`, data);

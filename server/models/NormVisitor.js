@@ -12,7 +12,7 @@ const visiterSchema = mongoose.Schema({
         type: String,
         trim: true,
         required: [true, 'required'],
-        enum: ['Case-Hearing', 'General-Visitor', 'Contractor', 'Vendor', 'Guest']
+        enum: ['General-Visitor', 'Contractor', 'Vendor', 'Guest']
     },
     passNo: {
         type: Number,
@@ -28,10 +28,6 @@ const visiterSchema = mongoose.Schema({
         type: String,
         trim: true,
         required: [true, 'required'],
-    },
-    advocateName: {
-        type: String,
-        trim: true,
     },
     address: {
         type: String,
@@ -78,12 +74,8 @@ const visiterSchema = mongoose.Schema({
             return this.isNew ? moment().format("DD MMM YYYY, hh:mm A") : undefined;
         },
     },
-    caseInfo: {
-        type: Array,
-        default: null,
-    },
 }, {
     timestamps: true,
 });
 
-module.exports = mongoose.model("Visitor", visiterSchema);
+module.exports = mongoose.model("NormVisitor", visiterSchema);

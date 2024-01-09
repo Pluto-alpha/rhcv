@@ -21,7 +21,7 @@ const visiterValid = Joi.object({
   passNo: Joi.number().required(),
   visitorName: Joi.string().required(),
   fatherName: Joi.string().required(),
-  advocateName: Joi.string().required(),
+  advocateName: Joi.string().allow('').optional(),
   address: Joi.string().required(),
   mobile: Joi.string().regex(/^[0-9]{10}$/).messages({ 'string.pattern.base': 'Phone number must have 10 digits.' }).required(),
   email: Joi.string().email().required(),
@@ -33,7 +33,7 @@ const visiterValid = Joi.object({
   case_no: Joi.string().allow('').optional(),
   causelisttype: Joi.string().allow('').optional(),
   causelistdate: Joi.string().allow('').optional(),
-
 });
+
 
 module.exports = { signupSchema, loginSchema, visiterValid };

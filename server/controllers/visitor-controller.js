@@ -4,7 +4,7 @@ const { visiterValid } = require('../config/validator');
 const path = require('path');
 const fs = require('fs')
 const generatePdf = require('../config/generatePdf');
-const Case = require("../models/Case")
+const Case = require("../models/Case");
 
 
 /**
@@ -67,6 +67,7 @@ const addVisitor = asyncHandler(async (req, res) => {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });
+
 /**
  * @des Get All Visitors of particular user
  * @route GET /api/v1/visitor
@@ -219,7 +220,7 @@ const updateVisitorImg = asyncHandler(async (req, res) => {
 
 const findCaseDetail = asyncHandler(async (req, res) => {
     try {
-        const cases = await Case.findOne({ case_no: "207600009122023" });
+        const cases = await Case.findOne({ case_no: "15205" });
         if (!cases) {
             return res.status(404).json({ status: false, msg: 'Case details not found' });
         } else {
@@ -233,4 +234,4 @@ const findCaseDetail = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg, findCaseDetail }
+module.exports = { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg, findCaseDetail };

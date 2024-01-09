@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg, } = require('../controllers/visitor-controller');
+const { GetAllvisitorList, addVisitor, GetAllvisitor, GetVisitor, updateVisitor, deleteVisitor, visitorPass, updateVisitorImg } = require('../controllers/visitor-controller');
 const { verifyReceptionToken, verifyToken } = require('../middlewares/validateTokenHandler');
 const upload = require('../config/multer')
 
