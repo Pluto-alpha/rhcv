@@ -29,9 +29,12 @@ const EditVisitorForm = () => {
       try {
         const res = await VisitorApi.GetSingleVisitor(id);
         const visitorData = res.data;
+        const firstCaseInfo = visitorData.caseInfo && visitorData.caseInfo.length > 0 ? visitorData.caseInfo[0] : {};
         setInitialValues({
           type: visitorData.type,
           passNo: visitorData.passNo,
+          case_no: firstCaseInfo.case_no || '',
+          causelisttype: firstCaseInfo.casetype || '',
           visitorName: visitorData.visitorName,
           fatherName: visitorData.fatherName,
           advocateName: visitorData.advocateName,
@@ -45,10 +48,12 @@ const EditVisitorForm = () => {
         });
         setValidOn(new Date(visitorData.validOn));
         setValidUpTo(new Date(visitorData.validUpTo));
+        setCauselistdate(new Date(visitorData.validOn));
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
   }, [id]);
 
@@ -70,6 +75,10 @@ const EditVisitorForm = () => {
     validUpTo: new Date(),
     caseInfo: caseInfo || [],
   });
+
+  useEffect(() => {
+    setSelectedVisitorType(initialValues.type);
+  }, [initialValues.type]);
 
   const validationSchema = Yup.object().shape({
     type: Yup.string().required('Visitor Type is required'),
@@ -120,7 +129,7 @@ const EditVisitorForm = () => {
     }
   };
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log('SubmitValues:', values)
+    console.log('SubmitValues:', values);
     try {
       if (values.type === 'Case-Hearing') {
         const caseRes = await caseDetails(values, { setSubmitting, resetForm });
@@ -155,303 +164,305 @@ const EditVisitorForm = () => {
     return console.log('InitialValues not Found!');
   }
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-      {({ setFieldValue }) => (
-        <Form>
-          <div className="row">
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Visitor Type</label>
-                <Field as="select"
-                  name="type"
-                  className="form-select"
-                  onChange={(e) => {
-                    setFieldValue('type', e.target.value, true);
-                    setSelectedVisitorType(e.target.value);
-                  }}>
-                  <option value="">--select-visitor-type--</option>
-                  <option value="Case-Hearing">Case Hearing</option>
-                  <option value="General-Visitor">General Visitor</option>
-                  <option value="Contractor">Contractor</option>
-                  <option value="Vendor">Vendor</option>
-                  <option value="Guest">Guest</option>
-                </Field>
-                <ErrorMessage name="type" component="div" className="err-msg" />
+    <>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        {({ setFieldValue }) => (
+          <Form>
+            <div className="row">
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Visitor Type</label>
+                  <Field as="select"
+                    name="type"
+                    className="form-select"
+                    onChange={(e) => {
+                      setFieldValue('type', e.target.value, true);
+                      setSelectedVisitorType(e.target.value);
+                    }}>
+                    <option value="">--select-visitor-type--</option>
+                    <option value="Case-Hearing">Case Hearing</option>
+                    <option value="General-Visitor">General Visitor</option>
+                    <option value="Contractor">Contractor</option>
+                    <option value="Vendor">Vendor</option>
+                    <option value="Guest">Guest</option>
+                  </Field>
+                  <ErrorMessage name="type" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
 
-            {selectedVisitorType === 'Case-Hearing' && (
-              <>
-                <div className="col-md-6 col-sm-6">
-                  <div className="form-group">
-                    <label className="form-label">Case Number</label>
-                    <Field
-                      id="case_no"
-                      name="case_no"
-                      type="text"
-                      className="form-control"
-                      placeholder="Case number"
-                    />
-                    <ErrorMessage name="case_no" component="div" className="err-msg" />
+              {selectedVisitorType === 'Case-Hearing' && (
+                <>
+                  <div className="col-md-6 col-sm-6">
+                    <div className="form-group">
+                      <label className="form-label">Case Number</label>
+                      <Field
+                        id="case_no"
+                        name="case_no"
+                        type="text"
+                        className="form-control"
+                        placeholder="Case number"
+                      />
+                      <ErrorMessage name="case_no" component="div" className="err-msg" />
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-6 col-sm-6">
-                  <div className="form-group">
-                    <label className="form-label">Case Type</label>
-                    <Field
-                      id="causelisttype"
-                      name="causelisttype"
-                      type="text"
-                      className="form-control"
-                      placeholder="Case type"
-                    />
-                    <ErrorMessage name="causelisttype" component="div" className="err-msg" />
+                  <div className="col-md-6 col-sm-6">
+                    <div className="form-group">
+                      <label className="form-label">Case Type</label>
+                      <Field
+                        id="causelisttype"
+                        name="causelisttype"
+                        type="text"
+                        className="form-control"
+                        placeholder="Case type"
+                      />
+                      <ErrorMessage name="causelisttype" component="div" className="err-msg" />
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-6 col-sm-6">
-                  <div className="form-group">
-                    <label className="form-label">Case Date</label>
-                    <DatePicker
-                      id="causelistdate"
-                      name="causelistdate"
-                      type="text"
-                      className="form-control"
-                      selected={causelistdate}
-                      minDate={causelistdate}
-                      onChange={(causelistdate) => {
-                        setFieldValue('causelistdate', causelistdate, true);
-                        setCauselistdate(causelistdate);
-                      }}
-                      dateFormat="dd-MM-yyyy"
-                      placeholderText="Select Valid On"
-                    />
-                    <ErrorMessage name="causelistdate" component="div" className="err-msg" />
+                  <div className="col-md-6 col-sm-6">
+                    <div className="form-group">
+                      <label className="form-label">Case Date</label>
+                      <DatePicker
+                        id="causelistdate"
+                        name="causelistdate"
+                        type="text"
+                        className="form-control"
+                        selected={causelistdate}
+                        minDate={causelistdate}
+                        onChange={(causelistdate) => {
+                          setFieldValue('causelistdate', causelistdate, true);
+                          setCauselistdate(causelistdate);
+                        }}
+                        dateFormat="dd-MM-yyyy"
+                        placeholderText="Select Valid On"
+                      />
+                      <ErrorMessage name="causelistdate" component="div" className="err-msg" />
+                    </div>
                   </div>
-                </div>
-                <div className="table-responsive">
-                  <table className="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                      <tr className="text-dark">
-                        <th scope="col">Case No</th>
-                        <th scope="col">Item No</th>
-                        <th scope="col">Case Type</th>
-                        <th scope="col">Case Year</th>
-                        <th scope="col">Lawyer</th>
-                        <th scope="col">Court Room</th>
-                        <th scope="col">Party 1</th>
-                        <th scope="col">Party 2</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {caseInfo?.length > 0 ? (
-                        caseInfo?.map((d, i) => (
-                          <tr key={i}>
-                            <td>{d.case_no}</td>
-                            <td>{d.no}</td>
-                            <td>{d.casetype}</td>
-                            <td>{d.yr}</td>
-                            <td>{d.law1}</td>
-                            <td>{d.croom}</td>
-                            <td>{d.pet}</td>
-                            <td>{d.res}</td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={8} style={{ textAlign: 'center' }}>N/A</td>
+                  <div className="table-responsive">
+                    <table className="table text-start align-middle table-bordered table-hover mb-0">
+                      <thead>
+                        <tr className="text-dark">
+                          <th scope="col">Case No</th>
+                          <th scope="col">Item No</th>
+                          <th scope="col">Case Type</th>
+                          <th scope="col">Case Year</th>
+                          <th scope="col">Lawyer</th>
+                          <th scope="col">Court Room</th>
+                          <th scope="col">Party 1</th>
+                          <th scope="col">Party 2</th>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="add_button_page">
-                  <button
-                    type="submit"
-                    className="btn btn-primary mt-5"
-                    onClick={() =>
-                      caseDetails(initialValues, {
-                        setSubmitting: () => { },
-                        resetForm: () => { },
-                      })
-                    }
-                  >
-                    Fetch
-                  </button>
-                </div>
-              </>
-            )}
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Pass No</label>
-                <Field
-                  id="passNo"
-                  name="passNo"
-                  type="number"
-                  className="form-control"
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Visitor Name</label>
-                <Field
-                  id="visitorName"
-                  name="visitorName"
-                  type="text"
-                  className="form-control"
-                  placeholder="Visitor Name"
-                />
-                <ErrorMessage name="visitorName" component="div" className="err-msg" />
-              </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Father's Name</label>
-                <Field
-                  id="fatherName"
-                  name="fatherName"
-                  type="text"
-                  className="form-control"
-                  placeholder="Father's Name"
-                />
-                <ErrorMessage name="fatherName" component="div" className="err-msg" />
-              </div>
-            </div>
-            {selectedVisitorType === 'Case-Hearing' && (
-              <>
-                {/* ... other form fields */}
-                <div className="col-md-6 col-sm-6">
-                  <div className="form-group">
-                    <label className="form-label">Advocate Name</label>
-                    <Field
-                      id="advocateName"
-                      name="advocateName"
-                      type="text"
-                      className="form-control"
-                      placeholder="Advocate Name"
-                    />
-                    <ErrorMessage name="advocateName" component="div" className="err-msg" />
+                      </thead>
+                      <tbody>
+                        {caseInfo?.length > 0 ? (
+                          caseInfo?.map((d, i) => (
+                            <tr key={i}>
+                              <td>{d.case_no}</td>
+                              <td>{d.no}</td>
+                              <td>{d.casetype}</td>
+                              <td>{d.yr}</td>
+                              <td>{d.law1}</td>
+                              <td>{d.croom}</td>
+                              <td>{d.pet}</td>
+                              <td>{d.res}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={8} style={{ textAlign: 'center' }}>N/A</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
+                  <div className="add_button_page">
+                    <button
+                      type="button"
+                      className="btn btn-primary mt-5"
+                      onClick={() =>
+                        caseDetails(initialValues, {
+                          setSubmitting: () => { },
+                          resetForm: () => { },
+                        })
+                      }
+                    >
+                      Fetch
+                    </button>
+                  </div>
+                </>
+              )}
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Pass No</label>
+                  <Field
+                    id="passNo"
+                    name="passNo"
+                    type="number"
+                    className="form-control"
+                    readOnly
+                  />
                 </div>
-              </>
-            )}
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Address</label>
-                <Field
-                  id="address"
-                  name="address"
-                  type="text"
-                  className="form-control"
-                  placeholder="Address"
-                />
-                <ErrorMessage name="address" component="div" className="err-msg" />
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Mobile No</label>
-                <Field
-                  id="mobile"
-                  name="mobile"
-                  type="text"
-                  className="form-control"
-                  placeholder="Mobile No"
-                />
-                <ErrorMessage name="mobile" component="div" className="err-msg" />
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Visitor Name</label>
+                  <Field
+                    id="visitorName"
+                    name="visitorName"
+                    type="text"
+                    className="form-control"
+                    placeholder="Visitor Name"
+                  />
+                  <ErrorMessage name="visitorName" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Mail Id</label>
-                <Field
-                  id="email"
-                  className="form-control"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                />
-                <ErrorMessage name="email" component="div" className="err-msg" />
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Father's Name</label>
+                  <Field
+                    id="fatherName"
+                    name="fatherName"
+                    type="text"
+                    className="form-control"
+                    placeholder="Father's Name"
+                  />
+                  <ErrorMessage name="fatherName" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">ID Proof Type</label>
-                <Field as="select" name="idProofType" className="form-select">
-                  <option value="">--select-id-type--</option>
-                  <option value="ADHAR CARD">ADHAR CARD</option>
-                  <option value="PAN CARD">PAN CARD</option>
-                  <option value="DRIVING LICENCE">DRIVING LICENCE</option>
-                </Field>
-                <ErrorMessage name="idProofType" component="div" className="err-msg" />
+              {selectedVisitorType === 'Case-Hearing' && (
+                <>
+                  {/* ... other form fields */}
+                  <div className="col-md-6 col-sm-6">
+                    <div className="form-group">
+                      <label className="form-label">Advocate Name</label>
+                      <Field
+                        id="advocateName"
+                        name="advocateName"
+                        type="text"
+                        className="form-control"
+                        placeholder="Advocate Name"
+                      />
+                      <ErrorMessage name="advocateName" component="div" className="err-msg" />
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Address</label>
+                  <Field
+                    id="address"
+                    name="address"
+                    type="text"
+                    className="form-control"
+                    placeholder="Address"
+                  />
+                  <ErrorMessage name="address" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">ID Proof No</label>
-                <Field
-                  id="idProofNo"
-                  name="idProofNo"
-                  type="text"
-                  className="form-control"
-                  placeholder="ID Proof No"
-                />
-                <ErrorMessage name="idProofNo" component="div" className="err-msg" />
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Mobile No</label>
+                  <Field
+                    id="mobile"
+                    name="mobile"
+                    type="text"
+                    className="form-control"
+                    placeholder="Mobile No"
+                  />
+                  <ErrorMessage name="mobile" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Valid On</label><br />
-                <DatePicker
-                  id="validOn"
-                  name="validOn"
-                  selected={validOn}
-                  minDate={validOn}
-                  onChange={(validOn) => {
-                    setFieldValue('validOn', validOn, true);
-                    setValidOn(validOn);
-                  }}
-                  showTimeSelect
-                  timeIntervals={15}
-                  dateFormat="dd MMM yyyy, hh:mm aa"
-                  className="form-control"
-                  placeholderText="Select Valid On"
-                />
-                <ErrorMessage name="validOn" component="div" className="err-msg" />
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Mail Id</label>
+                  <Field
+                    id="email"
+                    className="form-control"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                  />
+                  <ErrorMessage name="email" component="div" className="err-msg" />
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6">
-              <div className="form-group">
-                <label className="form-label">Valid Upto</label><br />
-                <DatePicker
-                  id="validUpTo"
-                  name="validUpTo"
-                  selected={validUpTo}
-                  minDate={validUpTo}
-                  onChange={(validUpTo) => {
-                    setFieldValue('validUpTo', validUpTo, true);
-                    setValidUpTo(validUpTo);
-                  }}
-                  showTimeSelect
-                  timeIntervals={15}
-                  dateFormat="dd MMM yyyy, hh:mm aa"
-                  className="form-control"
-                  placeholderText="Select Valid Upto"
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">ID Proof Type</label>
+                  <Field as="select" name="idProofType" className="form-select">
+                    <option value="">--select-id-type--</option>
+                    <option value="ADHAR CARD">ADHAR CARD</option>
+                    <option value="PAN CARD">PAN CARD</option>
+                    <option value="DRIVING LICENCE">DRIVING LICENCE</option>
+                  </Field>
+                  <ErrorMessage name="idProofType" component="div" className="err-msg" />
+                </div>
+              </div>
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">ID Proof No</label>
+                  <Field
+                    id="idProofNo"
+                    name="idProofNo"
+                    type="text"
+                    className="form-control"
+                    placeholder="ID Proof No"
+                  />
+                  <ErrorMessage name="idProofNo" component="div" className="err-msg" />
+                </div>
+              </div>
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Valid On</label><br />
+                  <DatePicker
+                    id="validOn"
+                    name="validOn"
+                    selected={validOn}
+                    minDate={validOn}
+                    onChange={(validOn) => {
+                      setFieldValue('validOn', validOn, true);
+                      setValidOn(validOn);
+                    }}
+                    showTimeSelect
+                    timeIntervals={15}
+                    dateFormat="dd MMM yyyy, hh:mm aa"
+                    className="form-control"
+                    placeholderText="Select Valid On"
+                  />
+                  <ErrorMessage name="validOn" component="div" className="err-msg" />
+                </div>
+              </div>
+              <div className="col-md-6 col-sm-6">
+                <div className="form-group">
+                  <label className="form-label">Valid Upto</label><br />
+                  <DatePicker
+                    id="validUpTo"
+                    name="validUpTo"
+                    selected={validUpTo}
+                    minDate={validUpTo}
+                    onChange={(validUpTo) => {
+                      setFieldValue('validUpTo', validUpTo, true);
+                      setValidUpTo(validUpTo);
+                    }}
+                    showTimeSelect
+                    timeIntervals={15}
+                    dateFormat="dd MMM yyyy, hh:mm aa"
+                    className="form-control"
+                    placeholderText="Select Valid Upto"
 
-                />
-                <ErrorMessage name="validUpTo" component="div" className="err-msg" />
+                  />
+                  <ErrorMessage name="validUpTo" component="div" className="err-msg" />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="add_button_page">
-            <button type="submit" className="btn btn-primary  ">
-              Update
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+            <div className="add_button_page">
+              <button type="submit" className="btn btn-primary  ">
+                Update
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

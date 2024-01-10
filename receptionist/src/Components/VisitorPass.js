@@ -128,11 +128,6 @@ const VisitorPass = () => {
         }
     };
 
-
-
-
-
-
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             {({ setFieldValue }) => (
@@ -292,7 +287,6 @@ const VisitorPass = () => {
                         </div>
                         {selectedVisitorType === 'Case-Hearing' && (
                             <>
-                                {/* ... other form fields */}
                                 <div className="col-md-6 col-sm-6">
                                     <div className="form-group">
                                         <label className="form-label">Advocate Name</label>
