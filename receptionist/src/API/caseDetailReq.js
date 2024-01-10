@@ -37,7 +37,7 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-                                  //replace with end poits 'gatepass_api/index.php'
+              //replace with end points 'gatepass_api/index.php'
 export const caseDetails = (data) => API.post('/api/v1/auth/case', data);
 
 export default API;

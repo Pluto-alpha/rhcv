@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import * as Case from '../API/caseDetailReq';
 
+
+
 const VisitorPass = () => {
     const navigate = useNavigate();
     const [caseInfo, setCaseInfo] = useState([]);
@@ -15,6 +17,7 @@ const VisitorPass = () => {
     const [validUpTo, setValidUpTo] = useState(new Date());
     const [selectedVisitorType, setSelectedVisitorType] = useState('');
     const [causelistdate, setCauselistdate] = useState(new Date());
+
 
     console.log(caseInfo)
     useEffect(() => {
@@ -105,6 +108,7 @@ const VisitorPass = () => {
             }
             const res = await VisitorApi.addVisitor(values);
             console.log(res.data);
+
             if (res.status === 200) {
                 toast.success(res.data.msg);
                 resetForm({ ...initialValues });
@@ -123,6 +127,11 @@ const VisitorPass = () => {
             setSubmitting(false);
         }
     };
+
+
+
+
+
 
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -283,6 +292,7 @@ const VisitorPass = () => {
                         </div>
                         {selectedVisitorType === 'Case-Hearing' && (
                             <>
+                                {/* ... other form fields */}
                                 <div className="col-md-6 col-sm-6">
                                     <div className="form-group">
                                         <label className="form-label">Advocate Name</label>
