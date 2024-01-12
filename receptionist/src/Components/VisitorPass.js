@@ -62,13 +62,16 @@ const VisitorPass = () => {
         validOn: Yup.date().required('Date is required'),
         validUpTo: Yup.date().required('Date is required'),
     });
+    
     const caseDetails = async (values, { setSubmitting, resetForm }) => {
+        console.log('Form values:', values)
         const formData = new URLSearchParams();
         formData.append('case_no', values.case_no);
         formData.append('causelisttype', values.causelisttype);
         formData.append('causelistdate', values.causelistdate);
+        console.log('formData:', formData.toString());
         try {
-            const res = await Case.caseDetails(formData);
+            const res = await Case.caseDetails(values);
             console.log(res.data);
             if (res.data && res.data.cases) {
                 setCaseInfo(res.data.cases);
@@ -81,7 +84,7 @@ const VisitorPass = () => {
                 toast.error('Invalid response structure from the server');
             }
             resetForm({ ...initialValues });
-            return res;
+            return [];
         } catch (err) {
             console.error('An error occurred during the request:', err);
             if (err.response && err.response.data && err.response.data.msg) {
@@ -89,6 +92,7 @@ const VisitorPass = () => {
             } else {
                 toast.error('An error occurred during the request', err);
             }
+            return [];
         } finally {
             setSubmitting(false);
         }

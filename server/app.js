@@ -10,7 +10,15 @@ const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
 
-
+module.exports = {
+    mode: 'development', // or 'production'
+    entry: '/app.js',
+    output: {
+      path: path.resolve(__dirname, 'build', 'dist'),
+      filename: 'bundle.js',
+    },
+  };
+  
 /*Logger configuration*/
 app.use(morgan('common', {
     skip: function (req, res) { return res.statusCode < 400 },
