@@ -5,12 +5,12 @@ module.exports = {
     main: './app.js',
   },
   output: {
-    path: path.resolve(__dirname, 'prod-build'),
+    path: path.resolve(__dirname, 'dev-build'),
     publicPath: '/',
     filename: '[name].js',
     clean: true,
   },
-  mode: 'production',
+  mode: 'development',
   target: 'node',
   module: {
     rules: [

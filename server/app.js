@@ -10,14 +10,6 @@ const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
 
-module.exports = {
-    mode: 'development', // or 'production'
-    entry: '/app.js',
-    output: {
-      path: path.resolve(__dirname, 'build', 'dist'),
-      filename: 'bundle.js',
-    },
-  };
   
 /*Logger configuration*/
 app.use(morgan('common', {
@@ -36,7 +28,6 @@ app.use('/files', express.static(path.join(__dirname, 'public')));
 
 // log all requests to console with dev format
 app.use(morgan('dev'));
-const findCaseDetail = require('./controllers/visitor-controller')
 /**API's routes  */
 app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));
@@ -48,6 +39,7 @@ app.get('/', (req, res) => {
 require('./config/dbConnect');
 /**Error middleware */
 app.use(errorHandler);
+const nodeEnv = process.env.NODE_ENV; // Either 'development' or 'production'
 
 const port = process.env.PORT || 3000;
 
