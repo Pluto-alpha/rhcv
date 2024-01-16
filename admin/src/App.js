@@ -14,9 +14,6 @@ import EditVisitor from './Pages/EditVisitor'
 import { useParams } from 'react-router-dom';
 
 
-
-
-
 const App = () => {
   const params = useParams();
   const { id } = params;
