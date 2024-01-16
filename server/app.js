@@ -1,16 +1,14 @@
 const express = require("express");
 const cors = require("cors");
-const helmet = require("helmet");
 const app = express();
 const cookieParser = require("cookie-parser");
 const errorHandler = require('./middlewares/errorHandler');
-const corsOptions = require('./config/corsOptions');
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
 
-  
+
 /*Logger configuration*/
 app.use(morgan('common', {
     skip: function (req, res) { return res.statusCode < 400 },
@@ -20,11 +18,9 @@ app.use(morgan('common', {
 /**Middlewares setup */
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
-app.use(helmet({ crossOriginResourcePolicy: false, }));
+app.use(cors({ origin: true, credentials: true, }));
 app.use(cookieParser());
 app.use('/files', express.static(path.join(__dirname, 'public')));
-
 
 // log all requests to console with dev format
 app.use(morgan('dev'));
@@ -39,7 +35,6 @@ app.get('/', (req, res) => {
 require('./config/dbConnect');
 /**Error middleware */
 app.use(errorHandler);
-const nodeEnv = process.env.NODE_ENV; // Either 'development' or 'production'
 
 const port = process.env.PORT || 3000;
 
