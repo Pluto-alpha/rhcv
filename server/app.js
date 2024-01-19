@@ -22,6 +22,7 @@ app.use(cors({ origin: true, credentials: true, }));
 app.use(cookieParser());
 app.use('/files', express.static(path.join(__dirname, 'public')));
 
+
 // log all requests to console with dev format
 app.use(morgan('dev'));
 /**API's routes  */

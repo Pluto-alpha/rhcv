@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="bg-light rounded-top p-4">
                 <div className="row">
                     <div className="col-12 col-sm-6 text-center text-sm-start">
-                        © 2023<a href="#"> Rajasthan Jodhpur High Court</a>, All Right
+                        © 2023<a href="#"> Rajasthan High Court Jaipur</a>, All Right
                         Reserved.
                     </div>
                     <div className="col-12 col-sm-6 text-center text-sm-end">
