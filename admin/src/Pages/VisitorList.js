@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import VisitorsList from '../Components/VisitorsList';
 
 const VisitorList = () => {
@@ -23,9 +23,9 @@ const VisitorList = () => {
           <div className="bg-light text-center rounded p-4">
             <div className="d-flex align-items-center justify-content-between mb-4">
               <h6 className="mb-0">Visitors List</h6>
-              <Link to="/add-visitor" className="add_button">
+              {/* <Link to="/add-visitor" className="add_button">
                 Add Visitor
-              </Link>
+              </Link> */}
             </div>
             <VisitorsList />
           </div>

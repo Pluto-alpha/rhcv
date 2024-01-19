@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import * as VisitorApi from '../API/visitorRequest';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
 import CamModel from '../Components/CamModel';
@@ -74,7 +74,7 @@ const VisitorsList = () => {
                             <th scope="col">Id Proof No</th>
                             <th scope="col">Valid On</th>
                             <th scope="col">Valid Upto</th>
-                            <th scope="col">Action</th>
+                            {/* <th scope="col">Action</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,7 @@ const VisitorsList = () => {
                                     <td>{visit.idProofNo}</td>
                                     <td>{visit.validOn ? moment(visit.validOn).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
-                                    <td style={{ display: "flex" }}>
+                                    {/* <td style={{ display: "flex" }}>
                                         <Link to={`/${visit._id}`}>
                                             <i className="fa fa-edit me-2" />
                                         </Link>
@@ -106,7 +106,7 @@ const VisitorsList = () => {
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
                                             <i className="fa fa-print me-2" />
                                         </Link>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             ))
                         ) : (
