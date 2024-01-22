@@ -155,3 +155,11 @@
 ::1 - - [19/Jan/2024:11:33:05 +0000] "GET /api/v1/visitor/3453 HTTP/1.1" 500 149
 ::1 - - [19/Jan/2024:11:34:09 +0000] "GET /api/v1/visitor/hom HTTP/1.1" 500 148
 ::1 - - [19/Jan/2024:11:34:19 +0000] "GET /api/v1/visitor/visitor-lis HTTP/1.1" 500 156
+::1 - - [19/Jan/2024:11:58:31 +0000] "GET /api/v1/auth/user HTTP/1.1" 403 64
+::1 - - [19/Jan/2024:11:58:35 +0000] "GET /api/v1/auth/user HTTP/1.1" 403 64
+::1 - - [20/Jan/2024:07:28:25 +0000] "GET /files/uploads/image-1705659194500.jpg HTTP/1.1" 404 176
+::1 - - [20/Jan/2024:07:28:26 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::1 - - [20/Jan/2024:08:04:46 +0000] "GET /files/uploads/image-1705475283257.jpg HTTP/1.1" 404 176
+::1 - - [20/Jan/2024:08:04:54 +0000] "GET /files/uploads/image-1704784322606.jpg HTTP/1.1" 404 176
+::1 - - [20/Jan/2024:09:56:36 +0000] "GET /files/uploads/image-1704784322606.jpg HTTP/1.1" 404 176
+::1 - - [20/Jan/2024:09:56:55 +0000] "GET /files/uploads/image-1705735812299.jpg HTTP/1.1" 404 176

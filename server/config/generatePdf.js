@@ -13,9 +13,7 @@ const generatePdf = async (visitor, passMaker) => {
         let templatePath;
         let passType;
         let additionalValues = {};
-
         let validOn, validUpTo, time;
-
         if (visitor.type === 'Case-Hearing') {
             templatePath = path.join(__dirname, '../passTemplate/pass.html');
             passType = 'Case Hearing';
@@ -37,7 +35,6 @@ const generatePdf = async (visitor, passMaker) => {
 
         const templateContent = fs.readFileSync(templatePath, 'utf8');
         const template = hbs.compile(templateContent);
-
         // Generate vertical line barcode for passNo
         const barcodeBuffer = await bwipjs.toBuffer({
             bcid: 'code128',       // Barcode type
@@ -75,15 +72,11 @@ const generatePdf = async (visitor, passMaker) => {
             format: 'A4',
             printBackground: true
         });
-
         return pdfBuffer;
     } catch (error) {
         console.error('Error generating PDF:', error);
         throw error;
     }
 };
-
-module.exports = generatePdf;
-
 
 module.exports = generatePdf;

@@ -12,7 +12,7 @@ const Footer = () => {
                     <div className="col-12 col-sm-6 text-center text-sm-end">
                         Designed/Development By{" "}
                         <a href="https://acentriatech.com/">
-                            Acentria Technologies Pvt ltd
+                            Acentria Technologies Pvt Ltd
                         </a>
                     </div>
                 </div>
