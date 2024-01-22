@@ -3,40 +3,47 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import * as Case from '../API/caseDetailReq';
+import DatePicker from 'react-datepicker';
 
-const CaseForm = () => {
+
+const CaseForm = ({ updateCaseInfo }) => {
     const [data, setData] = useState([]);
+    const [causelistdate, setCauselistdate] = useState(new Date());
+
     const initialValues = {
         case_no: '',
         causelisttype: '',
-        causelistdate: '',
+        causelistdate: new Date(),
     };
     const validationSchema = Yup.object().shape({
         case_no: Yup.string().required('Case number is required'),
         causelisttype: Yup.string().required('Case type is required'),
-        causelistdate: Yup.string().required("Case date is required"),
+        causelistdate: Yup.date().required('Date is required'),
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        console.log('Submitting form:', values);
         const formData = new URLSearchParams();
         formData.append('case_no', values.case_no);
         formData.append('causelisttype', values.causelisttype);
         formData.append('causelistdate', values.causelistdate);
+        
+        console.log('FormData:', formData.toString())
         try {
             const res = await Case.caseDetails(formData);
-            console.log(res.data);
-            setData(res.data.cases)
-            if (res.data && res.data.msg) {
-                toast.success(res.data.msg);
+            console.log('Response',res);
+            setData(res.data.cases);
+            updateCaseInfo(res.data.cases);
+            if (res.data && res.data.status === true) {
+                toast.success('Success');   
             } else {
-                toast.success('Success');
-            }
+                toast.success(res.message);   
+            }            
             resetForm({ ...initialValues });
         } catch (err) {
             console.error('An error occurred during the request:', err);
-
             if (err.response && err.response.data && err.response.data.msg) {
-                toast.error(err.response.data.msg);
+                toast.error(err.response.message);
             } else {
                 toast.error('An error occurred during the request');
             }
@@ -48,57 +55,70 @@ const CaseForm = () => {
     return (
         <>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-                <Form>
-                    <div className="row">
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="form-label">Case Number</label>
-                                <Field
-                                    id="case_no"
-                                    name="case_no"
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Case number"
-                                />
-                                <ErrorMessage name="case_no" component="div" className="err-msg" />
+                {({ setFieldValue, submitForm }) => (
+                    <Form>
+                        <div className="row">
+                            <div className="col-md-6 col-sm-6">
+                                <div className="form-group">
+                                    <label className="form-label">Case Number</label>
+                                    <Field
+                                        id="case_no"
+                                        name="case_no"
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Case number"
+                                    />
+                                    <ErrorMessage name="case_no" component="div" className="err-msg" />
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-sm-6">
+                                <div className="form-group">
+                                    <label className="form-label">Case Type</label>
+                                    <Field
+                                        id="causelisttype"
+                                        name="causelisttype"
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Case type"
+                                    />
+                                    <ErrorMessage name="causelisttype" component="div" className="err-msg" />
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-sm-6">
+                                <div className="form-group">
+                                    <label className="form-label">Case Date</label>
+                                    <DatePicker
+                                        id="causelistdate"
+                                        name="causelistdate"
+                                        type="text"
+                                        className="form-control"
+                                        selected={causelistdate}
+                                        minDate={causelistdate}
+                                        onChange={(causelistdate) => {
+                                            setFieldValue('causelistdate', causelistdate, true);
+                                            setCauselistdate(causelistdate);
+                                        }}
+                                        dateFormat="dd-MM-yyyy"
+                                        placeholderText="Select Valid On"
+                                    />
+                                    <ErrorMessage name="causelistdate" component="div" className="err-msg" />
+                                </div>
+                            </div>
+                            <div className="add_button_page">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={submitForm}
+                                >
+                                    Fetch
+                                </button>
                             </div>
                         </div>
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="form-label">Case Type</label>
-                                <Field
-                                    id="causelisttype"
-                                    name="causelisttype"
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Case type"
-                                />
-                                <ErrorMessage name="causelisttype" component="div" className="err-msg" />
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-sm-6">
-                            <div className="form-group">
-                                <label className="form-label">Case Date</label>
-                                <Field
-                                    id="causelistdate"
-                                    name="causelistdate"
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Case date"
-                                />
-                                <ErrorMessage name="causelistdate" component="div" className="err-msg" />
-                            </div>
-                        </div>
-                        <div className="add_button_page">
-                            <button type="submit" className="btn btn-primary  ">
-                                Fetch
-                            </button>
-                        </div>
-                    </div>
-                </Form>
+                    </Form>
+                )}
             </Formik>
             <div className="table-responsive">
-                <table className="table text-start align-middle table-bordered table-hover mb-0">
+                <table className="table text-start align-middle table-bordered table-hover mb-5">
                     <thead>
                         <tr className="text-dark">
                             <th scope="col">Case No</th>

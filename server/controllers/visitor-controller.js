@@ -219,8 +219,9 @@ const updateVisitorImg = asyncHandler(async (req, res) => {
 });
 
 const findCaseDetail = asyncHandler(async (req, res) => {
-    try {   
-        const cases = await Case.findOne({ case_no: "15205" });
+    try {
+        const { case_no } = req.body
+        const cases = await Case.findOne({ case_no });
         if (!cases) {
             return res.status(404).json({ status: false, msg: 'Case details not found' });
         } else {
