@@ -27,26 +27,30 @@ const CaseForm = ({ updateCaseInfo }) => {
         formData.append('case_no', values.case_no);
         formData.append('causelisttype', values.causelisttype);
         formData.append('causelistdate', values.causelistdate);
-        
-        console.log('FormData:', formData.toString())
+
+        console.log('FormData:', formData.toString());
+
         try {
             const res = await Case.caseDetails(formData);
-            console.log('Response',res);
+            console.log('CaseResponse:', res);
             setData(res.data.cases);
             updateCaseInfo(res.data.cases);
-            if (res.data && res.data.status === true) {
-                toast.success('Success');   
-            } else {
-                toast.success(res.message);   
-            }            
+            if (res.data && res.status === 200) {
+                toast.success('Fetched Successfully');
+            } 
             resetForm({ ...initialValues });
         } catch (err) {
             console.error('An error occurred during the request:', err);
-            if (err.response && err.response.data && err.response.data.msg) {
-                toast.error(err.response.message);
-            } else {
-                toast.error('An error occurred during the request');
-            }
+            if (err.response) {
+                console.error('Response Error:', err.response.data);
+                toast.error(`Server Error: ${err.message}`);
+              } else if (err.request) {
+                console.error('Request Error:', err.request);
+                toast.error('No response from the server');
+              } else {
+                console.error('General Error:', err.message);     
+                 toast.error('An error occurred while processing your request');
+              }          
         } finally {
             setSubmitting(false);
         }
@@ -147,7 +151,7 @@ const CaseForm = ({ updateCaseInfo }) => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={8} style={{ textAlign: 'center' }}>No data found</td>
+                                <td colSpan={8} style={{ textAlign: 'center' }}> N/A </td>
                             </tr>
                         )}
                     </tbody>
