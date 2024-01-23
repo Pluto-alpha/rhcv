@@ -104,7 +104,9 @@ const CaseForm = ({ updateCaseInfo }) => {
                                         className="form-control"
                                         selected={causelistdate}
                                         onChange={(causelistdate) => {
-                                            setFieldValue('causelistdate', causelistdate, true);
+                                            // Format the date to DDMMYYYY
+                                            const formattedDate = `${causelistdate.getDate().toString().padStart(2, '0')}${(causelistdate.getMonth() + 1).toString().padStart(2, '0')}${causelistdate.getFullYear()}`;
+                                            setFieldValue('causelistdate', formattedDate, true);
                                             setCauselistdate(causelistdate);
                                         }}
                                         dateFormat="dd-MM-yyyy"
