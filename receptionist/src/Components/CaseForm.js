@@ -33,8 +33,8 @@ const CaseForm = ({ updateCaseInfo }) => {
         try {
             const res = await Case.caseDetails(formData);
             console.log('CaseResponse:', res);
-            setData(res.data.cases);
-            updateCaseInfo(res.data.cases);
+            setData(res.data);
+            updateCaseInfo(res.data);
             if (res.data && res.status === 200) {
                 toast.success('Fetched Successfully');
             } 
