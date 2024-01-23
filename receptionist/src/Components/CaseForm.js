@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import * as Case from '../API/caseDetailReq';
 import DatePicker from 'react-datepicker';
-import { Base64 } from 'js-base64';
 
 const CaseForm = ({ updateCaseInfo }) => {
     const [data, setData] = useState([]);
@@ -24,17 +23,19 @@ const CaseForm = ({ updateCaseInfo }) => {
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
             console.log('Submitting form:', values);
+            // Use btoa for base64 encoding
+            const encodedCaseNo = btoa(values.case_no);
+            const encodedCauselistType = btoa(values.causelisttype);
+            const encodedCauselistdate = btoa(values.causelistdate);
+
             const formData = new URLSearchParams();
-            const encodedCaseNo = Base64.encode(values.case_no);
-            const encodedCauselistType = Base64.encode(values.causelisttype);
-            const encodedCauselistdate = Base64.encode(values.causelistdate);
             formData.append('case_no', encodedCaseNo);
             formData.append('causelisttype', encodedCauselistType);
             formData.append('causelistdate', encodedCauselistdate);
+            
             console.log('FormData:', formData.toString());
             const res = await Case.caseDetails(formData);
             console.log('CaseResponse:', res);
-
             if (res.status === 200) {
                 setData(res.data);
                 updateCaseInfo(res.data);
@@ -46,7 +47,6 @@ const CaseForm = ({ updateCaseInfo }) => {
             resetForm({ ...initialValues });
         } catch (err) {
             console.error('An error occurred during the request:', err);
-
             if (err.response) {
                 console.error('Response Error:', err.response.data);
                 toast.error(`Server Error: ${err.message}`);
