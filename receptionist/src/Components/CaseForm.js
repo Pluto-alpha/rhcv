@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import * as Case from '../API/caseDetailReq';
 import DatePicker from 'react-datepicker';
-
+import { Base64 } from 'js-base64';
 
 const CaseForm = ({ updateCaseInfo }) => {
     const [data, setData] = useState([]);
@@ -22,35 +22,41 @@ const CaseForm = ({ updateCaseInfo }) => {
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-        console.log('Submitting form:', values);
-        const formData = new URLSearchParams();
-        formData.append('case_no', values.case_no);
-        formData.append('causelisttype', values.causelisttype);
-        formData.append('causelistdate', values.causelistdate);
-
-        console.log('FormData:', formData.toString());
-
         try {
+            console.log('Submitting form:', values);
+            const formData = new URLSearchParams();
+            const encodedCaseNo = Base64.encode(values.case_no);
+            const encodedCauselistType = Base64.encode(values.causelisttype);
+            const encodedCauselistdate = Base64.encode(values.causelistdate);
+            formData.append('case_no', encodedCaseNo);
+            formData.append('causelisttype', encodedCauselistType);
+            formData.append('causelistdate', encodedCauselistdate);
+            console.log('FormData:', formData.toString());
             const res = await Case.caseDetails(formData);
             console.log('CaseResponse:', res);
-            setData(res.data);
-            updateCaseInfo(res.data);
-            if (res.data && res.status === 200) {
+
+            if (res.status === 200) {
+                setData(res.data);
+                updateCaseInfo(res.data);
                 toast.success('Fetched Successfully');
-            } 
+            } else {
+                console.error('Unexpected status code:', res.status);
+                toast.error('Unexpected response from the server');
+            }
             resetForm({ ...initialValues });
         } catch (err) {
             console.error('An error occurred during the request:', err);
+
             if (err.response) {
                 console.error('Response Error:', err.response.data);
                 toast.error(`Server Error: ${err.message}`);
-              } else if (err.request) {
+            } else if (err.request) {
                 console.error('Request Error:', err.request);
                 toast.error('No response from the server');
-              } else {
-                console.error('General Error:', err.message);     
-                 toast.error('An error occurred while processing your request');
-              }          
+            } else {
+                console.error('General Error:', err.message);
+                toast.error('An error occurred while processing your request');
+            }
         } finally {
             setSubmitting(false);
         }
@@ -97,7 +103,6 @@ const CaseForm = ({ updateCaseInfo }) => {
                                         type="text"
                                         className="form-control"
                                         selected={causelistdate}
-                                        minDate={causelistdate}
                                         onChange={(causelistdate) => {
                                             setFieldValue('causelistdate', causelistdate, true);
                                             setCauselistdate(causelistdate);
