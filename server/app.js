@@ -7,6 +7,8 @@ const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path")
 require("dotenv").config();
+const https = require('https');
+const axios = require('axios');
 
 
 /*Logger configuration*/
@@ -21,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true, }));
 app.use(cookieParser());
 app.use('/files', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, '../receptionist/build')));
+app.use('/', express.static(path.join(__dirname, '../admin/build')));
 
 
 // log all requests to console with dev format
@@ -30,7 +34,19 @@ app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));
 app.get('/', (req, res) => {
     res.status(200).json({ msg: 'server is running!' })
-})
+});
+/** third party api integration start */
+app.post('/gatepass_api/index.php', async (req, res) => {
+    try {
+        // Forward the request to the actual server
+        const response = await axios.post('http://10.130.8.102:8080/gatepass_api/index.php', req.body);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        console.error('Error in proxy server:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+/** third party api integration end */
 
 /*** database connection*/
 require('./config/dbConnect');
@@ -39,6 +55,13 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+const options = {
+    cert: fs.readFileSync(path.join(__dirname,'./combined.pem')),
+    key: fs.readFileSync(path.join(__dirname,'./combined.pem')),
+};
+
+const server = https.createServer(options, app);
+
+server.listen(port, () => {
     console.log(`--Server is listening on port ${port}--`);
 });

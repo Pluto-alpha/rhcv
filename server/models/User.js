@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
     },
     image: {
         type: String,
-        default: 'http://localhost:5001/files/user.jpeg' //chnage to path when project in production 
+        default: 'https://localhost:5001/files/user.jpeg' //chnage to path when project in production 
     },
     role: {
         type: String,
