@@ -8,8 +8,9 @@ const bwipjs = require('bwip-js');
 
 const generatePdf = async (visitor, passMaker) => {
     try {
-        const browser = await puppeteer.launch({ headless: 'new' });
+        const browser = await puppeteer.launch({ headless: 'new', ignoreHTTPSErrors: true, });
         const page = await browser.newPage();
+        page.on('console', (message) => console.log('PAGE LOG:', message.text()));
         let templatePath;
         let passType;
         let additionalValues = {};
@@ -47,7 +48,7 @@ const generatePdf = async (visitor, passMaker) => {
         validOn = moment(visitor.validOn).format("DD MMM YYYY, hh:mm A");
         validUpTo = moment(visitor.validUpTo).format("DD MMM YYYY");
         time = moment(visitor.validUpTo).format("hh:mm A");
-
+        console.log("Image:", visitor.image)
         const html = template({
             passType,
             validOn,
@@ -64,15 +65,14 @@ const generatePdf = async (visitor, passMaker) => {
             ...additionalValues,
             barcode: `data:image/png;base64,${barcodeBuffer.toString('base64')}`,
         });
-
         await page.setContent(html);
-
         const pdfBuffer = await page.pdf({
             margin: { top: '30px', right: '30px', bottom: '30px', left: '30px' },
             format: 'A4',
             printBackground: true
         });
         return pdfBuffer;
+
     } catch (error) {
         console.error('Error generating PDF:', error);
         throw error;

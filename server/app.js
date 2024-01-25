@@ -26,7 +26,6 @@ app.use('/files', express.static(path.join(__dirname, 'public')));
 app.use('/', express.static(path.join(__dirname, '../receptionist/build')));
 //app.use('/', express.static(path.join(__dirname, '../admin/build')));
 
-
 // log all requests to console with dev format
 app.use(morgan('dev'));
 /**API's routes  */
