@@ -249,3 +249,9 @@
 ::ffff:192.168.1.10 - - [24/Jan/2024:12:31:58 +0000] "GET /home HTTP/1.1" 404 143
 ::ffff:192.168.1.10 - - [24/Jan/2024:12:32:20 +0000] "GET /visitor-list HTTP/1.1" 404 151
 ::ffff:192.168.1.10 - - [24/Jan/2024:12:48:43 +0000] "GET /home HTTP/1.1" 404 143
+::1 - - [25/Jan/2024:10:54:49 +0000] "GET /api/v1/visitor/generate-pass/65ae6457d8fc137865c89c46 HTTP/1.1" 500 107
+::1 - - [25/Jan/2024:10:55:45 +0000] "GET /api/v1/visitor/generate-pass/65ae6457d8fc137865c89c46 HTTP/1.1" 401 71
+::1 - - [25/Jan/2024:10:56:03 +0000] "GET /api/v1/visitor/generate-pass/65ae6457d8fc137865c89c46 HTTP/1.1" 500 107
+::1 - - [25/Jan/2024:10:56:36 +0000] "GET /api/v1/visitor/generate-pass/65ae6457d8fc137865c89c46 HTTP/1.1" 500 107
+::1 - - [25/Jan/2024:12:13:36 +0000] "GET /api/v1/all-visitors HTTP/1.1" 401 42
+::1 - - [25/Jan/2024:12:13:36 +0000] "GET /api/v1/auth/dashboard HTTP/1.1" 401 42
