@@ -61,7 +61,6 @@ const CaseForm = ({ updateCaseInfo }) => {
             setSubmitting(false);
         }
     };
-
     return (
         <>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>

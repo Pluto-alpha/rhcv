@@ -24,7 +24,7 @@ app.use(cors({ origin: true, credentials: true, }));
 app.use(cookieParser());
 app.use('/files', express.static(path.join(__dirname, 'public')));
 app.use('/', express.static(path.join(__dirname, '../receptionist/build')));
-app.use('/', express.static(path.join(__dirname, '../admin/build')));
+//app.use('/', express.static(path.join(__dirname, '../admin/build')));
 
 
 // log all requests to console with dev format
@@ -35,17 +35,27 @@ app.use('/api/v1/', require('./Routes/visitorsRoutes'));
 app.get('/', (req, res) => {
     res.status(200).json({ msg: 'server is running!' })
 });
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../receptionist/build', 'index.html'));
+});
 /** third party api integration start */
 app.post('/gatepass_api/index.php', async (req, res) => {
     try {
-        // Forward the request to the actual server
-        const response = await axios.post('http://10.130.8.102:8080/gatepass_api/index.php', req.body);
+        const data = req.body;
+        //console.log(data)
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        };
+        const response = await axios.post('http://10.130.8.102:8080/gatepass_api/index.php', data, config);
         res.status(response.status).json(response.data);
     } catch (error) {
         console.error('Error in proxy server:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 /** third party api integration end */
 
 /*** database connection*/
