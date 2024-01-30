@@ -1,8 +1,8 @@
 import axios from 'axios';
-
+import { BASE_URL } from '../services/common';
 
 const API = axios.create({
-  baseURL: 'https://192.168.79.160:5001',
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

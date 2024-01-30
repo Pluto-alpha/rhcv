@@ -8,6 +8,7 @@ const ReceptionList = () => {
     const [data, setData] = useState([]);
     const [forceUpdate, setForceUpdate] = useState(false);
 
+    console.log(data)
     const updateStatus = async (userId, currentStatus) => {
         try {
             const response = await AuthApi.updateUser(userId, { enabled: !currentStatus });
@@ -71,7 +72,9 @@ const ReceptionList = () => {
                                     >
                                         {user.enabled ? 'Active' : 'InActive'}
                                     </Link>
+                                    {/* <Link to={`/${user._id}`} className='activeclas mx-2'>Edit</Link> */}
                                 </td>
+                                
                             </tr>
                         ))
                     ) : (

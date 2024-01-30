@@ -11,12 +11,10 @@ import Login from './Components/Login';
 import PrivateComponent from './Components/PrivateComponent';
 import { ToastContainer } from "react-toastify";
 import EditVisitor from './Pages/EditVisitor' 
-import { useParams } from 'react-router-dom';
 
-
+console.log(process.env.REACT_APP_URL);
 const App = () => {
-  const params = useParams();
-  const { id } = params;
+
 
   return (
     <div>
@@ -28,7 +26,7 @@ const App = () => {
             <Route path='/home' element={<Home />} />
             <Route path='/add-receptionist' element={<AddReceptionist />} />
             <Route path='/add-visitor' element={<AddVisitor />} />
-            <Route path='/:id' element={<EditVisitor visitorId={id} />} />
+            <Route path='/:id' element={<EditVisitor />} />
             <Route path='/receptionist-list' element={<ReceptionistList />} />
             <Route path='/visitor-list' element={<VisitorList />} />
             <Route path='/profile' element={<Profile />} />

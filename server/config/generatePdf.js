@@ -14,6 +14,7 @@ const generatePdf = async (visitor, passMaker) => {
         let templatePath;
         let passType;
         let additionalValues = {};
+        
         let validOn, validUpTo, time;
         if (visitor.type === 'Case-Hearing') {
             templatePath = path.join(__dirname, '../passTemplate/pass.html');
@@ -33,7 +34,7 @@ const generatePdf = async (visitor, passMaker) => {
             passType = visitor.type;
             additionalValues = {};
         }
-
+        
         const templateContent = fs.readFileSync(templatePath, 'utf8');
         const template = hbs.compile(templateContent);
         // Generate vertical line barcode for passNo

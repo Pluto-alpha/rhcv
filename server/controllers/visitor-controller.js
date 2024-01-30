@@ -178,7 +178,7 @@ const visitorPass = asyncHandler(async (req, res) => {
         }
         const passMaker = req.user.name;
         const fileName = `PASS-NO-${visitor.passNo}.pdf`;
-        const url = `https://192.168.79.160:5001/files/${fileName}`; // replace with http://10.130.8.102:8080
+        const url = `https://${process.env.IP}:5001/files/${fileName}`; // replace with http://10.130.8.102:8080
         const pdfBuffer = await generatePdf(visitor, passMaker);
         const filePath = path.resolve(__dirname, `../public/${fileName}`);
         fs.writeFileSync(filePath, pdfBuffer);
@@ -205,7 +205,7 @@ const updateVisitorImg = asyncHandler(async (req, res) => {
         if (!visitor) {
             return res.status(404).json({ msg: "Visitor not found" });
         }
-        const filePath = `https://192.168.79.160:5001/files/uploads/${file.filename}`;//replace with http://10.130.8.102:8080 
+        const filePath = `https://${process.env.IP}:5001/files/uploads/${file.filename}`;//replace with http://10.130.8.102:8080 
         await Visitor.findByIdAndUpdate(
             req.params.id,
             { image: filePath },
