@@ -41,5 +41,6 @@ export const getAllUsers = (data) => API.get('/api/v1/auth/user', data);
 export const updateUser = (id, data) => API.put(`/api/v1/auth/user/${id}`, data);
 export const getSingleUser = (id) => API.get(`/api/v1/auth/user/${id}`);
 export const getDashboard = (data) => API.get('/api/v1/auth/dashboard', data);
+export const resetPassword = (data) => API.post('/api/v1/auth/reset-password', data);
 
 export default API;

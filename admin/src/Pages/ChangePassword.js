@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
+import ResetPassword from '../Components/ResetPassword';
 const ChangePassword = () => {
     return (
         <div className="container-fluid position-relative bg-white d-flex p-0">
@@ -21,6 +22,7 @@ const ChangePassword = () => {
                         <div className="col-sm-12 col-xl-12">
                             <div className="bg-light rounded h-100 p-4 add_visitorform">
                                 <h6 className="mb-4">Change Password </h6>
+                                <ResetPassword/>
                             </div>
                         </div>
                     </div>

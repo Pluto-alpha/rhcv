@@ -160,23 +160,25 @@ const deleteUser = asyncHandler(async (req, res) => {
  */
 const resetPaswrd = asyncHandler(async (req, res) => {
     try {
-        const { email, newPassword } = req.body;
-        if (!email || !newPassword) {
-            return res.status(404).json({ status: false, msg: 'Email and newPassword is mandatory' })
-        }
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        // Hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        // Update the user's password in the database
-        await User.findOneAndUpdate({ email }, { password: hashedPassword });
-        return res.json({ message: 'Password reset successfully' });
+      const { email, password, confirmPassword } = req.body;
+      if (!email || !password || !confirmPassword) {
+        return res.status(400).json({ status: false, msg: 'Email, Password, and confirmPassword are mandatory' });
+      }
+      if (password !== confirmPassword) {
+        return res.status(400).json({ status: false, msg: 'Passwords do not match' });
+      }
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await User.findOneAndUpdate({ email }, { password: hashedPassword });
+      return res.json({ msg: 'Password reset successfully' });
     } catch (err) {
-        return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
+      return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
-})
+  });
+  
 
 /**
  * @des user dashboard api

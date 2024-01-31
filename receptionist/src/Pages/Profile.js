@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
+import * as AuthApi from '../API/authRequest';
 
 const Profile = () => {
 
   const userAuth = localStorage.getItem('user');
-  const parsedAuth = userAuth ? JSON.parse(userAuth) : 'null';
+  const user = userAuth ? JSON.parse(userAuth) : 'null';
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AuthApi.getSingleUser(user._id);
+        const userData = res.data;
+        setData(userData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [user._id]);
 
   return (
     <div className="container-fluid position-relative bg-white d-flex p-0">
@@ -35,22 +50,22 @@ const Profile = () => {
                   <tr>
                     <td>Name</td>
                     <td>:</td>
-                    <td>{parsedAuth.name}</td>
+                    <td>{data?.name}</td>
                   </tr>
                   <tr>
                     <td>Email</td>
                     <td>:</td>
-                    <td>{parsedAuth.email}</td>
+                    <td>{data?.email}</td>
                   </tr>
                   <tr>
                     <td>Mobile No.</td>
                     <td>:</td>
-                    <td>+91-7845696325</td>
+                    <td>+91-{data?.phone}</td>
                   </tr>
                   <tr>
                     <td>Role</td>
                     <td>:</td>
-                    <td>{parsedAuth.role}</td>
+                    <td>{data?.role}</td>
                   </tr>
                 </tbody>
               </table>

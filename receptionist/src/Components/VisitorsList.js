@@ -69,7 +69,7 @@ const VisitorsList = () => {
                             <th scope="col">Father Name</th>
                             <th scope="col">Advocate Name</th>
                             <th scope="col">Mobile No</th>
-                            <th scope="col">Email</th>
+                            {/* <th scope="col">Email</th> */}
                             <th scope="col">Address</th>
                             <th scope="col">Id Proof Type</th>
                             <th scope="col">Id Proof No</th>
@@ -88,7 +88,7 @@ const VisitorsList = () => {
                                     <td>{visit.fatherName}</td>
                                     <td>{visit.advocateName}</td>
                                     <td>{visit.mobile}</td>
-                                    <td>{visit.email}</td>
+                                    {/* <td>{visit.email}</td> */}
                                     <td>{visit.address}</td>
                                     <td>{visit.idProofType}</td>
                                     <td>{visit.idProofNo}</td>

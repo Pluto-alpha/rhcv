@@ -36,6 +36,7 @@ API.interceptors.response.use(
 );
 
 export const login = (data) => API.post('/api/v1/auth/login', data);
+export const getSingleUser = (id) => API.get(`/api/v1/auth/user/${id}`);
 export const receptionDashbord = (data) => API.get('/api/v1/auth/reception-dashboard', data);
 
 export default API;

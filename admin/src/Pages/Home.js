@@ -65,7 +65,7 @@ const Home = () => {
                                 <i className="fa fa-chart-area fa-3x text-primary" />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Visitor of The Month</p>
-                                    <h6 className="mb-0">{data.totalReceptionistUsers}</h6>
+                                    <h6 className="mb-0">{data.totalVisitorsOfMonth}</h6>
                                 </div>
                             </div>
                         </div>
