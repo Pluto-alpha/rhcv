@@ -23,19 +23,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true, }));
 app.use(cookieParser());
 app.use('/files', express.static(path.join(__dirname, 'public')));
-app.use('/', express.static(path.join(__dirname, '../receptionist/build')));
-//app.use('/', express.static(path.join(__dirname, '../admin/build')));
+
 
 // log all requests to console with dev format
 app.use(morgan('dev'));
 /**API's routes  */
 app.use('/api/v1/auth', require('./Routes/userRoutes'));
 app.use('/api/v1/', require('./Routes/visitorsRoutes'));
+app.use('/', express.static(path.join(__dirname, '../receptionist/build')));
+//app.use('/admin', express.static(path.join(__dirname, '../admin/build')));
+
 app.get('/', (req, res) => {
-    res.status(200).json({ msg: 'server is running!' })
+    res.status(200).json({ msg: 'Server is running!' });
 });
+
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../receptionist/build', 'index.html'));
+});
+app.get('/', (req, res) => {
+    res.status(200).json({ msg: 'server is running!' })
 });
 /** third party api integration start */
 app.post('/gatepass_api/index.php', async (req, res) => {
@@ -65,8 +71,8 @@ app.use(errorHandler);
 const port = process.env.PORT || 3000;
 
 const options = {
-    cert: fs.readFileSync(path.join(__dirname,'./combined.pem')),
-    key: fs.readFileSync(path.join(__dirname,'./combined.pem')),
+    cert: fs.readFileSync(path.join(__dirname, './combined.pem')),
+    key: fs.readFileSync(path.join(__dirname, './combined.pem')),
 };
 
 const server = https.createServer(options, app);

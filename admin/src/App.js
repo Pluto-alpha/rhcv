@@ -12,7 +12,6 @@ import PrivateComponent from './Components/PrivateComponent';
 import { ToastContainer } from "react-toastify";
 import EditVisitor from './Pages/EditVisitor' 
 
-console.log(process.env.REACT_APP_URL);
 const App = () => {
 
 
