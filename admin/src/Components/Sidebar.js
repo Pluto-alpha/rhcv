@@ -53,6 +53,7 @@ const Sidebar = () => {
                         <i className="fa fa-user me-2" />
                         Profile
                     </Link>
+                    <Link to="/reset-pswrd"></Link>
                     <button className="nav-item nav-link logout-btn" onClick={logout}>
                         <i className="fa fa-power-off me-2" />
                         Log Out

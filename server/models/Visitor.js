@@ -52,7 +52,7 @@ const visiterSchema = mongoose.Schema({
     },
     image: {
         type: String,
-        default: "http://localhost:5001/files/user.jpeg"
+        default: `https://${process.env.IP}:5001/files/user.jpeg`,
     },
     idProofType: {
         type: String,

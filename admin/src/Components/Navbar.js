@@ -50,13 +50,16 @@ const Navbar = () => {
                                 className="rounded-circle me-lg-2"
                                 src='img/user.jpg'
                                 alt=""
-                                style={{ width: 50, height: 50}}
+                                style={{ width: 50, height: 50 }}
                             />
                             <span className="d-none d-lg-inline-flex">{parsedAuth ? parsedAuth.name : 'Guest'}</span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <Link to="/profile" className="dropdown-item">
                                 My Profile
+                            </Link>
+                            <Link to="/reset-pswrd" className="dropdown-item">
+                                Change Password
                             </Link>
                             <button
                                 className="dropdown-item btn btn-link"

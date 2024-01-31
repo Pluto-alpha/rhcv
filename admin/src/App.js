@@ -10,7 +10,9 @@ import Profile from './Pages/Profile';
 import Login from './Components/Login';
 import PrivateComponent from './Components/PrivateComponent';
 import { ToastContainer } from "react-toastify";
-import EditVisitor from './Pages/EditVisitor' 
+import EditVisitor from './Pages/EditVisitor';
+import EditReception from './Pages/EditReceptionist';
+import ChangePassword from './Pages/ChangePassword';
 
 const App = () => {
 
@@ -25,6 +27,8 @@ const App = () => {
             <Route path='/home' element={<Home />} />
             <Route path='/add-receptionist' element={<AddReceptionist />} />
             <Route path='/add-visitor' element={<AddVisitor />} />
+            <Route path='/reset-pswrd' element={<ChangePassword />} />
+            <Route path='/:id' element={<EditReception />} />
             <Route path='/:id' element={<EditVisitor />} />
             <Route path='/receptionist-list' element={<ReceptionistList />} />
             <Route path='/visitor-list' element={<VisitorList />} />

@@ -9,6 +9,14 @@ const EditReception = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const [initialValues, setInitialValues] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        role: '',
+        enabled: true,
+    });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -25,30 +33,21 @@ const EditReception = () => {
                 console.error(error);
             }
         };
+
         fetchData();
     }, [id]);
-
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        role: '',
-        enabled: true,
-    });
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         email: Yup.string().email('Invalid email').required('Email is required'),
         phone: Yup.string().matches(/^\d{10}$/, 'Invalid phone number').required('Phone is required'),
-        password: Yup.string().required('Password is required'),
         role: Yup.string().required('Role is required'),
         enabled: Yup.string().required('Action is required'),
 
     });
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
-            const res = await AuthApi.updateUser(values);
+            const res = await AuthApi.updateUser(id, values);
             console.log(res.data);
             if (res.status === 200) {
                 toast.success(res.data.msg);
@@ -58,21 +57,27 @@ const EditReception = () => {
                 toast.error('An error occurred during the request');
             }
         } catch (err) {
-            console.error(err);
-            if (err.response && err.response.data && err.response.data.msg) {
-                toast.error(err.response.data.msg);
+            console.error('An error occurred during the request:', err);
+            if (err.response) {
+                console.error('Response Error:', err.response.data);
+                toast.error(`Server Error: ${err.message}`);
+            } else if (err.request) {
+                console.error('Request Error:', err.request);
+                toast.error('No response from the server');
             } else {
-                toast.error('Internal Server Error');
+                console.error('General Error:', err.message);
+                toast.error('An error occurred while processing your request');
             }
         } finally {
             setSubmitting(false);
         }
     };
     
-    if (!initialValues) {
-        return console.log('InitialValues not Found!');
+
+    if (!initialValues.name) {
+        return <p>Loading...</p>;
     }
-       
+
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             <Form>
@@ -118,19 +123,6 @@ const EditReception = () => {
                     </div>
                     <div className="col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label className="form-label">Password</label>
-                            <Field
-                                id="password"
-                                name="password"
-                                type="password"
-                                className="form-control"
-                                placeholder="Password"
-                            />
-                            <ErrorMessage name="password" component="div" className="err-msg" />
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6">
-                        <div className="form-group">
                             <label className="form-label">Role</label>
                             <Field as="select" name="role" className="form-select">
                                 <option value="Receptionist">Receptionist</option>
@@ -156,7 +148,8 @@ const EditReception = () => {
                     </button>
                 </div>
             </Form>
-        </Formik>)
+        </Formik>
+    )
 }
 
 export default EditReception

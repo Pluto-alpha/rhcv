@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
-import EditVisiorForm from '../Components/EditVisitorForm';
+import EditVisitorForm from '../Components/EditVisitorForm';
 
 
 const EditVisitor = () => {
@@ -25,7 +25,7 @@ const EditVisitor = () => {
             <div className="col-sm-12 col-xl-12">
               <div className="bg-light rounded h-100 p-4 add_visitorform">
                 <h6 className="mb-4">Update Visitor </h6>
-                <EditVisiorForm />
+                <EditVisitorForm />
               </div>
             </div>
           </div>

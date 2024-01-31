@@ -71,8 +71,8 @@ const ReceptionList = () => {
 
                                     >
                                         {user.enabled ? 'Active' : 'InActive'}
-                                    </Link>
-                                    {/* <Link to={`/${user._id}`} className='activeclas mx-2'>Edit</Link> */}
+                                    </Link> |
+                                    <Link to={`/${user._id}`} className='activeclas mx-2'>Edit</Link>
                                 </td>
                                 
                             </tr>

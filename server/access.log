@@ -413,3 +413,15 @@
 ::ffff:192.168.1.8 - - [31/Jan/2024:06:21:49 +0000] "GET /api/v1/visitor/receptionist-list HTTP/1.1" 500 162
 ::ffff:192.168.1.8 - - [31/Jan/2024:06:21:59 +0000] "GET /api/v1/visitor/admin HTTP/1.1" 500 150
 ::ffff:192.168.1.8 - - [31/Jan/2024:06:22:01 +0000] "GET /api/v1/visitor/admin HTTP/1.1" 500 150
+::ffff:192.168.1.8 - - [31/Jan/2024:06:44:17 +0000] "GET /api/v1/auth/user HTTP/1.1" 403 64
+::ffff:192.168.1.8 - - [31/Jan/2024:06:44:19 +0000] "GET /api/v1/auth/user HTTP/1.1" 403 64
+::ffff:192.168.1.8 - - [31/Jan/2024:07:14:22 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:17:10 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:18:07 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:19:48 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:19:58 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:28:06 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:28:12 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:29:49 +0000] "PUT /api/v1/auth/user/[object%20Object] HTTP/1.1" 500 157
+::ffff:192.168.1.8 - - [31/Jan/2024:07:33:04 +0000] "PUT /api/v1/auth/user/undefined HTTP/1.1" 500 151
+::ffff:192.168.1.8 - - [31/Jan/2024:08:45:02 +0000] "GET /api/v1/auth/user/reset-pawrd HTTP/1.1" 500 153

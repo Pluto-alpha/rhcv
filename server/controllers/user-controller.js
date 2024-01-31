@@ -122,18 +122,20 @@ const updateUser = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) {
-            return res.status(404).json({ message: "User not found" })
+            return res.status(404).json({ msg: "User not found" });
         }
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
-        )
-        return res.status(200).json({ updatedUser, message: 'User updated successfully' })
+        );
+        return res.status(200).json({ updatedUser, msg: 'User updated successfully' });
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });
     }
 });
+
+
 /**
  * @des Delete the user
  * @route DELETE /api/v1/auth/user:id
