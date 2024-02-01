@@ -73,7 +73,7 @@ const loginUser = asyncHandler(async (req, res) => {
             );
             return res.status(200).json({ token: token, _id: user.id, name: user.name, email: user.email, role: user.role, image: user.image, msg: 'Login Successful' });
         } else {
-            res.status(401).json({ msg: 'Invalid credentials' });
+            return res.status(401).json({ msg: 'Invalid credentials' });
         }
     } catch (err) {
         return res.status(500).json({ status: false, msg: 'Internal Server Error', err: err.message });

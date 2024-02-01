@@ -25,7 +25,6 @@ const Login = () => {
     password: Yup.string().required('Password is required'),
   });
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-
     try {
       const res = await AuthApi.login(values);
       console.log(res.data);
@@ -45,7 +44,7 @@ const Login = () => {
       if (err.response && err.response.data && err.response.data.msg) {
         toast.error(err.response.data.msg);
       } else {
-        toast.error('An error occurred during the request');
+        toast.error('An error occurred during the request', err.response);
       }
     } finally {
       setSubmitting(false);

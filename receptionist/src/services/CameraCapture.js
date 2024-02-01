@@ -45,6 +45,7 @@ const CameraCapture = ({ visitorId, onCaptureSuccess }) => {
                 webcamRef.current.video.srcObject = stream;
             } catch (err) {
                 console.error('Error opening webcam:', err);
+                toast.error('Error opening webcam:', err);
             }
         };
         const cleanupTracks = () => {
@@ -57,6 +58,7 @@ const CameraCapture = ({ visitorId, onCaptureSuccess }) => {
                             track.stop();
                         } catch (error) {
                             console.error('Error stopping track:', error);
+                            toast.error(error)
                         }
                     });
                 }

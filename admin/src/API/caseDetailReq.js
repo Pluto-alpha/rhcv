@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_URL } from '../services/common';
 
 const API = axios.create({
-  baseURL: BASE_URL,  //replace with http://10.130.8.102:8080
+  baseURL: BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
