@@ -41,20 +41,48 @@ const Sidebar = () => {
                 </div>
                 <div className="navbar-nav w-100">
                     <Link to="/home" className={`nav-item nav-link ${isCurrentRoute('/home') ? 'active' : ''}`}>
-                        <i className="fa fa-tachometer-alt me-2" />
-                        Dashboard
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                className="rounded-circle me-2"
+                                src='img/mtr.png'
+                                alt=""
+                                style={{ width: 16 }}
+                            />
+                            Dashboard
+                        </div>
                     </Link>
                     <Link to="/visitor-list" className={`nav-item nav-link ${isCurrentRoute('/visitor-list') ? 'active' : ''}`}>
-                        <i className="fa fa-users me-2" />
-                        Visitors
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                className="rounded-circle me-2"
+                                src="img/usr.png"
+                                alt=""
+                                style={{ width: 16 }}
+                            />
+                            Visitors
+                        </div>
                     </Link>
                     <Link to="/profile" className={`nav-item nav-link ${isCurrentRoute('/profile') ? 'active' : ''}`}>
-                        <i className="fa fa-user me-2" />
-                        Profile
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                className="rounded-circle me-2"
+                                src='img/prf.png'
+                                alt=""
+                                style={{ width: 16 }}
+                            />
+                            Profile
+                        </div>
                     </Link>
                     <button className="nav-item nav-link logout-btn" onClick={logout}>
-                        <i className="fa fa-power-off me-2" />
-                        Log Out
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                className="rounded-circle me-2"
+                                src='img/log.png'
+                                alt=""
+                                style={{ width: 16 }}
+                            />
+                            Log Out
+                        </div>
                     </button>
                 </div>
             </nav>

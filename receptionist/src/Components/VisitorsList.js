@@ -16,8 +16,8 @@ const VisitorsList = () => {
     const [selectedVisitId, setSelectedVisitId] = useState(null);
 
     const toggle = (visitId) => {
-      setSelectedVisitId(visitId);
-      setModel(!modal);
+        setSelectedVisitId(visitId);
+        setModel(!modal);
     };
 
     useEffect(() => {
@@ -96,16 +96,28 @@ const VisitorsList = () => {
                                     <td>{visit.validUpTo ? moment(visit.validUpTo).format("DD MMM YYYY, hh:mm A") : ""}</td>
                                     <td style={{ display: "flex" }}>
                                         <Link to={`/${visit._id}`}>
-                                            <i className="fa fa-edit me-2" />
+                                            <img
+                                                className='me-2'
+                                                src='img/edit.png'
+                                                alt=""
+                                                style={{ width: 15 }}
+                                            />
                                         </Link>
-                                        <Link to={''}>
-                                            <i
-                                                className="fa fa-camera me-2"
-                                                onClick={() => toggle(visit._id)}
+                                        <Link to={''} onClick={() => toggle(visit._id)}>
+                                            <img
+                                                className='me-2'
+                                                src='img/cam.png'
+                                                alt=""
+                                                style={{ width: 15 }}
                                             />
                                         </Link>
                                         <Link to={``} onClick={() => downloadPdf(visit._id)}>
-                                            <i className="fa fa-print me-2" />
+                                            <img
+                                                className='me-2'
+                                                src='img/print.png'
+                                                alt=""
+                                                style={{ width: 15 }}
+                                            />
                                         </Link>
                                     </td>
                                 </tr>

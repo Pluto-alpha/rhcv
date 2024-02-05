@@ -50,7 +50,7 @@ const VisitorPass = () => {
         advocateName: Yup.string().optional(),
         address: Yup.string().required('Address is required'),
         mobile: Yup.string().matches(/^\d{10}$/, 'Invalid phone number').required('Mobile No is required'),
-        email: Yup.string().email('Invalid email').required('Mail Id is required'),
+        email: Yup.string().email().nullable(),
         idProofType: Yup.string().required('ID Proof Type is required'),
         idProofNo: Yup.string().required('ID Proof No is required'),
         validOn: Yup.date().required('Date is required'),

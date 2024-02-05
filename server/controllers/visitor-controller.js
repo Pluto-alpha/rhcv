@@ -34,7 +34,7 @@ const GetAllvisitorList = asyncHandler(async (req, res) => {
 const addVisitor = asyncHandler(async (req, res) => {
     try {
         const { type, passNo, visitorName, fatherName, advocateName, address, mobile, email, idProofType, idProofNo, validUpTo, validOn, caseInfo } = req.body;
-        const visitorAvail = await Visitor.findOne({ $or: [{ email }, { mobile }] });
+        const visitorAvail = await Visitor.findOne({ mobile });
         if (visitorAvail) {
             return res.status(400).json({ msg: 'Visiter is already exist' })
         }

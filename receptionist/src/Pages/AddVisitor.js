@@ -25,7 +25,7 @@ const AddVisitor = () => {
           <div className="row g-4">
             <div className="col-sm-12 col-xl-12">
               <div className="bg-light rounded h-100 p-4 add_visitorform">
-                  <h6 className="mb-4">Add Visitor </h6>
+                <h6 className="mb-4">Add Visitor </h6>
                 <VisitorPass />
               </div>
             </div>
@@ -39,9 +39,6 @@ const AddVisitor = () => {
       </div>
       {/* Content End */}
       {/* Back to Top */}
-      <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
-        <i className="bi bi-arrow-up" />
-      </a>{" "}
     </div>
   )
 }

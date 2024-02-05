@@ -30,21 +30,11 @@ const Navbar = () => {
                         <img src="img/logo_min.png" />
                     </h2>
                 </Link>
-                <Link to="#" className="sidebar-toggler flex-shrink-0">
-                    <i className="fa fa-bars" />
-                </Link>
-                <form className="d-none d-md-flex ms-4">
-                    <input
-                        className="form-control border-0"
-                        type="search"
-                        placeholder="Search"
-                    />
-                </form>
                 <div className="navbar-nav align-items-center ms-auto">
                     <div className="nav-item dropdown">
                         <a
                             href="#"
-                            className="nav-link dropdown-toggle"
+                            className="nav-link"
                             data-bs-toggle="dropdown"
                         >
                             <img
@@ -53,7 +43,15 @@ const Navbar = () => {
                                 alt=""
                                 style={{ width: 50, height: 50, objectFit: 'cover' }}
                             />
-                            <span className="d-none d-lg-inline-flex">{parsedAuth ? parsedAuth.name : 'Guest'}</span>
+                            
+                            <span className="d-none d-lg-inline-flex me-1">{parsedAuth ? parsedAuth.name : 'Guest'}</span>
+                            <img
+                                className="me-lg-2"
+                                src="img/dwn.png"
+                                alt=""
+                                style={{ width: 10 }}
+
+                            />
                         </a>
                         <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <Link to="/profile" className="dropdown-item">

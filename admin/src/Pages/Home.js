@@ -88,7 +88,7 @@ const Home = () => {
                     <div className="bg-light text-center rounded p-4">
                         <div className="d-flex align-items-center justify-content-between mb-4">
                             <h6 className="mb-0">Visitors</h6>
-                            <a href="">Show All</a>
+                            {/* <a href="">Show All</a> */}
                         </div>
                         <VisitorsList />
                     </div>

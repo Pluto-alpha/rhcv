@@ -29,16 +29,6 @@ const Navbar = () => {
                         <img src="img/logo_min.png" />
                     </h2>
                 </Link>
-                <Link to="#" className="sidebar-toggler flex-shrink-0">
-                    <i className="fa fa-bars" />
-                </Link>
-                <form className="d-none d-md-flex ms-4">
-                    <input
-                        className="form-control border-0"
-                        type="search"
-                        placeholder="Search"
-                    />
-                </form>
                 <div className="navbar-nav align-items-center ms-auto">
                     <div className="nav-item dropdown">
                         <a

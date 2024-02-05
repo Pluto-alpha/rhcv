@@ -44,7 +44,10 @@ const Home = () => {
                     <div className="row g-4">
                         <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
-                                <i className="fa fa-chart-bar fa-3x text-primary" />
+                                <img
+                                    src='img/vc.png'
+                                    alt=""
+                                />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Visitors of The Day</p>
                                     <h6 className="mb-0">{data?.totalVisitorsOfDay}</h6>
@@ -53,7 +56,10 @@ const Home = () => {
                         </div>
                         <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
-                                <i className="fa fa-chart-area fa-3x text-primary" />
+                                <img
+                                    src='img/ch.png'
+                                    alt=""
+                                />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Visitor of The Month</p>
                                     <h6 className="mb-0">{data?.totalVisitorsOfMonth}</h6>
@@ -62,7 +68,10 @@ const Home = () => {
                         </div>
                         <div className="col-sm-6 col-xl-3">
                             <div className="bg-light rounded d-flex align-items-center justify-content-between p-2">
-                                <i className="fa fa-ban fa-3x text-primary" />
+                                <img
+                                    src='img/ttl.png'
+                                    alt=""
+                                />
                                 <div className="ms-3">
                                     <p className="mb-2">Total Rejected Visitor</p>
                                     <h6 className="mb-0">{data?.totalRejectedVisitorsOfDay}</h6>
@@ -79,7 +88,6 @@ const Home = () => {
                     <div className="bg-light text-center rounded p-4">
                         <div className="d-flex align-items-center justify-content-between mb-4">
                             <h6 className="mb-0">Visitors</h6>
-                            <a href="">Show All</a>
                         </div>
                         <VisitorsList />
                     </div>
@@ -91,9 +99,6 @@ const Home = () => {
             </div>
             {/* Content End */}
             {/* Back to Top */}
-            <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
-                <i className="bi bi-arrow-up" />
-            </a>
         </div>
 
 

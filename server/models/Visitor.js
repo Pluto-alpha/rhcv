@@ -48,7 +48,6 @@ const visiterSchema = mongoose.Schema({
         type: String,
         trim: true,
         unique: [true, 'Email is already exist'],
-        required: [true, 'required']
     },
     image: {
         type: String,

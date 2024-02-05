@@ -15,8 +15,8 @@ const CaseForm = ({ updateCaseInfo }) => {
         causelistdate: new Date(),
     };
     const validationSchema = Yup.object().shape({
-        case_no: Yup.string().required('Case number is required'),
-        causelisttype: Yup.string().required('Case type is required'),
+        case_no: Yup.string().required('Case Type/Case No./Case Year is required'),
+        causelisttype: Yup.string().required('Causelist Type is required'),
         causelistdate: Yup.date().required('Date is required'),
     });
 
@@ -69,26 +69,26 @@ const CaseForm = ({ updateCaseInfo }) => {
                         <div className="row">
                             <div className="col-md-6 col-sm-6">
                                 <div className="form-group">
-                                    <label className="form-label">Case Number</label>
+                                    <label className="form-label">Case Type/Case No./Case Year</label>
                                     <Field
                                         id="case_no"
                                         name="case_no"
                                         type="text"
                                         className="form-control"
-                                        placeholder="Case number"
+                                        placeholder="_________/__________/___________/"
                                     />
                                     <ErrorMessage name="case_no" component="div" className="err-msg" />
                                 </div>
                             </div>
                             <div className="col-md-6 col-sm-6">
                                 <div className="form-group">
-                                    <label className="form-label">Case Type</label>
+                                    <label className="form-label">Causelist Type</label>
                                     <Field
                                         id="causelisttype"
                                         name="causelisttype"
                                         type="text"
                                         className="form-control"
-                                        placeholder="Case type"
+                                        placeholder="Causelist type"
                                     />
                                     <ErrorMessage name="causelisttype" component="div" className="err-msg" />
                                 </div>

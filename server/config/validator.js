@@ -24,15 +24,12 @@ const visiterValid = Joi.object({
   advocateName: Joi.string().allow('').optional(),
   address: Joi.string().required(),
   mobile: Joi.string().regex(/^[0-9]{10}$/).messages({ 'string.pattern.base': 'Phone number must have 10 digits.' }).required(),
-  email: Joi.string().email().required(),
+  email: Joi.string().allow('').optional(),
   idProofType: Joi.string().required(),
   idProofNo: Joi.string().required(),
   validOn: Joi.date().iso().required(),
   validUpTo: Joi.date().iso().required(),
   caseInfo: Joi.array().allow('').optional(),
-  case_no: Joi.string().allow('').optional(),
-  causelisttype: Joi.string().allow('').optional(),
-  causelistdate: Joi.string().allow('').optional(),
 });
 
 

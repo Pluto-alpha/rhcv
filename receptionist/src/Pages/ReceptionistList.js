@@ -26,7 +26,7 @@ const ReceptionistList = () => {
             <div className="d-flex align-items-center justify-content-between mb-4">
               <h6 className="mb-0">Receptionist List</h6>
               <Link to="/add-receptionist" className="add_button">
-                Add Receptionist  
+                Add Receptionist
               </Link>
             </div>
             <ReceptionList />
@@ -40,9 +40,6 @@ const ReceptionistList = () => {
       </div>
       {/* Content End */}
       {/* Back to Top */}
-      <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
-        <i className="bi bi-arrow-up" />
-      </a>{" "}
     </div>
 
   )
