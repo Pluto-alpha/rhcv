@@ -8,7 +8,14 @@ const bwipjs = require('bwip-js');
 
 const generatePdf = async (visitor, passMaker) => {
     try {
-        const browser = await puppeteer.launch({ headless: 'new', ignoreHTTPSErrors: true, });
+        const browser = await puppeteer.launch({
+            args: [
+                '--ignore-certificate-errors',
+                '--disable-web-security'
+            ],
+            headless: 'new',
+            ignoreHTTPSErrors: true,
+        });
         const page = await browser.newPage();
         page.on('console', (message) => console.log('PAGE LOG:', message.text()));
         let templatePath;
