@@ -40,9 +40,7 @@ app.get('/', (req, res) => {
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../receptionist/build', 'index.html'));
 });
-app.get('/', (req, res) => {
-    res.status(200).json({ msg: 'server is running!' })
-});
+
 /** third party api integration start */
 app.post('/gatepass_api/index.php', async (req, res) => {
     try {
