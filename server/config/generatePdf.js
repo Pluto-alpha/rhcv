@@ -9,10 +9,6 @@ const bwipjs = require('bwip-js');
 const generatePdf = async (visitor, passMaker) => {
     try {
         const browser = await puppeteer.launch({
-            args: [
-                '--ignore-certificate-errors',
-                '--disable-web-security'
-            ],
             headless: 'new',
             ignoreHTTPSErrors: true,
         });
@@ -21,7 +17,6 @@ const generatePdf = async (visitor, passMaker) => {
         let templatePath;
         let passType;
         let additionalValues = {};
-        
         let validOn, validUpTo, time;
         if (visitor.type === 'Case-Hearing') {
             templatePath = path.join(__dirname, '../passTemplate/pass.html');
